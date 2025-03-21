@@ -1,0 +1,55 @@
+stages:
+  - build
+  - test
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+    - .next/
+
+build:
+  stage: build
+  image: node:16
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - .next
+
+test:
+  stage: test
+  image: node:16
+  script:
+    - npm install
+    - npm run test
+  coverage: '/Total: (\d+.\d+)%/'
+
+
+deploy_staging:
+  stage: deploy
+  image: node:16
+  script:
+    - npm install
+    - npm run build
+    - npm run deploy:staging
+  environment:
+    name: staging
+    url: https://staging.yourapp.com
+  only:
+    - main
+
+
+deploy_production:
+  stage: deploy
+  image: node:16
+  script:
+    - npm install
+    - npm run build
+    - npm run deploy:production
+  environment:
+    name: production
+    url: https://www.yourapp.com
+  only:
+    - tags
