@@ -10,7 +10,7 @@ cache:
 
 build:
   stage: build
-  image: node:16
+  image: node:18
   script:
     - npm install
     - npm run build
@@ -20,7 +20,7 @@ build:
 
 test:
   stage: test
-  image: node:16
+  image: node:18
   script:
     - npm install
     - npm run test
@@ -43,7 +43,7 @@ deploy_staging:
 
 deploy_production:
   stage: deploy
-  image: node:16
+  image: node:18
   script:
     - npm install
     - npm run build
