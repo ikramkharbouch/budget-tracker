@@ -41,7 +41,7 @@ const EarningsForm = () => {
     const total = Number(primaryIncome) + 
                  additionalEarnings.reduce((sum, earning) => sum + Number(earning.amount), 0);
                  
-    navigate('/dashboard', { 
+    navigate('/financial-summary', { 
       state: { 
         totalIncome: total,
         primaryIncome: primaryIncome,
