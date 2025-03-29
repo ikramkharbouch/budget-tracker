@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import WelcomeScreen from './welcome-screen';
 import ExpenseForm from '../components/expense-input';
+import EarningsForm from '../components/earnings-form';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
@@ -35,7 +36,6 @@ const theme = createTheme({
       'Roboto',
       'sans-serif',
     ].join(','),
-    // Other typography settings...
   },
 });
 
@@ -45,7 +45,7 @@ const Home = () => <WelcomeScreen />;
 const About = () => <div className="p-4"><h1 className="text-2xl font-bold">About Page</h1><p>This is the about page</p></div>;
 const Contact = () => <div className="p-4"><h1 className="text-2xl font-bold">Contact Page</h1><p>Contact us here</p></div>;
 const Expenses = () => <ExpenseForm />;
-const Earnings = () => <div className="p-4"><h1 className="text-2xl font-bold">Earnings Input</h1><p>Enter your earnings here (This is a placeholder)</p></div>;
+const Earnings = () => <EarningsForm />;
 
 const Navigation = () => (
   <AppBar position="static">
@@ -92,8 +92,7 @@ function MyApp({ Component, pageProps }) {
             <Route path="/contact" element={<Contact />} />
             <Route path="/expenses" element={<Expenses />} />
             <Route path="/earnings" element={<Earnings />} />
-            {/* For other dynamic pages from your Next.js or custom setup */}
-            <Route path="*" element={<Component {...pageProps} />} />
+              <Route path="*" element={<Component {...pageProps} />} />
           </Routes>
         </Layout>
       </BrowserRouter>
