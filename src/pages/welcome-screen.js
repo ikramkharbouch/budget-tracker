@@ -35,7 +35,7 @@ const WelcomeScreen = () => {
         </Typography>
         <Button 
           variant="contained" 
-          color="primary" 
+          color="secondary" 
           size="large" 
           onClick={handleStart}
           sx={{ py: 1.5, px: 4, fontSize: '1.1rem' }}
