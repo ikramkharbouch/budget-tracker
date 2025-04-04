@@ -5,6 +5,7 @@ import ExpenseForm from "../components/expense-input";
 import EarningsForm from "../components/earnings-form";
 import FinancialSummary from "../components/financial-summary";
 import SignIn from "../components/sign-in";
+import SignUp from "../components/sign-up";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
@@ -84,19 +85,18 @@ const Navigation = () => (
 );
 
 const Layout = ({ children }) => (
-  <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-    <Navigation />
-    <Box component="main" sx={{ flexGrow: 1 }} className="bg-slate-50">
-      {children}
-      <footer>
-      <div className="my-6 text-center text-gray-400 text-sm">
+  <div className="h-full">
+    <div className="flex flex-col h-full bg-slate-50">
+      <Navigation />
+      <main className="flex-1">{children}</main>
+    </div>
+
+    <footer className="mt-auto py-4">
+      <div className="text-center text-gray-400 text-sm">
         © 2025 Budget Tracker. All rights reserved.
       </div>
     </footer>
-
-    </Box>
-
-  </Box>
+  </div>
 );
 
 function MyApp({ Component, pageProps }) {
@@ -120,6 +120,7 @@ function MyApp({ Component, pageProps }) {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/sign-in" element={<SignIn />} />
+              <Route path="/sign-up" element={<SignUp />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/expenses" element={<Expenses />} />
               <Route path="/earnings" element={<Earnings />} />
