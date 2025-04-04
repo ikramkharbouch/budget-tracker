@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link} from "react-router-dom";
 
 export default function SignInForm() {
   const [email, setEmail] = useState("");
@@ -82,12 +83,14 @@ export default function SignInForm() {
                 <div className="text-center mt-6">
                   <p className="text-gray-600">
                     Don't have an account?{" "}
+                    <Link to="/sign-up">
                     <a
                       href="#"
                       className="text-indigo-600 font-medium hover:text-indigo-800"
                     >
                       Sign Up
                     </a>
+                    </Link>
                   </p>
                 </div>
               </form>
