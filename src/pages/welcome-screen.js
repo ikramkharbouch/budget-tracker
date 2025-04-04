@@ -7,22 +7,25 @@ import Image from 'next/image';
 
 export default function WelcomeScreen() {
   return (
-    <div className="max-h-screen bg-slate-50 flex p-6">
-      <div className='w-1/2 border-2 border-black rounded-2xl h-5/6'>
-      <Image
-        src={"/assets/bwink_ppl_19_single_07.jpg"}
-        alt="Budget Tracker"
-        width={500}
-        height={200}
-        className='w-full object-cover rounded-2xl'
-      />
+    <div className="min-h-screen bg-slate-50 flex p-6 flex-col lg:flex-row">
+      {/* Left section: Image */}
+      <div className='w-full lg:w-1/2 border-2 border-black rounded-2xl h-60 lg:h-5/6'>
+        <Image
+          src={"/assets/bwink_ppl_19_single_07.jpg"}
+          alt="Budget Tracker"
+          width={500}
+          height={200}
+          className='w-full h-full object-cover rounded-2xl'
+        />
       </div>
-      <div className="w-1/2 max-w-4xl flex">
-        <div className="rounded-2xl  overflow-hidden flex flex-col md:flex-row">
+      
+      {/* Right section: Text and Buttons */}
+      <div className="w-full lg:w-1/2 flex flex-col justify-center lg:max-w-4xl mt-6 lg:mt-0">
+        <div className="rounded-2xl overflow-hidden flex flex-col lg:flex-row">
         
-          <div className="w-full p-10 flex flex-col justify-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Welcome to Budget Tracker</h1>
-            <h2 className="text-xl text-gray-700 font-medium mb-6">Take control of your finances today</h2>
+          <div className="w-full px-4 sm:px-6 lg:px-10 flex flex-col justify-center">
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Welcome to Budget Tracker</h1>
+            <h2 className="text-xl sm:text-2xl text-gray-700 font-medium mb-6">Take control of your finances today</h2>
             
             <p className="text-gray-600 mb-8">
               This tool will help you track your expenses and income to create a personalized budget.
