@@ -1,11 +1,50 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import { useRouter } from "next/router";
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState(''); // Added username state
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const router = useRouter();
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    const data = { 
+      email,
+      username,
+      password 
+    };
+
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        console.log(result);
+        router.push("/expenses");
+      } else {
+        alert(result.error || "Registration failed");
+      }
+    } catch (error) {
+      console.error("Error registering:", error);
+      alert("An error occurred while registering");
+    }
+  };
 
   return (
     <div className="h-full flex flex-col">
@@ -15,77 +54,77 @@ const SignUp = () => {
         <div className="w-full max-w-md">
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
             <div className="p-8">
-              <form>
+              <form onSubmit={handleSubmit}>
+                <div className="mb-6">
+                  <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="username">
+                    Username
+                  </label>
+                  <input
+                    id="username"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all duration-200"
+                    placeholder="Your Username"
+                    required
+                  />
+                </div>
+
                 <div className="mb-6">
                   <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="email">
                     Email Address
                   </label>
-                  <div className="relative">
-                    <input
-                      id="email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all duration-200"
-                      placeholder="your@email.com"
-                      required
-                    />
-                  </div>
+                  <input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all duration-200"
+                    placeholder="your@email.com"
+                    required
+                  />
                 </div>
 
                 <div className="mb-6">
                   <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="password">
                     Password
                   </label>
-                  <div className="relative">
-                    <input
-                      id="password"
-                      type={passwordVisible ? "text" : "password"}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all duration-200"
-                      placeholder="••••••••"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setPasswordVisible(!passwordVisible)}
-                      className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
-                      tabIndex="-1"
-                    >
-                      {passwordVisible ? "Hide" : "Show"}
-                    </button>
-                  </div>
+                  <input
+                    id="password"
+                    type={passwordVisible ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all duration-200"
+                    placeholder="••••••••"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setPasswordVisible(!passwordVisible)}
+                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                  >
+                    {passwordVisible ? "Hide" : "Show"}
+                  </button>
                 </div>
 
                 <div className="mb-6">
                   <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="confirmPassword">
                     Confirm Password
                   </label>
-                  <div className="relative">
-                    <input
-                      id="confirmPassword"
-                      type={passwordVisible ? "text" : "password"}
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all duration-200"
-                      placeholder="••••••••"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setPasswordVisible(!passwordVisible)}
-                      className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
-                      tabIndex="-1"
-                    >
-                      {passwordVisible ? "Hide" : "Show"}
-                    </button>
-                  </div>
+                  <input
+                    id="confirmPassword"
+                    type={passwordVisible ? "text" : "password"}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:border-transparent outline-none transition-all duration-200"
+                    placeholder="••••••••"
+                    required
+                  />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-black text-white font-medium py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50"
+                  className="w-full bg-black text-white font-medium py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
                 >
                   Sign Up
                 </button>
@@ -93,40 +132,18 @@ const SignUp = () => {
                 <div className="text-center mt-6">
                   <p className="text-gray-600">
                     Already have an account?
-                    <Link to="/sign-in">
-                    <a href="#" className="text-indigo-600 font-medium hover:text-indigo-800">
+                    <Link to="/sign-in" className="text-indigo-600 font-medium hover:text-indigo-800">
                       Sign In
-                    </a>
                     </Link>
                   </p>
                 </div>
               </form>
             </div>
           </div>
-
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-indigo-50 text-gray-500">Or continue with</span>
-              </div>
-            </div>
-
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <a href="#" className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                Google
-              </a>
-              <a href="#" className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                Apple
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default SignUp;

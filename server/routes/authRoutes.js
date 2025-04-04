@@ -4,23 +4,19 @@ const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require('bcrypt');
 
-// Register a new user
 router.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
-    // Check if email is already taken
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       return res.status(400).json({ message: "Email is already registered." });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
     const user = await User.create({
-      name,
+      username,
       email,
       password: hashedPassword,
     });
@@ -29,7 +25,7 @@ router.post("/register", async (req, res) => {
       message: "User registered successfully",
       user: {
         id: user.id,
-        name: user.name,
+        username: user.username,
         email: user.email,
       },
     });
@@ -39,7 +35,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Local login
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);

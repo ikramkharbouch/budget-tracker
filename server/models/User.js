@@ -19,7 +19,7 @@ User.init({
     unique: true,
     allowNull: true,  // It is optional, as users may not sign up with Apple
   },
-  name: {
+  username: {
     type: DataTypes.STRING,
     allowNull: false,
   },
