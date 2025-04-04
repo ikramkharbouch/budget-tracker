@@ -9,7 +9,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import { montserrat } from "../fonts/fonts";
-import '../index.css';
+import "../index.css";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../i18n";
 
@@ -67,23 +67,35 @@ const Earnings = () => <EarningsForm />;
 
 const Navigation = () => (
   <nav className="bg-white py-4 px-6 flex justify-between items-center shadow-sm">
-  <div className="font-bold text-xl">Budget Tracker</div>
-  <div className="flex space-x-3">
-    <button className="bg-black hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition-colors duration-300">
-      START BUDGETING
-    </button>
-    <button className="border border-gray-300 text-gray-800 font-medium px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-      SIGN IN
-    </button>
-  </div>
-</nav>);
+    <div className="font-bold text-xl">Budget Tracker</div>
+    <div className="flex space-x-3">
+      <Link to="/welcome-screen">
+        <button className="bg-black hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition-colors duration-300">
+          START BUDGETING
+        </button>
+      </Link>
+      <Link to="/sign-in">
+        <button className="border border-gray-300 text-gray-800 font-medium px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+          SIGN IN
+        </button>
+      </Link>
+    </div>
+  </nav>
+);
 
 const Layout = ({ children }) => (
   <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
     <Navigation />
-    <Box component="main" sx={{ flexGrow: 1 }}>
+    <Box component="main" sx={{ flexGrow: 1 }} className="bg-slate-50">
       {children}
+      <footer>
+      <div className="my-6 text-center text-gray-400 text-sm">
+        © 2025 Budget Tracker. All rights reserved.
+      </div>
+    </footer>
+
     </Box>
+
   </Box>
 );
 
@@ -113,6 +125,7 @@ function MyApp({ Component, pageProps }) {
               <Route path="/earnings" element={<Earnings />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/financial-summary" element={<FinancialSummary />} />
+              <Route path="/welcome-screen" element={<WelcomeScreen />} />
               <Route path="*" element={<Component {...pageProps} />} />
             </Routes>
           </Layout>

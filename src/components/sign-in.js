@@ -6,7 +6,7 @@ export default function SignInForm() {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
-    <div className="max-h-screen min-h-screen h-full bg-slate-50 flex flex-col">
+    <div className="max-h-screen min-h-screen h-full flex flex-col">
       {/* Navbar */}
       {/* Main Content */}
       <h1 className='text-3xl font-bold text-center pt-24'>Welcome Back</h1>
