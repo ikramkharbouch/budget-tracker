@@ -4,11 +4,12 @@ import WelcomeScreen from "./welcome-screen";
 import ExpenseForm from "../components/expense-input";
 import EarningsForm from "../components/earnings-form";
 import FinancialSummary from "../components/financial-summary";
+import SignIn from "../components/sign-in";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import { montserrat } from "../fonts/fonts";
-
+import '../index.css';
 import { I18nextProvider } from "react-i18next";
 import i18n from "../i18n";
 
@@ -65,20 +66,17 @@ const Expenses = () => <ExpenseForm />;
 const Earnings = () => <EarningsForm />;
 
 const Navigation = () => (
-  <AppBar position="static" sx={{ backgroundColor: "transparent" }}>
-    <Toolbar>
-      <Typography variant="h6" sx={{ flexGrow: 1 }}>
-        Budget Tracker
-      </Typography>
-      <Button variant="contained" color="secondary" sx={{ marginRight: 2 }}>
-        Start Budgeting
-      </Button>
-      <Button variant="outlined" color="primary">
-        Sign In
-      </Button>
-    </Toolbar>
-  </AppBar>
-);
+  <nav className="bg-white py-4 px-6 flex justify-between items-center shadow-sm">
+  <div className="font-bold text-xl">Budget Tracker</div>
+  <div className="flex space-x-3">
+    <button className="bg-black hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition-colors duration-300">
+      START BUDGETING
+    </button>
+    <button className="border border-gray-300 text-gray-800 font-medium px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+      SIGN IN
+    </button>
+  </div>
+</nav>);
 
 const Layout = ({ children }) => (
   <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -109,6 +107,7 @@ function MyApp({ Component, pageProps }) {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/sign-in" element={<SignIn />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/expenses" element={<Expenses />} />
               <Route path="/earnings" element={<Earnings />} />

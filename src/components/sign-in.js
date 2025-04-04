@@ -6,30 +6,16 @@ export default function SignInForm() {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+    <div className="max-h-screen min-h-screen h-full bg-slate-50 flex flex-col">
       {/* Navbar */}
-      <nav className="bg-white py-4 px-6 flex justify-between items-center shadow-sm">
-        <div className="font-bold text-xl text-indigo-900">Budget Tracker</div>
-        <div className="flex space-x-3">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition-colors duration-300">
-            START BUDGETING
-          </button>
-          <button className="border border-gray-300 text-gray-800 font-medium px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-            SIGN IN
-          </button>
-        </div>
-      </nav>
-
       {/* Main Content */}
+      <h1 className='text-3xl font-bold text-center pt-24'>Welcome Back</h1>
+      <p className='text-xl font-italic text-center mt-5'>Sign in to manage your budget</p>
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-md">
           {/* Card */}
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
             {/* Card Header */}
-            <div className="bg-gradient-to-r from-indigo-500 to-purple-600 px-8 py-6">
-              <h2 className="text-white text-2xl font-bold">Welcome Back</h2>
-              <p className="text-indigo-100 mt-1">Sign in to manage your budget</p>
-            </div>
 
             {/* Card Body */}
             <div className="p-8">
@@ -86,7 +72,7 @@ export default function SignInForm() {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50"
+                  className="w-full bg-black text-white font-medium py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50"
                 >
                   Sign In
                 </button>
