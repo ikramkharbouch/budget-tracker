@@ -13,6 +13,7 @@ import { montserrat } from "../fonts/fonts";
 import "../index.css";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../i18n";
+import NotificationProvider from "../components/NotificationProvider";
 
 const theme = createTheme({
   palette: {
@@ -68,7 +69,9 @@ const Earnings = () => <EarningsForm />;
 
 const Navigation = () => (
   <nav className="bg-white py-4 px-6 flex justify-between items-center shadow-sm">
-    <div className="font-bold text-xl">Budget Tracker</div>
+    <Link to="/">
+      <div className="font-bold text-xl">Budget Tracker</div>
+    </Link>
     <div className="flex space-x-3">
       <Link to="/welcome-screen">
         <button className="bg-black hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition-colors duration-300">
@@ -112,6 +115,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <I18nextProvider i18n={i18n}>
+      <NotificationProvider />
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter>

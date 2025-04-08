@@ -1,27 +1,28 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useRouter } from "next/router";
+import { showToast } from "./NotificationProvider";
 
 const SignUp = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [username, setUsername] = useState(''); // Added username state
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [username, setUsername] = useState(""); // Added username state
   const [passwordVisible, setPasswordVisible] = useState(false);
   const router = useRouter();
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      showToast("Passwords do not match", "error"); // Show error toast
       return;
     }
 
-    const data = { 
+    const data = {
       email,
       username,
-      password 
+      password,
     };
 
     try {
@@ -36,27 +37,33 @@ const SignUp = () => {
       const result = await response.json();
       if (response.ok) {
         console.log(result);
+        showToast("Registration successful! Redirecting...", "success");
         router.push("/expenses");
       } else {
-        alert(result.error || "Registration failed");
+        showToast(result.error || "Registration failed", "error");
       }
     } catch (error) {
       console.error("Error registering:", error);
-      alert("An error occurred while registering");
+      showToast("An error occurred while registering", "error");
     }
   };
 
   return (
     <div className="h-full flex flex-col">
-      <h1 className='text-3xl font-bold text-center pt-24'>Create Account</h1>
-      <p className='text-xl font-italic text-center mt-5'>Sign up to start managing your budget</p>
+      <h1 className="text-3xl font-bold text-center pt-24">Create Account</h1>
+      <p className="text-xl font-italic text-center mt-5">
+        Sign up to start managing your budget
+      </p>
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-md">
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
             <div className="p-8">
               <form onSubmit={handleSubmit}>
                 <div className="mb-6">
-                  <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="username">
+                  <label
+                    className="block text-gray-700 text-sm font-medium mb-2"
+                    htmlFor="username"
+                  >
                     Username
                   </label>
                   <input
@@ -71,7 +78,10 @@ const SignUp = () => {
                 </div>
 
                 <div className="mb-6">
-                  <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="email">
+                  <label
+                    className="block text-gray-700 text-sm font-medium mb-2"
+                    htmlFor="email"
+                  >
                     Email Address
                   </label>
                   <input
@@ -86,7 +96,10 @@ const SignUp = () => {
                 </div>
 
                 <div className="mb-6">
-                  <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="password">
+                  <label
+                    className="block text-gray-700 text-sm font-medium mb-2"
+                    htmlFor="password"
+                  >
                     Password
                   </label>
                   <input
@@ -108,7 +121,10 @@ const SignUp = () => {
                 </div>
 
                 <div className="mb-6">
-                  <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="confirmPassword">
+                  <label
+                    className="block text-gray-700 text-sm font-medium mb-2"
+                    htmlFor="confirmPassword"
+                  >
                     Confirm Password
                   </label>
                   <input
@@ -132,7 +148,10 @@ const SignUp = () => {
                 <div className="text-center mt-6">
                   <p className="text-gray-600">
                     Already have an account?
-                    <Link to="/sign-in" className="text-indigo-600 font-medium hover:text-indigo-800">
+                    <Link
+                      to="/sign-in"
+                      className="text-indigo-600 font-medium hover:text-indigo-800"
+                    >
                       Sign In
                     </Link>
                   </p>
