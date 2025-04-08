@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
-import { 
-  Box, Typography, TextField, Button, Paper, Grid, 
-  Dialog, DialogTitle, DialogContent, 
-  DialogActions, List, ListItem, ListItemText,
-  IconButton
-} from '@mui/material';
+import { useRouter } from 'next/router';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useNavigate } from 'react-router-dom';
 
 const EarningsForm = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [openDialog, setOpenDialog] = useState(false);
   const [customEarningName, setCustomEarningName] = useState('');
   const [customEarningAmount, setCustomEarningAmount] = useState('');
@@ -41,134 +35,142 @@ const EarningsForm = () => {
     const total = Number(primaryIncome) + 
                  additionalEarnings.reduce((sum, earning) => sum + Number(earning.amount), 0);
                  
-    navigate('/financial-summary', { 
-      state: { 
+    router.push({
+      pathname: '/financial-summary',
+      query: { 
         totalIncome: total,
         primaryIncome: primaryIncome,
-        additionalEarnings: additionalEarnings
-      } 
+        additionalEarnings: JSON.stringify(additionalEarnings)
+      }
     });
   };
 
-  return (
-    <Box sx={{ p: 4, maxWidth: 1200, mx: 'auto' }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Enter Your Monthly Earnings
-      </Typography>
-      <Typography variant="body1" paragraph sx={{ mb: 4 }}>
-        Please enter your monthly income from all sources. This will help us create an accurate budget for you.
-      </Typography>
+  // Calculate total income
+  const totalIncome = Number(primaryIncome) + 
+                     additionalEarnings.reduce((sum, earning) => sum + Number(earning.amount), 0);
 
-      <Paper elevation={3} sx={{ p: 3, mb: 4 }}>
-        <Typography variant="h6" gutterBottom>
-          Primary Income
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+  return (
+    <div className="max-w-6xl mx-auto px-4 py-16">
+      <h1 className="text-4xl font-bold mb-2">Enter Your Monthly Earnings</h1>
+      <p className="text-gray-600 mb-8">
+        Please enter your monthly income from all sources. This will help us create an accurate budget for you.
+      </p>
+
+      <div className="bg-white border border-gray-200 rounded-lg p-6 mb-8">
+        <h2 className="text-xl font-semibold mb-2">Primary Income</h2>
+        <p className="text-sm text-gray-600 mb-4">
           Enter your main source of income (e.g., salary, wages, pension).
-        </Typography>
-        <TextField
-          label="Monthly Amount"
-          variant="outlined"
-          type="number"
-          value={primaryIncome}
-          onChange={(e) => setPrimaryIncome(e.target.value)}
-          InputProps={{
-            startAdornment: <Typography sx={{ mr: 1 }}>$</Typography>,
-          }}
-          fullWidth
-        />
-      </Paper>
+        </p>
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+          <input
+            type="number"
+            value={primaryIncome}
+            onChange={(e) => setPrimaryIncome(e.target.value)}
+            className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:outline-none"
+            placeholder="0.00"
+          />
+        </div>
+      </div>
 
       {additionalEarnings.length > 0 && (
-        <Paper elevation={3} sx={{ p: 3, mb: 4 }}>
-          <Typography variant="h6" gutterBottom>
-            Additional Earnings
-          </Typography>
-          <List>
+        <div className="bg-white border border-gray-200 rounded-lg p-6 mb-8">
+          <h2 className="text-xl font-semibold mb-4">Additional Earnings</h2>
+          <ul className="divide-y divide-gray-100">
             {additionalEarnings.map((item, index) => (
-              <ListItem 
-                key={index} 
-                divider={index < additionalEarnings.length - 1}
-                secondaryAction={
-                  <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteEarning(index)}>
-                    <DeleteIcon />
-                  </IconButton>
-                }
-              >
-                <ListItemText 
-                  primary={item.name} 
-                  secondary={`$${parseFloat(item.amount).toLocaleString()} per month`} 
-                />
-              </ListItem>
+              <li key={index} className="py-4 flex justify-between items-center">
+                <div>
+                  <h3 className="font-medium">{item.name}</h3>
+                  <p className="text-gray-600">${parseFloat(item.amount).toLocaleString()} per month</p>
+                </div>
+                <button 
+                  onClick={() => handleDeleteEarning(index)}
+                  className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                >
+                  <DeleteIcon className="w-5 h-5" />
+                </button>
+              </li>
             ))}
-          </List>
-        </Paper>
+          </ul>
+        </div>
       )}
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 4 }}>
-        <Button 
-          variant="outlined" 
-          color="primary" 
-          startIcon={<AddIcon />}
+      <div className="bg-white border border-gray-200 rounded-lg p-6 mb-8">
+        <h2 className="text-xl font-semibold mb-2">Total Monthly Income</h2>
+        <p className="text-3xl font-bold text-black">
+          ${totalIncome.toLocaleString()}
+        </p>
+      </div>
+
+      <div className="flex justify-between items-center mt-6">
+        <button 
           onClick={() => setOpenDialog(true)}
+          className="flex items-center px-5 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
         >
-          Add Additional Earnings
-        </Button>
-        <Button 
-          variant="contained" 
-          color="primary" 
+          <AddIcon className="w-4 h-4 mr-2" />
+          <span>Add Additional Earnings</span>
+        </button>
+        <button 
           onClick={handleFinish}
-          size="large"
+          className="px-8 py-3 bg-black text-white rounded-md hover:bg-black/90 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
           disabled={!primaryIncome}
         >
           Complete
-        </Button>
-      </Box>
-
-      <Paper elevation={3} sx={{ p: 3, mt: 4 }}>
-        <Typography variant="h6" gutterBottom>
-          Total Monthly Income
-        </Typography>
-        <Typography variant="h4" color="primary.main">
-          ${(Number(primaryIncome) + additionalEarnings.reduce((sum, earning) => sum + Number(earning.amount), 0)).toLocaleString()}
-        </Typography>
-      </Paper>
+        </button>
+      </div>
 
       {/* Add Earning Dialog */}
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle>Add Additional Earnings</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Source of Income"
-            placeholder="Freelance, Side Gig, Investments, etc."
-            type="text"
-            fullWidth
-            value={customEarningName}
-            onChange={(e) => setCustomEarningName(e.target.value)}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            margin="dense"
-            label="Monthly Amount"
-            type="number"
-            fullWidth
-            value={customEarningAmount}
-            onChange={(e) => setCustomEarningAmount(e.target.value)}
-            InputProps={{
-              startAdornment: <Typography sx={{ mr: 1 }}>$</Typography>,
-            }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
-          <Button onClick={handleAddCustomEarning} variant="contained" color="primary">
-            Add Earnings
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </Box>
+      {openDialog && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg max-w-md w-full p-6">
+            <h2 className="text-xl font-bold mb-4">Add Additional Earnings</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Source of Income
+                </label>
+                <input
+                  type="text"
+                  value={customEarningName}
+                  onChange={(e) => setCustomEarningName(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:outline-none"
+                  placeholder="Freelance, Side Gig, Investments, etc."
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Monthly Amount
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                  <input
+                    type="number"
+                    value={customEarningAmount}
+                    onChange={(e) => setCustomEarningAmount(e.target.value)}
+                    className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:outline-none"
+                    placeholder="0.00"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end space-x-3 mt-6">
+              <button 
+                onClick={() => setOpenDialog(false)}
+                className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleAddCustomEarning}
+                className="px-4 py-2 bg-black text-white rounded-md hover:bg-black/90 transition-colors"
+              >
+                Add Earnings
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
