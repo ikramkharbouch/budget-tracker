@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CategoryStepForm from "./CategoryStepForm";
+import GenericInputBar from "./GenericInputBar";
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const ATMMain = () => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [currentPhase, setCurrentPhase] = useState("form-details"); // Start directly with CategoryStepForm
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [currentPhase, setCurrentPhase] = useState("form-details");
   const [categoryExpenses, setCategoryExpenses] = useState({
     Groceries: "",
     Restaurants: "",
@@ -14,6 +16,11 @@ const ATMMain = () => {
     Utilities: "",
     Insurance: "",
   });
+  const [targetSavings, setTargetSavings] = useState("");
+  const [timeFrame, setTimeFrame] = useState("3 months");
+  const [reductionStrategy, setReductionStrategy] = useState("");
+  const [primaryJobIncome, setPrimaryJobIncome] = useState("");
+
 
   const categories = [
     "Groceries",
@@ -41,21 +48,28 @@ const ATMMain = () => {
   };
 
   const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-    setCurrentPhase("form-details");
-    console.log("Selected category:", category);
+    setSelectedCategories((prevSelected) => {
+      if (prevSelected.includes(category)) {
+        setCategoryExpenses(prev => ({ ...prev, [category]: "" }));
+        return prevSelected.filter((item) => item !== category);
+      } else {
+        return [...prevSelected, category];
+      }
+    });
+    console.log("Selected categories toggled:", category);
   };
 
   const handleExpenseChange = (category, value) => {
+    const numericValue = value === "" ? "" : Number(value);
     setCategoryExpenses((prev) => ({
       ...prev,
-      [category]: value,
+      [category]: numericValue,
     }));
   };
 
   const handleReset = () => {
-    setSelectedCategory(null);
-    setCurrentPhase("form-details"); // Reset to the initial CategoryStepForm
+    setSelectedCategories([]);
+    setCurrentPhase("form-details");
     setCategoryExpenses({
       Groceries: "",
       Restaurants: "",
@@ -63,12 +77,53 @@ const ATMMain = () => {
       Utilities: "",
       Insurance: "",
     });
+    setTargetSavings("");
+    setTimeFrame("3 months");
+    setReductionStrategy("");
+    setPrimaryJobIncome("");
+  };
+
+  const handleIncomeInternalNext = () => {
+    if (!primaryJobIncome || parseFloat(primaryJobIncome) <= 0) {
+      alert("Please enter a valid amount for your primary job income.");
+      return;
+    }
   };
 
   const handleNextPhase = () => {
+    if (currentPhase === "form-details" && selectedCategories.length === 0) {
+      alert("Please select at least one category before proceeding.");
+      return;
+    }
+
+    if (currentPhase === "budget-planning") {
+      const allExpensesEntered = selectedCategories.every(category => {
+        const expense = parseFloat(categoryExpenses[category]);
+        return !isNaN(expense) && expense >= 0 && categoryExpenses[category] !== '';
+      });
+      if (!allExpensesEntered) {
+        alert("Please enter a valid expense for all selected categories before proceeding.");
+        return;
+      }
+    }
+    if (currentPhase === "income-details") {
+      if (!primaryJobIncome || parseFloat(primaryJobIncome) <= 0) {
+        alert("Please enter a valid amount for your primary job income.");
+        return;
+      }
+    }
+    if (currentPhase === "goal-setting") {
+      if (!targetSavings || parseFloat(targetSavings) <= 0 || !timeFrame || reductionStrategy.trim() === '') {
+        alert("Please fill in all goal setting details (Target Savings > 0, Time Frame, and Reduction Strategy).");
+        return;
+      }
+    }
+
     if (currentPhase === "form-details") {
       setCurrentPhase("budget-planning");
     } else if (currentPhase === "budget-planning") {
+      setCurrentPhase("income-details");
+    } else if (currentPhase === "income-details") {
       setCurrentPhase("goal-setting");
     } else if (currentPhase === "goal-setting") {
       setCurrentPhase("summary");
@@ -79,6 +134,8 @@ const ATMMain = () => {
     if (currentPhase === "summary") {
       setCurrentPhase("goal-setting");
     } else if (currentPhase === "goal-setting") {
+      setCurrentPhase("income-details");
+    } else if (currentPhase === "income-details") {
       setCurrentPhase("budget-planning");
     } else if (currentPhase === "budget-planning") {
       setCurrentPhase("form-details");
@@ -88,15 +145,17 @@ const ATMMain = () => {
   const getProgressBarWidth = () => {
     switch (currentPhase) {
       case "form-details":
-        return "25%"; // First step is 25% complete
+        return "20%";
       case "budget-planning":
-        return "50%";
+        return "40%";
+      case "income-details":
+        return "60%";
       case "goal-setting":
-        return "75%";
+        return "80%";
       case "summary":
         return "100%";
       default:
-        return "0%"; // Fallback
+        return "0%";
     }
   };
 
@@ -164,9 +223,19 @@ const ATMMain = () => {
         className="absolute"
         style={{ top: "25%", left: "25%", width: "50%" }}
       >
-        <div className="text-center p-4">
-          {/* Navigation Arrows & Progress Bar */}
-          <div className="flex justify-between items-center mb-4 relative">
+        <div className="text-center">
+          {/* Progress Bar Line */}
+          <div className="flex-grow flex items-center justify-center px-4">
+            <div className="w-2/3 bg-gray-200 rounded-full h-1.5">
+              <div
+                className="bg-black h-1.5 rounded-full transition-all duration-300 ease-in-out"
+                style={{ width: getProgressBarWidth() }}
+              ></div>
+            </div>
+          </div>
+
+          {/* Navigation Arrows */}
+          <div className="flex justify-between items-center">
             <button
               onClick={handlePreviousPhase}
               disabled={currentPhase === "form-details"}
@@ -176,37 +245,15 @@ const ATMMain = () => {
                   : "border-gray-600 text-gray-600 hover:bg-gray-200 bg-white"
               }`}
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
+              <ArrowLeft className="w-4 h-4" />
             </button>
 
-            {/* Progress Bar - Centered, Longer, with Rounded Edges on the sides only */}
-            <div className="bg-transparent w-full flex items-center justify-center absolute left-0 right-0 bottom-10 mx-auto">
-              {/* This is the key change: the filling part is controlled by getProgressBarWidth */}
-              <div className="flex w-2/3 max-w-xs rounded-full overflow-hidden h-1 bg-gray-400">
-                {" "}
-                {/* Added bg-gray-400 to the container for the track */}
-                <div
-                  className="h-full bg-black transition-all duration-500 ease-in-out"
-                  style={{ width: getProgressBarWidth() }}
-                ></div>
-                {/* The gray part is now implied by the background of the container, no separate div needed */}
-              </div>
-            </div>
-
             <button
-              onClick={handleNextPhase}
+              onClick={
+                  currentPhase === "summary"
+                      ? handleReset
+                      : handleNextPhase
+              }
               disabled={currentPhase === "summary"}
               className={`w-8 h-8 rounded-full border-2 flex items-center justify-center shadow-sm z-10 ${
                 currentPhase === "summary"
@@ -214,229 +261,281 @@ const ATMMain = () => {
                   : "border-gray-600 text-gray-600 hover:bg-gray-200 bg-white"
               }`}
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
+              <ArrowRight className="w-4 h-4" />
             </button>
           </div>
 
-          {/* Render content based on currentPhase */}
-          {currentPhase === "form-details" && (
-            <CategoryStepForm selectedCategory={selectedCategory} />
-          )}
+           {/* Phase 1: Category Selection */}
+           {currentPhase === "form-details" && (
+            <div className="p-4">
+              <CategoryStepForm selectedCategories={selectedCategories} />
+            </div>
+           )}
 
-          {currentPhase === "budget-planning" && (
-            <div className="mb-8">
-              <h2 className="font-acme text-2xl mb-4">
+           {/* Phase 2: Budget Planning - Expense Questions */}
+           {currentPhase === "budget-planning" && (
+            <div className="p-4">
+              <h2 className="font-acme text-2xl mb-4 ">
                 How much is your monthly expenses?
               </h2>
-              <p className="text-gray-900 mx-auto font-inter font-normal text-[11.28px] leading-[100%] tracking-[0em] text-center mb-8 w-4/6">
+              <p className="text-gray-900 mx-auto font-inter font-normal text-[11.28px] leading-[100%] tracking-[0em] text-center mb-4 w-4/6">
                 Based on your chosen categories, what's your estimated monthly
                 spending?
               </p>
-              <div className="flex justify-start items-start gap-4 whitespace-nowrap">
-                {categories.map((category, index) => (
-                  <div
-                    key={category}
-                    className="flex items-start justify-start"
-                  >
-                    <div className="flex">
-                      <div className="text-center">
-                        <span className="font-acme text-sm">{category}</span>
-                        <div className="border-l-2 border-dashed border-gray-300 h-20 mx-auto mt-2"></div>
-                      </div>
+              <div className="flex justify-center items-start gap-4 whitespace-nowrap">
+                {selectedCategories.length > 0 ? (
+                  selectedCategories.map((category) => (
+                    <div key={category} className="flex flex-col items-center">
+                      <span className="font-acme text-xs text-gray-700 border border-black px-3 py-2 rounded-full">{category}</span>
+                      <div className="border-l-2 border-dashed border-black h-24 mx-auto mt-2"></div>
                     </div>
+                  ))
+                ) : (
+                  <p className="text-gray-500">
+                    No categories selected. Please go back and select some.
+                  </p>
+                )}
+              </div>
+            </div>
+           )}
+
+           {/* Phase 3: Income Details - Content */}
+           {currentPhase === "income-details" && (
+            <div className="p-4">
+              <h2 className="font-acme text-2xl mb-4">
+                How much is your monthly earnings?
+              </h2>
+              <p className="text-gray-900 mx-auto font-inter font-normal text-[11.28px] leading-[100%] tracking-[0em] text-center mb-6 w-4/6">
+                Let's get a clear picture of your income. Include all sources that contribute to your monthly budget.
+              </p>
+              <div className="border-b border-gray-300 w-full my-6"></div>
+
+              <div className="text-left">
+                  <p className="text-sm text-gray-800 mb-1">Question 1.</p>
+                  <p className="font-bold text-lg text-gray-900 mb-1">1. Primary Job Income*</p>
+                  <p className="text-sm text-gray-700">
+                    What's your average monthly take-home pay from your main job?
+                  </p>
+              </div>
+            </div>
+           )}
+
+           {/* Phase 4: Goal Setting - Questions */}
+           {currentPhase === "goal-setting" && (
+            <div className="p-4">
+              <h2 className="font-acme text-2xl mb-4">Set Your Savings Goal</h2>
+              <p className="text-gray-900 mx-auto font-inter font-normal text-[11.28px] leading-[100%] tracking-[0em] text-center mb-8 w-4/6">
+                Define your financial aspirations to help us tailor your budget.
+              </p>
+              <div className="text-left space-y-4">
+                  <div className="bg-white p-3 rounded-lg shadow-sm">
+                      <label className="block text-sm font-medium mb-1">
+                          Target Savings Amount:
+                      </label>
+                      <p className="font-acme text-gray-700 text-xl">${targetSavings || "_____"}</p>
                   </div>
-                ))}
+                  <div className="bg-white p-3 rounded-lg shadow-sm">
+                      <label className="block text-sm font-medium mb-1">
+                          Time Frame:
+                      </label>
+                      <p className="font-acme text-gray-700 text-xl">{timeFrame || "_____"}</p>
+                  </div>
+                  <div className="bg-white p-3 rounded-lg shadow-sm">
+                      <label className="block text-sm font-medium mb-1">
+                          Reduction Strategy:
+                      </label>
+                      <p className="font-acme text-gray-700 text-xl">{reductionStrategy || "_____"}</p>
+                  </div>
               </div>
             </div>
-          )}
+           )}
 
-          {currentPhase === "goal-setting" && (
-            <div>
-              <h2 className="font-acme text-lg mb-4">Goal Setting</h2>
-              <div className="text-left space-y-3">
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Target Savings Amount
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="How much do you want to save?"
-                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Time Frame
-                  </label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded text-sm">
-                    <option>3 months</option>
-                    <option>6 months</option>
-                    <option>1 year</option>
-                    <option>2 years</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Reduction Strategy
-                  </label>
-                  <textarea
-                    placeholder="How will you reduce spending in this category?"
-                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm h-16 resize-none"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          {currentPhase === "summary" && (
-            <div>
+           {/* Phase 5: Summary */}
+           {currentPhase === "summary" && (
+            <div className="p-4">
               <h2 className="font-acme text-lg mb-4">Summary & Results</h2>
               <div className="text-left text-sm space-y-2 bg-gray-50 p-3 rounded">
                 <p>
-                  <strong>Category:</strong> {selectedCategory}
+                  <strong>Monthly Income:</strong> ${primaryJobIncome || "0"}
                 </p>
                 <p>
-                  <strong>Budget Allocation:</strong> 15% of monthly income
+                  <strong>Categories:</strong>{" "}
+                  {selectedCategories.length > 0
+                    ? selectedCategories.join(", ")
+                    : "None selected"}
+                </p>
+                {selectedCategories.map((cat) => (
+                  <p key={cat}>
+                    <strong>{cat} Expense:</strong> $
+                    {categoryExpenses[cat] || "0"}
+                  </p>
+                ))}
+                <p>
+                  <strong>Savings Goal:</strong> ${targetSavings || "0"}
                 </p>
                 <p>
-                  <strong>Priority Level:</strong> High Priority
+                  <strong>Timeline:</strong> {timeFrame || "N/A"}
                 </p>
                 <p>
-                  <strong>Savings Goal:</strong> $500
+                  <strong>Reduction Strategy:</strong> {reductionStrategy || "N/A"}
                 </p>
                 <p>
-                  <strong>Timeline:</strong> 6 months
-                </p>
-                <p>
-                  <strong>Monthly Target:</strong> $83.33
+                  <strong>Monthly Target:</strong> ${
+                    targetSavings && timeFrame ? (
+                        parseFloat(targetSavings) / parseInt(timeFrame.split(' ')[0])
+                    ).toFixed(2) : "0.00"
+                }
                 </p>
               </div>
               <div className="mt-4 p-3 bg-blue-50 rounded text-sm">
                 <p className="font-medium text-blue-800">Recommendation:</p>
                 <p className="text-blue-700">
-                  Based on your inputs, you can achieve your goal by reducing{" "}
-                  {selectedCategory
-                    ? selectedCategory.toLowerCase()
-                    : "your spending"}{" "}
-                  spending by $83 per month.
+                  Based on your inputs, with a monthly income of ${primaryJobIncome || "0"}, you can achieve your goal by targeting a monthly saving of $
+                  {
+                      targetSavings && timeFrame ? (
+                          parseFloat(targetSavings) / parseInt(timeFrame.split(' ')[0])
+                      ).toFixed(2) : "0.00"
+                  } by focusing on your strategy: "{reductionStrategy}".
                 </p>
               </div>
             </div>
-          )}
+           )}
 
-          {(currentPhase === "goal-setting" || currentPhase === "summary") && (
-            <div className="flex justify-between mt-4">
-              <button
-                onClick={handlePreviousPhase}
-                className="px-4 py-2 rounded bg-gray-500 text-white text-xs hover:bg-gray-600"
-              >
-                Back
-              </button>
-              <button
-                onClick={
-                  currentPhase === "goal-setting"
-                    ? handleNextPhase
-                    : handleReset
-                }
-                className="px-4 py-2 rounded bg-green-600 text-white text-xs hover:bg-green-700"
-              >
-                {currentPhase === "goal-setting"
-                  ? "Review Summary"
-                  : "Start New Category"}
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
+         </div>
+       </div>
 
-      {/* BOTTOM CAROUSEL */}
-      <div
-        className="absolute"
-        style={{ top: "78%", left: "15%", width: "70%" }}
-      >
-        {currentPhase === "budget-planning" ? (
-          <div className="flex justify-center items-center space-x-4">
-            {categories.map((item) => (
-              <div key={item} className="flex flex-col items-center">
-                <div className="px-6 py-2 whitespace-nowrap font-acme text-xs bg-white border border-gray-300 rounded-full mb-2">
-                  {item}
-                </div>
-                <div className="flex items-center bg-white border border-gray-300 rounded-full px-4 py-2">
-                  <span className="text-sm mr-1">$</span>
-                  <input
-                    type="number"
-                    placeholder="0"
-                    value={categoryExpenses[item]}
-                    onChange={(e) => handleExpenseChange(item, e.target.value)}
-                    className="w-16 text-sm border-none outline-none bg-transparent"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <Slider
-            {...{
-              ...sliderSettings,
-              variableWidth: true,
-            }}
-          >
-            {categories.map((item) => (
-              <div key={item} className="px-2 shrink-0">
-                <button
-                  onClick={() => handleCategorySelect(item)}
-                  className={`
-                    px-10 py-4 whitespace-nowrap
-                    font-acme text-sm font-light
-                    rounded-full border border-black shadow-md
-                    transition-all duration-200 hover:opacity-90
-                    ${
-                      selectedCategory === item
-                        ? "bg-black text-white"
-                        : "bg-transparent text-black hover:bg-gray-100"
-                    }
-                  `}
-                >
-                  {item}
-                </button>
-              </div>
-            ))}
-          </Slider>
-        )}
-      </div>
-    </div>
-  );
-};
+       {/* BOTTOM CAROUSEL - Dynamic based on phase */}
+       <div
+         className="absolute"
+         style={{ top: "78%", left: "15%", width: "70%" }}
+       >
+         {currentPhase === "form-details" && (
+           <Slider
+             {...{
+               ...sliderSettings,
+               variableWidth: true,
+             }}
+           >
+             {categories.map((item) => (
+               <div key={item} className="px-2 shrink-0">
+                 <button
+                   onClick={() => handleCategorySelect(item)}
+                   className={`
+                     px-10 py-4 whitespace-nowrap
+                     font-acme text-sm font-light
+                     rounded-full border border-black shadow-md
+                     transition-all duration-200 hover:opacity-90
+                     ${
+                       selectedCategories.includes(item)
+                         ? "bg-black text-white"
+                         : "bg-transparent text-black hover:bg-gray-100"
+                     }
+                   `}
+                 >
+                   {item}
+                 </button>
+               </div>
+             ))}
+           </Slider>
+         )}
 
-const ATMButton = ({ label, small = false, wide = false, onClick }) => (
-  <button
-    onClick={onClick}
-    style={{
-      backgroundImage: `url('/assets/button.svg')`,
-      width: wide ? "200px" : "100px",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "100%",
-      height: "40px",
-    }}
-    className={`font-acme ${
-      small ? "text-[10px]" : "text-sm"
-    } bg-transparent text-white font-bold
-      rounded-[10px] shadow-md hover:opacity-90`}
-  >
-    {label}
-  </button>
-);
+         {/* Budget Planning - UPDATED */}
+         {currentPhase === "budget-planning" && (
+           <div className="bg-white rounded-2xl py-4 px-6 flex justify-around items-center gap-4 h-[70px]">
+             {selectedCategories.length > 0 ? (
+               selectedCategories.map((item) => (
+                 <div key={item} className="flex items-center">
+                   <span className="text-xl font-bold text-black mr-1">$</span>
+                   <input
+                     type="number"
+                     placeholder="---"
+                     value={categoryExpenses[item]}
+                     onChange={(e) => handleExpenseChange(item, e.target.value)}
+                     className="w-20 text-xl font-semibold text-black border-none outline-none bg-transparent text-center"
+                     style={{ MozAppearance: 'textfield', WebkitAppearance: 'none', appearance: 'none' }}
+                   />
+                 </div>
+               ))
+             ) : (
+               <p className="text-gray-500 text-center w-full">Please select categories in the first step.</p>
+             )}
+           </div>
+         )}
 
-export default ATMMain;
+         {/* Income Details - Single input via GenericInputBar */}
+         {currentPhase === "income-details" && (
+           <GenericInputBar
+             placeholder="1. Write your Answer here..."
+             value={primaryJobIncome}
+             onChange={(e) => setPrimaryJobIncome(e.target.value)}
+             onInternalNextClick={handleIncomeInternalNext}
+             type="text"
+             showDollarSign={true}
+           />
+         )}
+
+         {/* Goal Setting - Reverted to original multi-input */}
+         {currentPhase === "goal-setting" && (
+           <div className="bg-white rounded-2xl py-4 px-6 flex justify-around items-center gap-4 h-[70px]">
+             {/* Goal Setting Inputs */}
+             <div className="flex items-center">
+                 <span className="text-sm font-bold text-gray-800 mr-1">Target $:</span>
+                 <input
+                     type="number"
+                     placeholder="500"
+                     value={targetSavings}
+                     onChange={(e) => setTargetSavings(e.target.value)}
+                     className="w-20 text-xl font-semibold text-gray-800 border-none outline-none bg-transparent text-center"
+                     style={{ MozAppearance: 'textfield', WebkitAppearance: 'none', appearance: 'none' }}
+                 />
+             </div>
+             <div className="flex items-center">
+                 <span className="text-sm font-bold text-gray-800 mr-1">Time:</span>
+                 <select
+                     value={timeFrame}
+                     onChange={(e) => setTimeFrame(e.target.value)}
+                     className="w-24 text-xl font-semibold text-gray-800 border-none outline-none bg-transparent text-center"
+                 >
+                     <option value="3 months">3 mos</option>
+                     <option value="6 months">6 mos</option>
+                     <option value="1 year">1 year</option>
+                     <option value="2 years">2 years</option>
+                 </select>
+             </div>
+             <div className="flex items-center">
+                 <span className="text-sm font-bold text-gray-800 mr-1">Strategy:</span>
+                 <input
+                     type="text"
+                     placeholder="Reduce X by Y"
+                     value={reductionStrategy}
+                     onChange={(e) => setReductionStrategy(e.target.value)}
+                     className="w-24 text-xl font-semibold text-gray-800 border-none outline-none bg-transparent text-center"
+                 />
+             </div>
+           </div>
+         )}
+       </div>
+     </div>
+   );
+ };
+
+ const ATMButton = ({ label, small = false, wide = false, onClick }) => (
+   <button
+     onClick={onClick}
+     style={{
+       backgroundImage: `url('/assets/button.svg')`,
+       width: wide ? "200px" : "100px",
+       backgroundRepeat: "no-repeat",
+       backgroundSize: "100%",
+       height: "40px",
+     }}
+     className={`font-acme ${
+       small ? "text-[10px]" : "text-sm"
+     } bg-transparent text-white font-bold
+       rounded-[10px] shadow-md hover:opacity-90`}
+   >
+     {label}
+   </button>
+ );
+
+ export default ATMMain;
