@@ -4,7 +4,7 @@ const User = require('./User');
 
 const Transaction = sequelize.define('Transaction', {
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     primaryKey: true,
     autoIncrement: true,
   },
@@ -39,6 +39,6 @@ const Transaction = sequelize.define('Transaction', {
   timestamps: false,
 });
 
-Transaction.belongsTo(User, { foreignKey: 'user_id' });
+Transaction.belongsTo(User, { foreignKey: 'id' });
 
 module.exports = Transaction;

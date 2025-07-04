@@ -5,19 +5,19 @@ class User extends Model {}
 
 User.init({
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     primaryKey: true,
     autoIncrement: true,
   },
   googleId: {
     type: DataTypes.STRING,
     unique: true,
-    allowNull: true,  // It is optional, as users may not sign up with Google
+    allowNull: true,
   },
   appleId: {
     type: DataTypes.STRING,
     unique: true,
-    allowNull: true,  // It is optional, as users may not sign up with Apple
+    allowNull: true,
   },
   username: {
     type: DataTypes.STRING,

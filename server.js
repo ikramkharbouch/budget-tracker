@@ -8,6 +8,7 @@ const userRoutes = require('./server/routes/userRoutes');
 const financeRoutes = require('./server/routes/financeRoutes');
 const transactionRoutes = require('./server/routes/transactionRoutes');
 const authRoutes = require('./server/routes/authRoutes');
+const expenseRoutes = require('./server/routes/expenseRoutes'); // Add this line
 
 const setupSwagger = require("./server/swagger");
 
@@ -30,10 +31,26 @@ require('./passportConfig');
 
 setupSwagger(app);
 
+// Add Swagger documentation for authentication
+app.use((req, res, next) => {
+  req.swaggerDoc = {
+    ...req.swaggerDoc,
+    securityDefinitions: {
+      bearerAuth: {
+        type: 'apiKey',
+        name: 'x-auth-token',
+        in: 'header'
+      }
+    }
+  };
+  next();
+});
+
 app.use('/api/users', userRoutes);
 app.use('/api/finance', financeRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/expenses', expenseRoutes); // Add this line
 
 const PORT = process.env.PORT || 5000;
 

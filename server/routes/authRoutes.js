@@ -2,7 +2,19 @@ const express = require("express");
 const passport = require("passport");
 const router = express.Router();
 const User = require("../models/User");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { z } = require("zod");
+const {loginSchema, registerSchema} = require('../validation/authValidator');
+require("dotenv").config();
+
+const generateToken = (user) => {
+  return jwt.sign(
+    { userId: user.id, email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: "7d" }
+  );
+};
 
 /**
  * @swagger
@@ -123,11 +135,27 @@ const bcrypt = require('bcrypt');
  *         description: Redirects after login
  */
 
+/**
+ * @swagger
+ * /api/auth/me:
+ *   get:
+ *     summary: Get current user info
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User data retrieved
+ *       401:
+ *         description: Not authenticated
+ */
 
+// Register
 router.post("/register", async (req, res) => {
-  const { username, email, password } = req.body;
-
   try {
+    const validatedData = registerSchema.parse(req.body);
+    const { username, email, password } = validatedData;
+
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       return res.status(400).json({ message: "Email is already registered." });
@@ -141,6 +169,9 @@ router.post("/register", async (req, res) => {
       password: hashedPassword,
     });
 
+    // Generate JWT token
+    const token = generateToken(user);
+
     return res.status(201).json({
       message: "User registered successfully",
       user: {
@@ -148,30 +179,89 @@ router.post("/register", async (req, res) => {
         username: user.username,
         email: user.email,
       },
+      token,
     });
   } catch (err) {
+    if (err instanceof z.ZodError) {
+      return res
+        .status(400)
+        .json({ message: "Validation failed", errors: err.errors });
+    }
     console.error("Register error:", err);
     return res.status(500).json({ message: "Internal server error" });
   }
 });
 
 router.post("/login", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    if (err) return next(err);
-    if (!user) return res.status(401).json({ message: info.message });
+  try {
+    const validatedData = loginSchema.parse(req.body);
+    const { email, password } = validatedData;
 
-    req.logIn(user, (err) => {
+    passport.authenticate("local", (err, user, info) => {
       if (err) return next(err);
-      return res.status(200).json({ message: "Logged in successfully", user });
-    });
-  })(req, res, next);
+      if (!user) return res.status(401).json({ message: info.message });
+
+      req.logIn(user, (err) => {
+        if (err) return next(err);
+
+        const token = generateToken(user);
+
+        return res.status(200).json({
+          message: "Logged in successfully",
+          user: {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+          },
+          token,
+        });
+      });
+    })(req, res, next);
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      return res
+        .status(400)
+        .json({ message: "Validation failed", errors: err.errors });
+    }
+    console.error("Login error:", err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 });
 
-// Logout
 router.get("/logout", (req, res) => {
   req.logout(() => {
     res.status(200).json({ message: "Logged out successfully" });
   });
+});
+
+router.get("/me", async (req, res) => {
+  try {
+    const token = req.header("x-auth-token");
+
+    if (!token) {
+      return res
+        .status(401)
+        .json({ message: "No token, authorization denied" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findByPk(decoded.userId, {
+      attributes: ["id", "username", "email", "createdAt"],
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json(user);
+  } catch (err) {
+    console.error(err);
+    if (err.name === "JsonWebTokenError") {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 router.get(
@@ -184,9 +274,14 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
+    session: false,
     failureRedirect: "/login",
-    successRedirect: "/",
-  })
+  }),
+  (req, res) => {
+    const token = generateToken(req.user);
+
+    res.redirect(`/?token=${token}`);
+  }
 );
 
 router.get(
@@ -198,10 +293,12 @@ router.get(
 
 router.get(
   "/apple/callback",
-  passport.authenticate("apple", {
-    failureRedirect: "/login",
-    successRedirect: "/",
-  })
+  passport.authenticate("apple", { session: false, failureRedirect: "/login" }),
+  (req, res) => {
+    const token = generateToken(req.user);
+
+    res.redirect(`/?token=${token}`);
+  }
 );
 
 module.exports = router;
