@@ -22,9 +22,7 @@ const CategoryStepForm = () => {
 
   return (
     <div className="w-full mx-auto bg-transparent rounded-lg " >
-      {/* Header with back arrow and progress bar */}
      
-      {/* Top Section - Pick Category */}
       <div className="bg-transparent px-6 py-4 text-center">
         <h2 className="text-xl font-semibold text-gray-900 mb-1">
           Pick your category
@@ -35,10 +33,8 @@ const CategoryStepForm = () => {
         </p>
       </div>
 
-      {/* Divider Line */}
       <div className="border-t border-gray-400 mx-0"></div>
 
-      {/* Bottom Section - Add Custom Category */}
       <div className="bg-transparent px-6 py-4 text-center flex-1">
         <h2 className="text-lg font-semibold text-gray-900 mb-1">
           Can't find a category<br />

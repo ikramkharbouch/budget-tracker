@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Box, Typography, TextField } from '@mui/material';
 
-// Component for Financial Summary & Simulation
 const FinancialSummary = () => {
   const [earnings, setEarnings] = useState(0);
   const [expenses, setExpenses] = useState(0);

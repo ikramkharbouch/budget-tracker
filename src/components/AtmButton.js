@@ -1,14 +1,22 @@
-import React from "react";
+import React from 'react';
 
-const AtmButton = ({ label, small = false }) => (
+const ATMButton = ({ label, small = false, wide = false, onClick }) => (
   <button
-    style={{ backgroundImage: `url('/assets/button.svg')` }}
-    className={`font-acme bg-transparent text-white font-bold
-      rounded-[10px] shadow-[0_4px_6px_rgba(0,0,0,0.3)] hover:opacity-90
-      ${small ? 'text-xs w-[100px]' : 'text-sm w-[100px]'} h-10`}
+    onClick={onClick}
+    style={{
+      backgroundImage: `url('/assets/button.svg')`,
+      width: wide ? "200px" : "100px",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "100%",
+      height: "40px",
+    }}
+    className={`font-acme ${
+      small ? "text-[10px]" : "text-sm"
+    } bg-transparent text-white font-bold
+      rounded-[10px] shadow-md hover:opacity-90`}
   >
     {label}
   </button>
 );
 
-export default AtmButton;
+export default ATMButton;
