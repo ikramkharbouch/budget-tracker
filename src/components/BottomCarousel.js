@@ -94,44 +94,7 @@ const BottomCarousel = ({
     />
   );
 
-  const renderGoalSettingCarousel = () => (
-    <div className="bg-white rounded-2xl py-4 px-6 flex justify-around items-center gap-4 h-[70px]">
-      <div className="flex items-center">
-        <span className="text-sm font-bold text-gray-800 mr-1">Target $:</span>
-        <input
-          type="number"
-          placeholder="500"
-          value={targetSavings}
-          onChange={onTargetSavingsChange}
-          className="w-20 text-xl font-semibold text-gray-800 border-none outline-none bg-transparent text-center"
-          style={{ MozAppearance: 'textfield', WebkitAppearance: 'none', appearance: 'none' }}
-        />
-      </div>
-      <div className="flex items-center">
-        <span className="text-sm font-bold text-gray-800 mr-1">Time:</span>
-        <select
-          value={timeFrame}
-          onChange={onTimeFrameChange}
-          className="w-24 text-xl font-semibold text-gray-800 border-none outline-none bg-transparent text-center"
-        >
-          <option value="3 months">3 mos</option>
-          <option value="6 months">6 mos</option>
-          <option value="1 year">1 year</option>
-          <option value="2 years">2 years</option>
-        </select>
-      </div>
-      <div className="flex items-center">
-        <span className="text-sm font-bold text-gray-800 mr-1">Strategy:</span>
-        <input
-          type="text"
-          placeholder="Reduce X by Y"
-          value={reductionStrategy}
-          onChange={onReductionStrategyChange}
-          className="w-24 text-xl font-semibold text-gray-800 border-none outline-none bg-transparent text-center"
-        />
-      </div>
-    </div>
-  );
+  const renderGoalSettingCarousel = () => null;
 
   switch (currentPhase) {
     case "form-details":
