@@ -1,0 +1,47 @@
+{
+  "appTitle": "Keine Finanzberatung",
+  "navigation": {
+    "goal": "ZIEL",
+    "expenses": "AUSGABEN",
+    "print": "DRUCKEN",
+    "simulateOneYear": "EIN JAHR SIMULIEREN",
+    "createGoal": "ZIEL ERSTELLEN",
+    "reset": "ZURÜCKSETZEN"
+  },
+  "tableHeaders": {
+    "months": "Monate",
+    "utilities": "Nebenkosten",
+    "foods": "Lebensmittel",
+    "loans": "Kredite"
+  },
+  "income": {
+    "title": "Wie hoch ist Ihr monatliches Einkommen?",
+    "description": "Verschaffen wir uns ein klares Bild von Ihrem Einkommen. Schließen Sie alle Quellen ein, die zu Ihrem monatlichen Budget beitragen.",
+    "primaryJobIncome": "Hauptarbeitseinkommen",
+    "primaryJobIncomeQuestion": "Wie hoch ist Ihr durchschnittliches monatliches Nettoeinkommen aus Ihrem Hauptjob?"
+  },
+  "expenses": {
+    "title": "Wie hoch sind Ihre monatlichen Ausgaben?",
+    "description": "Basierend auf Ihren gewählten Kategorien, wie hoch sind Ihre geschätzten monatlichen Ausgaben?"
+  },
+  "categories": {
+    "pickCategory": "Wählen Sie Ihre Kategorie",
+    "description": "wählen Sie so viele wie zutreffend oder fügen Sie Ihre eigene hinzu",
+    "cantFind": "Können Sie keine passende Kategorie finden?",
+    "addToList": "fügen Sie eine zur Liste hinzu!",
+    "restaurants": "Restaurants",
+    "creditCardDebt": "Kreditkartenschulden",
+    "utilities": "Nebenkosten",
+    "insurance": "Versicherung",
+    "groceries": "Lebensmittel"
+  },
+  "common": {
+    "question": "Frage",
+    "monthly": "monatlich",
+    "budget": "Budget",
+    "income": "Einkommen",
+    "spending": "Ausgaben",
+    "category": "Kategorie",
+    "categories": "Kategorien"
+  }
+}

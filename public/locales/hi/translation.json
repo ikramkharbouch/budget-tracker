@@ -1,0 +1,47 @@
+{
+  "appTitle": "वित्तीय सलाह नहीं",
+  "navigation": {
+    "goal": "लक्ष्य",
+    "expenses": "खर्च",
+    "print": "प्रिंट",
+    "simulateOneYear": "एक साल का अनुकरण",
+    "createGoal": "लक्ष्य बनाएं",
+    "reset": "रीसेट"
+  },
+  "tableHeaders": {
+    "months": "महीने",
+    "utilities": "उपयोगिताएं",
+    "foods": "खाद्य पदार्थ",
+    "loans": "ऋण"
+  },
+  "income": {
+    "title": "आपकी मासिक आय कितनी है?",
+    "description": "आइए आपकी आय की स्पष्ट तस्वीर प्राप्त करें। सभी स्रोतों को शामिल करें जो आपके मासिक बजट में योगदान देते हैं।",
+    "primaryJobIncome": "मुख्य नौकरी की आय",
+    "primaryJobIncomeQuestion": "आपकी मुख्य नौकरी से औसत मासिक वेतन कितना है?"
+  },
+  "expenses": {
+    "title": "आपका मासिक खर्च कितना है?",
+    "description": "आपकी चुनी गई श्रेणियों के आधार पर, आपका अनुमानित मासिक खर्च कितना है?"
+  },
+  "categories": {
+    "pickCategory": "अपनी श्रेणी चुनें",
+    "description": "जितनी लागू हों उतनी चुनें या अपनी जोड़ें",
+    "cantFind": "कोई श्रेणी नहीं मिल रही जो आपके लिए उपयुक्त हो?",
+    "addToList": "सूची में एक जोड़ें!",
+    "restaurants": "रेस्तराँ",
+    "creditCardDebt": "क्रेडिट कार्ड ऋण",
+    "utilities": "उपयोगिताएं",
+    "insurance": "बीमा",
+    "groceries": "किराना"
+  },
+  "common": {
+    "question": "सवाल",
+    "monthly": "मासिक",
+    "budget": "बजट",
+    "income": "आमदनी",
+    "spending": "खर्च",
+    "category": "श्रेणी",
+    "categories": "श्रेणियां"
+  }
+}

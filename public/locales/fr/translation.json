@@ -1,0 +1,47 @@
+{
+  "appTitle": "Pas un Conseil Financier",
+  "navigation": {
+    "goal": "OBJECTIF",
+    "expenses": "DÉPENSES",
+    "print": "IMPRIMER",
+    "simulateOneYear": "SIMULER UNE ANNÉE",
+    "createGoal": "CRÉER OBJECTIF",
+    "reset": "RÉINITIALISER"
+  },
+  "tableHeaders": {
+    "months": "Mois",
+    "utilities": "Services",
+    "foods": "Aliments",
+    "loans": "Prêts"
+  },
+  "income": {
+    "title": "Quels sont vos revenus mensuels ?",
+    "description": "Obtenons une image claire de vos revenus. Incluez toutes les sources qui contribuent à votre budget mensuel.",
+    "primaryJobIncome": "Revenus du Travail Principal",
+    "primaryJobIncomeQuestion": "Quel est votre salaire net mensuel moyen de votre emploi principal ?"
+  },
+  "expenses": {
+    "title": "Quelles sont vos dépenses mensuelles ?",
+    "description": "Basé sur les catégories que vous avez choisies, quelles sont vos dépenses mensuelles estimées ?"
+  },
+  "categories": {
+    "pickCategory": "Choisissez votre catégorie",
+    "description": "choisissez autant que nécessaire ou ajoutez la vôtre",
+    "cantFind": "Vous ne trouvez pas une catégorie qui vous convient ?",
+    "addToList": "ajoutez-en une à la liste !",
+    "restaurants": "Restaurants",
+    "creditCardDebt": "Dette de Carte de Crédit",
+    "utilities": "Services Publics",
+    "insurance": "Assurance",
+    "groceries": "Épicerie"
+  },
+  "common": {
+    "question": "Question",
+    "monthly": "mensuel",
+    "budget": "budget",
+    "income": "revenus",
+    "spending": "dépenses",
+    "category": "catégorie",
+    "categories": "catégories"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "appTitle": "Não É Conselho Financeiro",
+  "navigation": {
+    "goal": "META",
+    "expenses": "DESPESAS",
+    "print": "IMPRIMIR",
+    "simulateOneYear": "SIMULAR UM ANO",
+    "createGoal": "CRIAR META",
+    "reset": "REDEFINIR"
+  },
+  "tableHeaders": {
+    "months": "Meses",
+    "utilities": "Utilidades",
+    "foods": "Alimentos",
+    "loans": "Empréstimos"
+  },
+  "income": {
+    "title": "Qual é a sua renda mensal?",
+    "description": "Vamos ter uma imagem clara da sua renda. Inclua todas as fontes que contribuem para o seu orçamento mensal.",
+    "primaryJobIncome": "Renda do Trabalho Principal",
+    "primaryJobIncomeQuestion": "Qual é o seu salário líquido mensal médio do seu trabalho principal?"
+  },
+  "expenses": {
+    "title": "Quais são as suas despesas mensais?",
+    "description": "Com base nas categorias que você escolheu, quais são os seus gastos mensais estimados?"
+  },
+  "categories": {
+    "pickCategory": "Escolha sua categoria",
+    "description": "escolha quantas se aplicarem ou adicione a sua própria",
+    "cantFind": "Não consegue encontrar uma categoria que se adeque a você?",
+    "addToList": "adicione uma à lista!",
+    "restaurants": "Restaurantes",
+    "creditCardDebt": "Dívida do Cartão de Crédito",
+    "utilities": "Utilidades",
+    "insurance": "Seguro",
+    "groceries": "Supermercado"
+  },
+  "common": {
+    "question": "Pergunta",
+    "monthly": "mensal",
+    "budget": "orçamento",
+    "income": "renda",
+    "spending": "gastos",
+    "category": "categoria",
+    "categories": "categorias"
+  }
+}

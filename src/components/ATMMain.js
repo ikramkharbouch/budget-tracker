@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -12,6 +12,7 @@ import IncomeDetailsPhase from "./IncomeDetailsPhase";
 import GoalSettingPhase from "./GoalSettingPhase";
 import SummaryPhase from "./SummaryPhase";
 import BottomCarousel from "./BottomCarousel";
+import { useTranslation } from "react-i18next";
 
 import {
   setCurrentPhase,
@@ -32,11 +33,12 @@ import {
   selectTimeFrame,
   selectReductionStrategy,
   selectOnboardingData,
-} from '../store/slices/onboardingSlice';
+} from "../store/slices/onboardingSlice";
 
 const ATMMain = () => {
   const dispatch = useDispatch();
-  
+  const { t } = useTranslation();
+
   const currentPhase = useSelector(selectCurrentPhase);
   const selectedCategories = useSelector(selectSelectedCategories);
   const categoryExpenses = useSelector(selectCategoryExpenses);
@@ -55,17 +57,17 @@ const ATMMain = () => {
   ];
 
   useEffect(() => {
-    localStorage.setItem('onboardingProgress', JSON.stringify(onboardingData));
+    localStorage.setItem("onboardingProgress", JSON.stringify(onboardingData));
     dispatch(saveProgress());
   }, [onboardingData, dispatch]);
 
   useEffect(() => {
-    const savedProgress = localStorage.getItem('onboardingProgress');
+    const savedProgress = localStorage.getItem("onboardingProgress");
     if (savedProgress) {
       try {
         const parsed = JSON.parse(savedProgress);
       } catch (error) {
-        console.error('Error loading saved progress:', error);
+        console.error("Error loading saved progress:", error);
       }
     }
   }, []);
@@ -81,7 +83,7 @@ const ATMMain = () => {
 
   const handleReset = () => {
     dispatch(resetOnboarding());
-    localStorage.removeItem('onboardingProgress');
+    localStorage.removeItem("onboardingProgress");
   };
 
   const handleIncomeInternalNext = () => {
@@ -98,12 +100,16 @@ const ATMMain = () => {
     }
 
     if (currentPhase === "budget-planning") {
-      const allExpensesEntered = selectedCategories.every(category => {
+      const allExpensesEntered = selectedCategories.every((category) => {
         const expense = parseFloat(categoryExpenses[category]);
-        return !isNaN(expense) && expense >= 0 && categoryExpenses[category] !== '';
+        return (
+          !isNaN(expense) && expense >= 0 && categoryExpenses[category] !== ""
+        );
       });
       if (!allExpensesEntered) {
-        alert("Please enter a valid expense for all selected categories before proceeding.");
+        alert(
+          "Please enter a valid expense for all selected categories before proceeding."
+        );
         return;
       }
     }
@@ -116,8 +122,15 @@ const ATMMain = () => {
     }
 
     if (currentPhase === "goal-setting") {
-      if (!targetSavings || parseFloat(targetSavings) <= 0 || !timeFrame || reductionStrategy.trim() === '') {
-        alert("Please fill in all goal setting details (Target Savings > 0, Time Frame, and Reduction Strategy).");
+      if (
+        !targetSavings ||
+        parseFloat(targetSavings) <= 0 ||
+        !timeFrame ||
+        reductionStrategy.trim() === ""
+      ) {
+        alert(
+          "Please fill in all goal setting details (Target Savings > 0, Time Frame, and Reduction Strategy)."
+        );
         return;
       }
     }
@@ -187,26 +200,26 @@ const ATMMain = () => {
       />
 
       <div className="absolute" style={{ top: "23.5%", left: "7.2%" }}>
-        <ATMButton label="GOAL" />
+        <ATMButton label={t("navigation.goal")} />
       </div>
       <div className="absolute" style={{ top: "28.5%", left: "7.2%" }}>
-        <ATMButton label="EXPENSES" />
+        <ATMButton label={t("navigation.expenses")} />
       </div>
       <div className="absolute" style={{ top: "33.5%", left: "7.2%" }}>
-        <ATMButton label="PRINT" />
+        <ATMButton label={t("navigation.print")} />
       </div>
       <div className="absolute" style={{ top: "38.5%", left: "7.2%" }}>
         <ATMButton />
       </div>
 
       <div className="absolute" style={{ top: "23.5%", right: "9.2%" }}>
-        <ATMButton label="SIMULATE ONE YEAR" small />
+        <ATMButton label={t("navigation.simulateOneYear")} small />
       </div>
       <div className="absolute" style={{ top: "28.5%", right: "9.2%" }}>
-        <ATMButton label="CREATE GOAL" small />
+        <ATMButton label={t("navigation.createGoal")} small />
       </div>
       <div className="absolute" style={{ top: "33.5%", right: "9.2%" }}>
-        <ATMButton label="RESET" onClick={handleReset} />
+        <ATMButton label={t("navigation.reset")} onClick={handleReset} />
       </div>
       <div className="absolute" style={{ top: "38.5%", right: "9.2%" }}>
         <ATMButton />
@@ -232,7 +245,10 @@ const ATMMain = () => {
         }}
       />
 
-      <div className="absolute" style={{ top: "25%", left: "25%", width: "50%" }}>
+      <div
+        className="absolute"
+        style={{ top: "25%", left: "25%", width: "50%" }}
+      >
         <div className="text-center">
           <ProgressBar currentPhase={currentPhase} />
 
@@ -247,7 +263,10 @@ const ATMMain = () => {
         </div>
       </div>
 
-      <div className="absolute" style={{ top: "78%", left: "15%", width: "70%" }}>
+      <div
+        className="absolute"
+        style={{ top: "78%", left: "15%", width: "70%" }}
+      >
         <BottomCarousel
           currentPhase={currentPhase}
           categories={categories}
@@ -259,10 +278,16 @@ const ATMMain = () => {
           reductionStrategy={reductionStrategy}
           onCategorySelect={handleCategorySelect}
           onExpenseChange={handleExpenseChange}
-          onPrimaryJobIncomeChange={(e) => dispatch(setPrimaryJobIncome(e.target.value))}
-          onTargetSavingsChange={(e) => dispatch(setTargetSavings(e.target.value))}
+          onPrimaryJobIncomeChange={(e) =>
+            dispatch(setPrimaryJobIncome(e.target.value))
+          }
+          onTargetSavingsChange={(e) =>
+            dispatch(setTargetSavings(e.target.value))
+          }
           onTimeFrameChange={(e) => dispatch(setTimeFrame(e.target.value))}
-          onReductionStrategyChange={(e) => dispatch(setReductionStrategy(e.target.value))}
+          onReductionStrategyChange={(e) =>
+            dispatch(setReductionStrategy(e.target.value))
+          }
           onIncomeInternalNext={handleIncomeInternalNext}
         />
       </div>

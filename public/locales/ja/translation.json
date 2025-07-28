@@ -1,0 +1,47 @@
+{
+  "appTitle": "金融アドバイスではありません",
+  "navigation": {
+    "goal": "目標",
+    "expenses": "支出",
+    "print": "印刷",
+    "simulateOneYear": "1年をシミュレート",
+    "createGoal": "目標を作成",
+    "reset": "リセット"
+  },
+  "tableHeaders": {
+    "months": "月",
+    "utilities": "光熱費",
+    "foods": "食費",
+    "loans": "ローン"
+  },
+  "income": {
+    "title": "月収はいくらですか？",
+    "description": "収入の明確な全体像を把握しましょう。月予算に貢献するすべての収入源を含めてください。",
+    "primaryJobIncome": "主要な仕事の収入",
+    "primaryJobIncomeQuestion": "メインの仕事からの平均月手取り給与はいくらですか？"
+  },
+  "expenses": {
+    "title": "月の支出はいくらですか？",
+    "description": "選択したカテゴリに基づいて、推定月支出はいくらですか？"
+  },
+  "categories": {
+    "pickCategory": "カテゴリを選択してください",
+    "description": "該当するものをいくつでも選択するか、独自のものを追加してください",
+    "cantFind": "あなたに合うカテゴリが見つかりませんか？",
+    "addToList": "リストに追加してください！",
+    "restaurants": "レストラン",
+    "creditCardDebt": "クレジットカード債務",
+    "utilities": "光熱費",
+    "insurance": "保険",
+    "groceries": "食料品"
+  },
+  "common": {
+    "question": "質問",
+    "monthly": "月次",
+    "budget": "予算",
+    "income": "収入",
+    "spending": "支出",
+    "category": "カテゴリ",
+    "categories": "カテゴリ"
+  }
+}

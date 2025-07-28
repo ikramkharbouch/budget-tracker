@@ -1,0 +1,47 @@
+{
+  "appTitle": "Dudu Saran Finansial",
+  "navigation": {
+    "goal": "TUJUAN",
+    "expenses": "PENGELUARAN",
+    "print": "CETAK",
+    "simulateOneYear": "SIMULASI SETAHUN",
+    "createGoal": "GAWE TUJUAN",
+    "reset": "RESET"
+  },
+  "tableHeaders": {
+    "months": "Sasi",
+    "utilities": "Utilitas",
+    "foods": "Pangan",
+    "loans": "Utang"
+  },
+  "income": {
+    "title": "Pira penghasilan saben sasi sampeyan?",
+    "description": "Ayo entuk gambaran sing cetha babagan penghasilan sampeyan. Lebokno kabeh sumber sing nyumbang kanggo anggaran saben sasi.",
+    "primaryJobIncome": "Penghasilan Kerja Utama",
+    "primaryJobIncomeQuestion": "Pira rata-rata gaji saben sasi sing sampeyan tampa saka kerja utama?"
+  },
+  "expenses": {
+    "title": "Pira pengeluaran saben sasi sampeyan?",
+    "description": "Adhedhasar kategori sing sampeyan pilih, pira kira-kira pengeluaran saben sasi?"
+  },
+  "categories": {
+    "pickCategory": "Pilih kategori sampeyan",
+    "description": "pilih akeh-akehe sing cocok utawa tambahno dhewe",
+    "cantFind": "Ora nemokake kategori sing cocok?",
+    "addToList": "tambahno siji ing daftar!",
+    "restaurants": "Restoran",
+    "creditCardDebt": "Utang Kartu Kredit",
+    "utilities": "Utilitas",
+    "insurance": "Asuransi",
+    "groceries": "Sembako"
+  },
+  "common": {
+    "question": "Pitakonan",
+    "monthly": "saben sasi",
+    "budget": "anggaran",
+    "income": "penghasilan",
+    "spending": "mbuwang",
+    "category": "kategori",
+    "categories": "kategori-kategori"
+  }
+}

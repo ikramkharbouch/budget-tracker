@@ -1,0 +1,47 @@
+{
+  "appTitle": "আর্থিক পরামর্শ নয়",
+  "navigation": {
+    "goal": "লক্ষ্য",
+    "expenses": "খরচ",
+    "print": "প্রিন্ট",
+    "simulateOneYear": "এক বছর অনুকরণ",
+    "createGoal": "লক্ষ্য তৈরি",
+    "reset": "রিসেট"
+  },
+  "tableHeaders": {
+    "months": "মাস",
+    "utilities": "ইউটিলিটি",
+    "foods": "খাবার",
+    "loans": "ঋণ"
+  },
+  "income": {
+    "title": "আপনার মাসিক আয় কত?",
+    "description": "আসুন আপনার আয়ের একটি স্পষ্ট চিত্র পাই। আপনার মাসিক বাজেটে অবদান রাখে এমন সব উৎস অন্তর্ভুক্ত করুন।",
+    "primaryJobIncome": "প্রধান চাকরির আয়",
+    "primaryJobIncomeQuestion": "আপনার মূল চাকরি থেকে গড় মাসিক বেতন কত?"
+  },
+  "expenses": {
+    "title": "আপনার মাসিক খরচ কত?",
+    "description": "আপনার নির্বাচিত বিভাগের উপর ভিত্তি করে, আপনার আনুমানিক মাসিক খরচ কত?"
+  },
+  "categories": {
+    "pickCategory": "আপনার বিভাগ বেছে নিন",
+    "description": "যতগুলি প্রযোজ্য ততগুলি বেছে নিন বা আপনার নিজস্ব যোগ করুন",
+    "cantFind": "আপনার জন্য উপযুক্ত কোন বিভাগ খুঁজে পাচ্ছেন না?",
+    "addToList": "তালিকায় একটি যোগ করুন!",
+    "restaurants": "রেস্তোরাঁ",
+    "creditCardDebt": "ক্রেডিট কার্ড ঋণ",
+    "utilities": "ইউটিলিটি",
+    "insurance": "বীমা",
+    "groceries": "মুদিখানা"
+  },
+  "common": {
+    "question": "প্রশ্ন",
+    "monthly": "মাসিক",
+    "budget": "বাজেট",
+    "income": "আয়",
+    "spending": "খরচ",
+    "category": "বিভাগ",
+    "categories": "বিভাগসমূহ"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "appTitle": "ليس نصيحة مالية",
+  "navigation": {
+    "goal": "الهدف",
+    "expenses": "المصروفات",
+    "print": "طباعة",
+    "simulateOneYear": "محاكاة سنة واحدة",
+    "createGoal": "إنشاء هدف",
+    "reset": "إعادة تعيين"
+  },
+  "tableHeaders": {
+    "months": "الأشهر",
+    "utilities": "المرافق",
+    "foods": "الأطعمة",
+    "loans": "القروض"
+  },
+  "income": {
+    "title": "كم دخلك الشهري؟",
+    "description": "دعنا نحصل على صورة واضحة لدخلك. اشمل جميع المصادر التي تساهم في ميزانيتك الشهرية.",
+    "primaryJobIncome": "دخل الوظيفة الأساسية",
+    "primaryJobIncomeQuestion": "ما متوسط راتبك الشهري الصافي من وظيفتك الرئيسية؟"
+  },
+  "expenses": {
+    "title": "كم مصروفاتك الشهرية؟",
+    "description": "بناءً على الفئات التي اخترتها، ما هي مصروفاتك الشهرية المقدرة؟"
+  },
+  "categories": {
+    "pickCategory": "اختر فئتك",
+    "description": "اختر كما ينطبق أو أضف فئتك الخاصة",
+    "cantFind": "لا تجد فئة تناسبك؟",
+    "addToList": "أضف واحدة إلى القائمة!",
+    "restaurants": "المطاعم",
+    "creditCardDebt": "دين بطاقة الائتمان",
+    "utilities": "المرافق",
+    "insurance": "التأمين",
+    "groceries": "البقالة"
+  },
+  "common": {
+    "question": "سؤال",
+    "monthly": "شهري",
+    "budget": "الميزانية",
+    "income": "الدخل",
+    "spending": "الإنفاق",
+    "category": "فئة",
+    "categories": "فئات"
+  }
+}

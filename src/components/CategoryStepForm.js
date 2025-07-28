@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useTranslation } from 'react-i18next';
 
 const CategoryStepForm = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [customCategory, setCustomCategory] = useState("");
 
+  const { t } = useTranslation();
 
   const handleCategoryToggle = (category) => {
     setSelectedCategories(prev => 
@@ -25,11 +27,10 @@ const CategoryStepForm = () => {
      
       <div className="bg-transparent px-6 py-4 text-center">
         <h2 className="text-xl font-semibold text-gray-900 mb-1">
-          Pick your category
+          {t('categories.pickCategory')}
         </h2>
         <p className="text-sm text-gray-600 mb-4">
-          choose as many as may apply or<br />
-          add your own
+          {t('categories.description')}
         </p>
       </div>
 
@@ -37,11 +38,10 @@ const CategoryStepForm = () => {
 
       <div className="bg-transparent px-6 py-4 text-center flex-1">
         <h2 className="text-lg font-semibold text-gray-900 mb-1">
-          Can't find a category<br />
-          that fits you?
+          {t('categories.cantFind')}
         </h2>
         <p className="text-sm text-gray-600 mb-4">
-          add one to the list!
+          {t('categories.addToList')}
         </p>
 
     

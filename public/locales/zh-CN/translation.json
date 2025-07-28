@@ -1,0 +1,47 @@
+{
+  "appTitle": "非财务建议",
+  "navigation": {
+    "goal": "目标",
+    "expenses": "支出",
+    "print": "打印",
+    "simulateOneYear": "模拟一年",
+    "createGoal": "创建目标",
+    "reset": "重置"
+  },
+  "tableHeaders": {
+    "months": "月份",
+    "utilities": "公用事业",
+    "foods": "食物",
+    "loans": "贷款"
+  },
+  "income": {
+    "title": "您的月收入是多少？",
+    "description": "让我们清楚地了解您的收入。包括所有对您月预算有贡献的来源。",
+    "primaryJobIncome": "主要工作收入",
+    "primaryJobIncomeQuestion": "您主要工作的平均月实得工资是多少？"
+  },
+  "expenses": {
+    "title": "您的月支出是多少？",
+    "description": "根据您选择的类别，您的估计月支出是多少？"
+  },
+  "categories": {
+    "pickCategory": "选择您的类别",
+    "description": "选择适用的任意数量或添加您自己的",
+    "cantFind": "找不到适合您的类别？",
+    "addToList": "添加一个到列表中！",
+    "restaurants": "餐厅",
+    "creditCardDebt": "信用卡债务",
+    "utilities": "公用事业",
+    "insurance": "保险",
+    "groceries": "杂货"
+  },
+  "common": {
+    "question": "问题",
+    "monthly": "月度",
+    "budget": "预算",
+    "income": "收入", 
+    "spending": "支出",
+    "category": "类别",
+    "categories": "类别"
+  }
+}

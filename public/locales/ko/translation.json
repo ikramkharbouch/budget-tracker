@@ -1,0 +1,47 @@
+{
+  "appTitle": "재정 조언이 아닙니다",
+  "navigation": {
+    "goal": "목표",
+    "expenses": "지출",
+    "print": "인쇄",
+    "simulateOneYear": "1년 시뮬레이션",
+    "createGoal": "목표 생성",
+    "reset": "재설정"
+  },
+  "tableHeaders": {
+    "months": "월",
+    "utilities": "공과금",
+    "foods": "식품",
+    "loans": "대출"
+  },
+  "income": {
+    "title": "월 수입이 얼마인가요?",
+    "description": "수입에 대한 명확한 그림을 얻어봅시다. 월 예산에 기여하는 모든 소스를 포함하세요.",
+    "primaryJobIncome": "주요 직업 수입",
+    "primaryJobIncomeQuestion": "주요 직업에서 평균 월 실수령액이 얼마인가요?"
+  },
+  "expenses": {
+    "title": "월 지출이 얼마인가요?",
+    "description": "선택한 카테고리를 바탕으로 예상 월 지출이 얼마인가요?"
+  },
+  "categories": {
+    "pickCategory": "카테고리를 선택하세요",
+    "description": "해당하는 만큼 선택하거나 직접 추가하세요",
+    "cantFind": "맞는 카테고리를 찾을 수 없나요?",
+    "addToList": "목록에 추가하세요!",
+    "restaurants": "음식점",
+    "creditCardDebt": "신용카드 부채",
+    "utilities": "공과금",
+    "insurance": "보험",
+    "groceries": "식료품"
+  },
+  "common": {
+    "question": "질문",
+    "monthly": "월간",
+    "budget": "예산",
+    "income": "수입",
+    "spending": "지출",
+    "category": "카테고리",
+    "categories": "카테고리"
+  }
+}

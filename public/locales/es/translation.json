@@ -1,0 +1,47 @@
+{
+  "appTitle": "No Es Consejo Financiero",
+  "navigation": {
+    "goal": "OBJETIVO",
+    "expenses": "GASTOS",
+    "print": "IMPRIMIR",
+    "simulateOneYear": "SIMULAR UN AÑO",
+    "createGoal": "CREAR OBJETIVO",
+    "reset": "REINICIAR"
+  },
+  "tableHeaders": {
+    "months": "Meses",
+    "utilities": "Servicios",
+    "foods": "Alimentos",
+    "loans": "Préstamos"
+  },
+  "income": {
+    "title": "¿Cuáles son tus ingresos mensuales?",
+    "description": "Obtengamos una imagen clara de tus ingresos. Incluye todas las fuentes que contribuyen a tu presupuesto mensual.",
+    "primaryJobIncome": "Ingresos del Trabajo Principal",
+    "primaryJobIncomeQuestion": "¿Cuál es tu salario neto mensual promedio de tu trabajo principal?"
+  },
+  "expenses": {
+    "title": "¿Cuáles son tus gastos mensuales?",
+    "description": "Basado en las categorías que elegiste, ¿cuál es tu gasto mensual estimado?"
+  },
+  "categories": {
+    "pickCategory": "Elige tu categoría",
+    "description": "elige tantas como apliquen o agrega la tuya propia",
+    "cantFind": "¿No encuentras una categoría que te sirva?",
+    "addToList": "¡agrega una a la lista!",
+    "restaurants": "Restaurantes",
+    "creditCardDebt": "Deuda de Tarjeta de Crédito",
+    "utilities": "Servicios Públicos",
+    "insurance": "Seguros",
+    "groceries": "Supermercado"
+  },
+  "common": {
+    "question": "Pregunta",
+    "monthly": "mensual",
+    "budget": "presupuesto",
+    "income": "ingresos",
+    "spending": "gastos",
+    "category": "categoría",
+    "categories": "categorías"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "appTitle": "Not Financial Advice",
+  "navigation": {
+    "goal": "GOAL",
+    "expenses": "EXPENSES",
+    "print": "PRINT",
+    "simulateOneYear": "SIMULATE ONE YEAR",
+    "createGoal": "CREATE GOAL",
+    "reset": "RESET"
+  },
+  "tableHeaders": {
+    "months": "Months",
+    "utilities": "Utilities",
+    "foods": "Foods",
+    "loans": "Loans"
+  },
+  "income": {
+    "title": "How much is your monthly earnings?",
+    "description": "Let's get a clear picture of your income. Include all sources that contribute to your monthly budget.",
+    "primaryJobIncome": "Primary Job Income",
+    "primaryJobIncomeQuestion": "What's your average monthly take-home pay from your main job?"
+  },
+  "expenses": {
+    "title": "How much is your monthly expenses?",
+    "description": "Based on your chosen categories, what's your estimated monthly spending?"
+  },
+  "categories": {
+    "pickCategory": "Pick your category",
+    "description": "choose as many as may apply or add your own",
+    "cantFind": "Can't find a category that fits you?",
+    "addToList": "add one to the list!",
+    "restaurants": "Restaurants",
+    "creditCardDebt": "Credit Card Debt",
+    "utilities": "Utilities",
+    "insurance": "Insurance",
+    "groceries": "Groceries"
+  },
+  "common": {
+    "question": "Question",
+    "monthly": "monthly",
+    "budget": "budget",
+    "income": "income",
+    "spending": "spending",
+    "category": "category",
+    "categories": "categories"
+  }
+}

@@ -1,14 +1,15 @@
-import React from 'react';
+import { useTranslation } from "react-i18next";
 
 const BudgetPlanningPhase = ({ selectedCategories }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="p-4">
       <h2 className="font-acme text-2xl mb-4">
-        How much is your monthly expenses?
+        {t("income.title")}
       </h2>
       <p className="text-gray-900 mx-auto font-inter font-normal text-[11.28px] leading-[100%] tracking-[0em] text-center mb-4 w-4/6">
-        Based on your chosen categories, what's your estimated monthly
-        spending?
+        {t("income.description")}
       </p>
       <div className="flex justify-center items-start gap-4 whitespace-nowrap">
         {selectedCategories.length > 0 ? (

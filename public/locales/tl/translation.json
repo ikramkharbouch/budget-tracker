@@ -1,0 +1,47 @@
+{
+  "appTitle": "Hindi Payo sa Pananalapi",
+  "navigation": {
+    "goal": "LAYUNIN",
+    "expenses": "MGA GASTOS",
+    "print": "I-PRINT",
+    "simulateOneYear": "I-SIMULATE ANG ISANG TAON",
+    "createGoal": "GUMAWA NG LAYUNIN",
+    "reset": "I-RESET"
+  },
+  "tableHeaders": {
+    "months": "Mga Buwan",
+    "utilities": "Mga Utility",
+    "foods": "Mga Pagkain",
+    "loans": "Mga Utang"
+  },
+  "income": {
+    "title": "Magkano ang inyong buwanang kita?",
+    "description": "Kumuha tayo ng malinaw na larawan ng inyong kita. Isama ang lahat ng pinagkukunan na nag-aambag sa inyong buwanang badyet.",
+    "primaryJobIncome": "Kita sa Pangunahing Trabaho",
+    "primaryJobIncomeQuestion": "Ano ang inyong average na buwanang sahod mula sa inyong pangunahing trabaho?"
+  },
+  "expenses": {
+    "title": "Magkano ang inyong buwanang gastos?",
+    "description": "Batay sa mga kategoryang inyong pinili, ano ang inyong tinantyang buwanang gastos?"
+  },
+  "categories": {
+    "pickCategory": "Piliin ang inyong kategorya",
+    "description": "pumili ng marami kung naaangkop o magdagdag ng sarili ninyo",
+    "cantFind": "Hindi makahanap ng kategoryang bagay sa inyo?",
+    "addToList": "magdagdag ng isa sa listahan!",
+    "restaurants": "Mga Restaurant",
+    "creditCardDebt": "Utang sa Credit Card",
+    "utilities": "Mga Utility",
+    "insurance": "Insurance",
+    "groceries": "Mga Grocery"
+  },
+  "common": {
+    "question": "Tanong",
+    "monthly": "buwanang",
+    "budget": "badyet",
+    "income": "kita",
+    "spending": "gastos",
+    "category": "kategorya",
+    "categories": "mga kategorya"
+  }
+}
