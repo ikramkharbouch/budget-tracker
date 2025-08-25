@@ -20,9 +20,9 @@ const ProgressBar = ({ currentPhase }) => {
 
   return (
     <div className="flex-grow flex items-center justify-center px-4">
-      <div className="w-2/3 bg-gray-200 rounded-full h-1.5">
+      <div className="w-2/3 bg-gray-200 rounded-full h-1.5 max-sm:h-3">
         <div
-          className="bg-black h-1.5 rounded-full transition-all duration-300 ease-in-out"
+          className="bg-black h-1.5 rounded-full transition-all duration-300 ease-in-out max-sm:h-3"
           style={{ width: getProgressBarWidth() }}
         ></div>
       </div>

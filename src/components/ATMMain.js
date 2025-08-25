@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import ATMButton from "./AtmButton";
+import ATMButton from "./ATMButton";
 import ProgressBar from "./ProgressBar";
 import NavigationArrows from "./NavigationArrows";
 import FormDetailsPhase from "./FormDetailsPhase";
@@ -37,6 +38,7 @@ import {
 
 const ATMMain = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const currentPhase = useSelector(selectCurrentPhase);
@@ -191,107 +193,297 @@ const ATMMain = () => {
     }
   };
 
+  // Mobile category selection component
+  const renderMobileCategorySelection = () => (
+    <div className="space-y-4">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+        {t("mobile.categorySelection.title", "Select Your Expense Categories")}
+      </h2>
+      <p className="text-gray-600 text-center mb-8">
+        {t("mobile.categorySelection.subtitle", "Choose the categories you want to track in your budget")}
+      </p>
+      <div className="grid grid-cols-1 gap-4">
+        {categories.map((item) => (
+          <button
+            key={item}
+            onClick={() => handleCategorySelect(item)}
+            className={`
+              w-full py-6 px-6 text-lg font-medium rounded-xl border-2 
+              transition-all duration-200 touch-manipulation min-h-[64px]
+              ${
+                selectedCategories.includes(item)
+                  ? "bg-black text-white border-black"
+                  : "bg-white text-black border-gray-300 hover:border-gray-400 hover:bg-gray-50"
+              }
+            `}
+          >
+            {t(`categories.${item.toLowerCase().replace(/\s+/g, '')}`, item)}
+          </button>
+        ))}
+      </div>
+      {selectedCategories.length > 0 && (
+        <div className="mt-6 p-4 bg-green-50 rounded-lg">
+          <p className="text-green-700 text-center">
+            ✓ {selectedCategories.length} {t("mobile.categorySelection.selected", selectedCategories.length === 1 ? 'category' : 'categories')} {t("common.selected", "selected")}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+
   return (
-    <div className="relative mt-4 w-[60vw] max-w-none mx-auto aspect-[1004/1200]">
-      <img
-        src="/assets/atm-machine-asset.svg"
-        alt="ATM Machine"
-        className="absolute w-full left-0 right-0 object-contain"
-      />
+    <>
+      {/* DESKTOP VERSION - UPDATED WITH TRANSLATABLE TEXT OVERLAY */}
+      <div className="hidden md:block relative mt-4 w-[60vw] max-w-none mx-auto aspect-[1004/1200]">
+        <img
+          src="/assets/atm-machine-asset.svg"
+          alt="ATM Machine"
+          className="absolute w-full left-0 right-0 object-contain"
+        />
 
-      <div className="absolute" style={{ top: "23.5%", left: "7.2%" }}>
-        <ATMButton label={t("navigation.goal")} />
-      </div>
-      <div className="absolute" style={{ top: "28.5%", left: "7.2%" }}>
-        <ATMButton label={t("navigation.expenses")} />
-      </div>
-      <div className="absolute" style={{ top: "33.5%", left: "7.2%" }}>
-        <ATMButton label={t("navigation.print")} />
-      </div>
-      <div className="absolute" style={{ top: "38.5%", left: "7.2%" }}>
-        <ATMButton />
-      </div>
+        {/* Translatable Text Overlay for "Not Financial Advice" */}
+        <div className="absolute" style={{ top: "6.5%", left: "8.5%", width: "83%", height: "11%" }}>
+          <div className="flex h-full">
+            {/* Left panel - "Not Financial" */}
+            <div className="flex-1 flex flex-col items-start justify-center bg-transparent pr-1 pl-2">
+              <span 
+                className="text-white font-light italic leading-none select-none"
+                style={{ 
+                  fontFamily: '"Bookman Old Style", "Book Antiqua", Georgia, serif',
+                  fontSize: "clamp(2.2rem, 5.5vw, 5rem)",
+                  textShadow: '1px 1px 2px rgba(255,255,255,0.5), 0 0 4px rgba(255,255,255,0.3)',
+                  letterSpacing: '1px'
+                }}
+              >
+                {t('disclaimer.not', 'Not')}
+              </span>
+              <span 
+                className="text-white font-light italic leading-none select-none -mt-2"
+                style={{ 
+                  fontFamily: '"Bookman Old Style", "Book Antiqua", Georgia, serif',
+                  fontSize: "clamp(2.2rem, 5.5vw, 5rem)",
+                  textShadow: '1px 1px 2px rgba(255,255,255,0.5), 0 0 4px rgba(255,255,255,0.3)',
+                  letterSpacing: '1px'
+                }}
+              >
+                {t('disclaimer.financial', 'Financial')}
+              </span>
+            </div>
+            {/* Right panel - "Advice" */}
+            <div className="flex-1 flex items-center justify-center bg-transparent pl-1">
+              <span 
+                className="text-white font-light italic leading-none text-center select-none"
+                style={{ 
+                  fontFamily: '"Bookman Old Style", "Book Antiqua", Georgia, serif',
+                  fontSize: "clamp(2.6rem, 6.5vw, 6rem)",
+                  textShadow: '1px 1px 2px rgba(255,255,255,0.5), 0 0 4px rgba(255,255,255,0.3)',
+                  letterSpacing: '1px'
+                }}
+              >
+                {t('disclaimer.advice', 'Advice')}
+              </span>
+            </div>
+          </div>
+        </div>
 
-      <div className="absolute" style={{ top: "23.5%", right: "9.2%" }}>
-        <ATMButton label={t("navigation.simulateOneYear")} small />
-      </div>
-      <div className="absolute" style={{ top: "28.5%", right: "9.2%" }}>
-        <ATMButton label={t("navigation.createGoal")} small />
-      </div>
-      <div className="absolute" style={{ top: "33.5%", right: "9.2%" }}>
-        <ATMButton label={t("navigation.reset")} onClick={handleReset} />
-      </div>
-      <div className="absolute" style={{ top: "38.5%", right: "9.2%" }}>
-        <ATMButton />
-      </div>
+        <div className="absolute" style={{ top: "23.5%", left: "7.2%" }}>
+          <ATMButton label={t("navigation.goal")} />
+        </div>
+        <div className="absolute" style={{ top: "28.5%", left: "7.2%" }}>
+          <ATMButton label={t("navigation.expenses")} />
+        </div>
+        <div className="absolute" style={{ top: "33.5%", left: "7.2%" }}>
+          <ATMButton label={t("navigation.print")} />
+        </div>
+        <div className="absolute" style={{ top: "38.5%", left: "7.2%" }}>
+          <ATMButton />
+        </div>
 
-      <img
-        src="/assets/Button/Off.svg"
-        alt="Terms and Conditions"
-        className="absolute cursor-pointer"
-        style={{ top: "66%", left: "5%" }}
-        onClick={() => {
-          console.log("Terms and Conditions clicked");
-        }}
-      />
+        <div className="absolute" style={{ top: "23.5%", right: "9.2%" }}>
+          <ATMButton label={t("navigation.simulateOneYear")} small />
+        </div>
+        <div className="absolute" style={{ top: "28.5%", right: "9.2%" }}>
+          <ATMButton label={t("navigation.createGoal")} small />
+        </div>
+        <div className="absolute" style={{ top: "33.5%", right: "9.2%" }}>
+          <ATMButton label={t("navigation.reset")} onClick={handleReset} />
+        </div>
+        <div className="absolute" style={{ top: "38.5%", right: "9.2%" }}>
+          <ATMButton />
+        </div>
 
-      <img
-        src="/assets/cmts-suggestions.svg"
-        alt="COMMENTS & SUGGESTIONS"
-        className="absolute cursor-pointer"
-        style={{ top: "63.5%", left: "26%" }}
-        onClick={() => {
-          console.log("Comments and Suggestions clicked");
-        }}
-      />
+        {/* Terms and Conditions Button - UPDATED */}
+        <img
+          src="/assets/Button/Off.svg"
+          alt="Terms and Conditions"
+          className="absolute cursor-pointer hover:opacity-80 transition-opacity"
+          style={{ top: "66%", left: "5%" }}
+          onClick={() => navigate('/terms')}
+          title={t("navigation.terms", "Terms & Conditions")}
+        />
 
-      <div
-        className="absolute"
-        style={{ top: "25%", left: "25%", width: "50%" }}
-      >
-        <div className="text-center">
-          <ProgressBar currentPhase={currentPhase} />
+        {/* Comments & Suggestions Button - UPDATED */}
+        <img
+          src="/assets/cmts-suggestions.svg"
+          alt="COMMENTS & SUGGESTIONS"
+          className="absolute cursor-pointer hover:opacity-80 transition-opacity"
+          style={{ top: "63.5%", left: "26%" }}
+          onClick={() => navigate('/feedback')}
+          title={t("navigation.feedback", "Comments & Suggestions")}
+        />
 
-          <NavigationArrows
+        <div
+          className="absolute"
+          style={{ top: "25%", left: "25%", width: "50%" }}
+        >
+          <div className="text-center">
+            <ProgressBar currentPhase={currentPhase} />
+
+            <NavigationArrows
+              currentPhase={currentPhase}
+              onPrevious={handlePreviousPhase}
+              onNext={handleNextPhase}
+              onReset={handleReset}
+            />
+
+            {renderCurrentPhase()}
+          </div>
+        </div>
+
+        <div
+          className="absolute"
+          style={{ top: "78%", left: "15%", width: "70%" }}
+        >
+          <BottomCarousel
             currentPhase={currentPhase}
-            onPrevious={handlePreviousPhase}
-            onNext={handleNextPhase}
-            onReset={handleReset}
+            categories={categories}
+            selectedCategories={selectedCategories}
+            categoryExpenses={categoryExpenses}
+            primaryJobIncome={primaryJobIncome}
+            targetSavings={targetSavings}
+            timeFrame={timeFrame}
+            reductionStrategy={reductionStrategy}
+            onCategorySelect={handleCategorySelect}
+            onExpenseChange={handleExpenseChange}
+            onPrimaryJobIncomeChange={(e) =>
+              dispatch(setPrimaryJobIncome(e.target.value))
+            }
+            onTargetSavingsChange={(e) =>
+              dispatch(setTargetSavings(e.target.value))
+            }
+            onTimeFrameChange={(e) => dispatch(setTimeFrame(e.target.value))}
+            onReductionStrategyChange={(e) =>
+              dispatch(setReductionStrategy(e.target.value))
+            }
+            onIncomeInternalNext={handleIncomeInternalNext}
           />
-
-          {renderCurrentPhase()}
         </div>
       </div>
 
-      <div
-        className="absolute"
-        style={{ top: "78%", left: "15%", width: "70%" }}
-      >
-        <BottomCarousel
-          currentPhase={currentPhase}
-          categories={categories}
-          selectedCategories={selectedCategories}
-          categoryExpenses={categoryExpenses}
-          primaryJobIncome={primaryJobIncome}
-          targetSavings={targetSavings}
-          timeFrame={timeFrame}
-          reductionStrategy={reductionStrategy}
-          onCategorySelect={handleCategorySelect}
-          onExpenseChange={handleExpenseChange}
-          onPrimaryJobIncomeChange={(e) =>
-            dispatch(setPrimaryJobIncome(e.target.value))
-          }
-          onTargetSavingsChange={(e) =>
-            dispatch(setTargetSavings(e.target.value))
-          }
-          onTimeFrameChange={(e) => dispatch(setTimeFrame(e.target.value))}
-          onReductionStrategyChange={(e) =>
-            dispatch(setReductionStrategy(e.target.value))
-          }
-          onIncomeInternalNext={handleIncomeInternalNext}
-        />
+      {/* MOBILE VERSION - IMPROVED LAYOUT WITH DISCLAIMER */}
+      <div className="md:hidden min-h-screen bg-gradient-to-b from-gray-100 to-gray-200">
+        <div className="container mx-auto px-4 py-6">
+          {/* Mobile Header with Disclaimer */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-800 mb-3">
+              {t("mobile.header.title", "Financial Planner")}
+            </h1>
+            <p className="text-gray-600 text-lg mb-4">
+              {t("mobile.header.subtitle", "Plan your budget and savings goals")}
+            </p>
+            {/* Mobile Disclaimer */}
+            <div className="bg-gray-800 text-white py-3 px-4 rounded-lg text-sm">
+              <span 
+                className="font-bold italic"
+                style={{ fontFamily: '"Bookman Old Style", "Book Antiqua", Georgia, serif' }}
+              >
+                {t('disclaimer.notFinancial', 'Not Financial')} {t('disclaimer.advice', 'Advice')}
+              </span>
+            </div>
+          </div>
+
+          {/* Progress */}
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <ProgressBar currentPhase={currentPhase} />
+            <NavigationArrows
+              currentPhase={currentPhase}
+              onPrevious={handlePreviousPhase}
+              onNext={handleNextPhase}
+              onReset={handleReset}
+            />
+          </div>
+
+          {/* Main Content - ENHANCED FOR FORM-DETAILS */}
+          <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+            {currentPhase === "form-details" ? (
+              // Special mobile layout for category selection
+              renderMobileCategorySelection()
+            ) : (
+              // Regular phase rendering for other steps
+              renderCurrentPhase()
+            )}
+          </div>
+
+          {/* Bottom Carousel - HIDE FOR FORM-DETAILS ON MOBILE */}
+          {currentPhase !== "form-details" && (
+            <div className="mb-8">
+              <BottomCarousel
+                currentPhase={currentPhase}
+                categories={categories}
+                selectedCategories={selectedCategories}
+                categoryExpenses={categoryExpenses}
+                primaryJobIncome={primaryJobIncome}
+                targetSavings={targetSavings}
+                timeFrame={timeFrame}
+                reductionStrategy={reductionStrategy}
+                onCategorySelect={handleCategorySelect}
+                onExpenseChange={handleExpenseChange}
+                onPrimaryJobIncomeChange={(e) =>
+                  dispatch(setPrimaryJobIncome(e.target.value))
+                }
+                onTargetSavingsChange={(e) =>
+                  dispatch(setTargetSavings(e.target.value))
+                }
+                onTimeFrameChange={(e) => dispatch(setTimeFrame(e.target.value))}
+                onReductionStrategyChange={(e) =>
+                  dispatch(setReductionStrategy(e.target.value))
+                }
+                onIncomeInternalNext={handleIncomeInternalNext}
+              />
+            </div>
+          )}
+
+          {/* Mobile Action Buttons */}
+          <div className="flex gap-4 mb-6">
+            <button 
+              onClick={handleReset}
+              className="flex-1 bg-red-600 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-red-700 active:bg-red-800 transition-colors touch-manipulation"
+            >
+              {t("common.reset", "Reset")}
+            </button>
+            <button className="flex-1 bg-gray-600 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-gray-700 active:bg-gray-800 transition-colors touch-manipulation">
+              {t("common.settings", "Settings")}
+            </button>
+          </div>
+
+          {/* Mobile Footer - UPDATED WITH NAVIGATION */}
+          <div className="text-center space-y-3 text-base text-gray-600">
+            <button 
+              className="block w-full py-3 hover:text-gray-800 transition-colors"
+              onClick={() => navigate('/terms')}
+            >
+              {t("navigation.terms", "Terms & Conditions")}
+            </button>
+            <button 
+              className="block w-full py-3 hover:text-gray-800 transition-colors"
+              onClick={() => navigate('/feedback')}
+            >
+              {t("navigation.feedback", "Comments & Suggestions")}
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

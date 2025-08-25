@@ -6,7 +6,9 @@
     "print": "DRUCKEN",
     "simulateOneYear": "EIN JAHR SIMULIEREN",
     "createGoal": "ZIEL ERSTELLEN",
-    "reset": "ZURÜCKSETZEN"
+    "reset": "ZURÜCKSETZEN",
+    "terms": "Allgemeine Geschäftsbedingungen",
+    "feedback": "Kommentare & Vorschläge"
   },
   "tableHeaders": {
     "months": "Monate",
@@ -43,5 +45,10 @@
     "spending": "Ausgaben",
     "category": "Kategorie",
     "categories": "Kategorien"
+  },
+  "disclaimer": {
+    "not": "Keine",
+    "financial": "Finanz",
+    "advice": "beratung"
   }
 }

@@ -6,7 +6,9 @@
     "print": "I-PRINT",
     "simulateOneYear": "I-SIMULATE ANG ISANG TAON",
     "createGoal": "GUMAWA NG LAYUNIN",
-    "reset": "I-RESET"
+    "reset": "I-RESET",
+    "terms": "Mga Tuntunin at Kondisyon",
+    "feedback": "Mga Komento at Suhestiyon"
   },
   "tableHeaders": {
     "months": "Mga Buwan",
@@ -43,5 +45,10 @@
     "spending": "gastos",
     "category": "kategorya",
     "categories": "mga kategorya"
+  },
+  "disclaimer": {
+    "not": "Hindi",
+    "financial": "Pananalapi",
+    "advice": "Payo"
   }
 }

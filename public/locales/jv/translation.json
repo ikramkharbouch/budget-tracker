@@ -6,7 +6,9 @@
     "print": "CETAK",
     "simulateOneYear": "SIMULASI SETAHUN",
     "createGoal": "GAWE TUJUAN",
-    "reset": "RESET"
+    "reset": "RESET",
+    "terms": "Sarat & Katentuan",
+    "feedback": "Komentar & Saran"
   },
   "tableHeaders": {
     "months": "Sasi",
@@ -43,5 +45,10 @@
     "spending": "mbuwang",
     "category": "kategori",
     "categories": "kategori-kategori"
+  },
+  "disclaimer": {
+    "not": "Dudu",
+    "financial": "Finansial",
+    "advice": "Saran"
   }
 }

@@ -6,7 +6,9 @@
     "print": "ਪ੍ਰਿੰਟ",
     "simulateOneYear": "ਇੱਕ ਸਾਲ ਦੀ ਨਕਲ",
     "createGoal": "ਟੀਚਾ ਬਣਾਓ",
-    "reset": "ਰੀਸੈੱਟ"
+    "reset": "ਰੀਸੈੱਟ",
+    "terms": "ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ",
+    "feedback": "ਟਿੱਪਣੀਆਂ ਅਤੇ ਸੁਝਾਅ"
   },
   "tableHeaders": {
     "months": "ਮਹੀਨੇ",
@@ -43,5 +45,10 @@
     "spending": "ਖਰਚ",
     "category": "ਸ਼੍ਰੇਣੀ",
     "categories": "ਸ਼੍ਰੇਣੀਆਂ"
+  },
+  "disclaimer": {
+    "not": "ਵਿੱਤੀ",
+    "financial": "ਸਲਾਹ",
+    "advice": "ਨਹੀਂ"
   }
 }

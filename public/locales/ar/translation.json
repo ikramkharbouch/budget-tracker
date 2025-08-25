@@ -6,7 +6,9 @@
     "print": "طباعة",
     "simulateOneYear": "محاكاة سنة واحدة",
     "createGoal": "إنشاء هدف",
-    "reset": "إعادة تعيين"
+    "reset": "إعادة تعيين",
+    "terms": "الأحكام والشروط",
+    "feedback": "التعليقات والاقتراحات"
   },
   "tableHeaders": {
     "months": "الأشهر",
@@ -43,5 +45,10 @@
     "spending": "الإنفاق",
     "category": "فئة",
     "categories": "فئات"
+  },
+  "disclaimer": {
+  "not": "ليس",
+  "financial": "مالي", 
+  "advice": "نصيحة"
   }
 }

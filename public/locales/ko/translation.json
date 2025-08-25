@@ -6,7 +6,9 @@
     "print": "인쇄",
     "simulateOneYear": "1년 시뮬레이션",
     "createGoal": "목표 생성",
-    "reset": "재설정"
+    "reset": "재설정",
+    "terms": "이용 약관",
+    "feedback": "의견 및 제안"
   },
   "tableHeaders": {
     "months": "월",
@@ -43,5 +45,10 @@
     "spending": "지출",
     "category": "카테고리",
     "categories": "카테고리"
+  },
+  "disclaimer": {
+    "not": "금융",
+    "financial": "조언이",
+    "advice": "아님"
   }
 }

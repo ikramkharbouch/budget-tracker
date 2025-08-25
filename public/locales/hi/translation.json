@@ -12,7 +12,9 @@
     "months": "महीने",
     "utilities": "उपयोगिताएं",
     "foods": "खाद्य पदार्थ",
-    "loans": "ऋण"
+    "loans": "ऋण",
+    "terms": "नियम और शर्तें",
+    "feedback": "टिप्पणियाँ और सुझाव"
   },
   "income": {
     "title": "आपकी मासिक आय कितनी है?",
@@ -43,5 +45,10 @@
     "spending": "खर्च",
     "category": "श्रेणी",
     "categories": "श्रेणियां"
+  },
+  "disclaimer": {
+    "not": "वित्तीय",
+    "financial": "सलाह",
+    "advice": "नहीं"
   }
 }

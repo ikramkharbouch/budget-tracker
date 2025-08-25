@@ -6,7 +6,9 @@
     "print": "ПЕЧАТЬ",
     "simulateOneYear": "СИМУЛИРОВАТЬ ГОД",
     "createGoal": "СОЗДАТЬ ЦЕЛЬ",
-    "reset": "СБРОС"
+    "reset": "СБРОС",
+    "terms": "Условия использования",
+    "feedback": "Комментарии и предложения"
   },
   "tableHeaders": {
     "months": "Месяцы",
@@ -43,5 +45,10 @@
     "spending": "траты",
     "category": "категория",
     "categories": "категории"
+  },
+  "disclaimer": {
+    "not": "Не",
+    "financial": "Финансовый",
+    "advice": "Совет"
   }
 }

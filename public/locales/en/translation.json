@@ -6,7 +6,9 @@
     "print": "PRINT",
     "simulateOneYear": "SIMULATE ONE YEAR",
     "createGoal": "CREATE GOAL",
-    "reset": "RESET"
+    "reset": "RESET",
+    "terms": "Terms & Conditions",
+    "feedback": "Comments & Suggestions"
   },
   "tableHeaders": {
     "months": "Months",
@@ -43,5 +45,10 @@
     "spending": "spending",
     "category": "category",
     "categories": "categories"
+  },
+  "disclaimer": {
+    "not": "Not",
+    "financial": "Financial",
+    "advice": "Advice"
   }
 }

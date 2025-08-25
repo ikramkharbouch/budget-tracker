@@ -6,7 +6,9 @@
     "print": "IMPRIMIR",
     "simulateOneYear": "SIMULAR UN AÑO",
     "createGoal": "CREAR OBJETIVO",
-    "reset": "REINICIAR"
+    "reset": "REINICIAR",
+    "terms": "Términos y Condiciones",
+    "feedback": "Comentarios y Sugerencias"
   },
   "tableHeaders": {
     "months": "Meses",
@@ -43,5 +45,10 @@
     "spending": "gastos",
     "category": "categoría",
     "categories": "categorías"
+  },
+  "disclaimer": {
+    "not": "No es",
+    "financial": "Financiero",
+    "advice": "Consejo"
   }
 }

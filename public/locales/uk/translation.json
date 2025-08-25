@@ -6,7 +6,9 @@
     "print": "ДРУК",
     "simulateOneYear": "СИМУЛЮВАТИ РІК",
     "createGoal": "СТВОРИТИ ЦІЛЬ",
-    "reset": "СКИНУТИ"
+    "reset": "СКИНУТИ",
+    "terms": "Умови та положення",
+    "feedback": "Коментарі та пропозиції"
   },
   "tableHeaders": {
     "months": "Місяці",
@@ -43,5 +45,10 @@
     "spending": "витрати",
     "category": "категорія",
     "categories": "категорії"
+  },
+  "disclaimer": {
+    "not": "Не",
+    "financial": "Фінансова",
+    "advice": "Порада"
   }
 }

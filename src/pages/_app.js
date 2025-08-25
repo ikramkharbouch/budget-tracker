@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Provider } from "react-redux";
@@ -11,6 +11,8 @@ import i18n from "../i18n/index";
 import NotificationProvider from "../components/NotificationProvider";
 import ATMMain from "../components/ATMMain";
 import LanguageSelector from "../components/LanguageSelector";
+import TermsAndConditions from "../pages/TermsAndConditions";
+import CommentsAndSuggestions from "../pages/CommentsAndSuggestions";
 
 const theme = createTheme({
   palette: {
@@ -31,8 +33,8 @@ const theme = createTheme({
   },
 });
 
-function AppContent() {
-  const { t, i18n } = useTranslation();
+function MainLayout({ children }) {
+  const { t } = useTranslation();
 
   return (
     <div
@@ -46,15 +48,52 @@ function AppContent() {
         <LanguageSelector />
       </div>
 
-      <div className="w-full max-w-[768px] h-[90px] bg-white shadow-md flex items-center justify-center">
-        {/* Translated ad banner text */}
-        <span className="text-sm text-gray-700">
-          🔶 {t("adBanner", "The Ad Banner Goes Here")} 🔶
-        </span>
-      </div>
-
-      <ATMMain />
+      {children}
     </div>
+  );
+}
+
+function AppContent() {
+  const { t } = useTranslation();
+
+  return (
+    <Routes>
+      {/* Main app route */}
+      <Route 
+        path="/" 
+        element={
+          <MainLayout>
+            <div className="w-full max-w-[768px] h-[90px] bg-white shadow-md flex items-center justify-center">
+              {/* Translated ad banner text */}
+              <span className="text-sm text-gray-700">
+                🔶 {t("adBanner", "The Ad Banner Goes Here")} 🔶
+              </span>
+            </div>
+            <ATMMain />
+          </MainLayout>
+        } 
+      />
+      
+      {/* Terms and Conditions route */}
+      <Route 
+        path="/terms" 
+        element={
+          <MainLayout>
+            <TermsAndConditions />
+          </MainLayout>
+        } 
+      />
+      
+      {/* Comments and Suggestions route */}
+      <Route 
+        path="/feedback" 
+        element={
+          <MainLayout>
+            <CommentsAndSuggestions />
+          </MainLayout>
+        } 
+      />
+    </Routes>
   );
 }
 

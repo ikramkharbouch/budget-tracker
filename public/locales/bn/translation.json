@@ -6,7 +6,9 @@
     "print": "প্রিন্ট",
     "simulateOneYear": "এক বছর অনুকরণ",
     "createGoal": "লক্ষ্য তৈরি",
-    "reset": "রিসেট"
+    "reset": "রিসেট",
+    "terms": "শর্তাবলী",
+    "feedback": "মন্তব্য ও পরামর্শ"
   },
   "tableHeaders": {
     "months": "মাস",
@@ -43,5 +45,10 @@
     "spending": "খরচ",
     "category": "বিভাগ",
     "categories": "বিভাগসমূহ"
+  },
+  "disclaimer": {
+    "not": "না",
+    "financial": "আর্থিক",
+    "advice": "পরামর্শ"
   }
 }

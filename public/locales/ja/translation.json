@@ -6,7 +6,9 @@
     "print": "印刷",
     "simulateOneYear": "1年をシミュレート",
     "createGoal": "目標を作成",
-    "reset": "リセット"
+    "reset": "リセット",
+    "terms": "利用規約",
+    "feedback": "コメントと提案"
   },
   "tableHeaders": {
     "months": "月",
@@ -43,5 +45,10 @@
     "spending": "支出",
     "category": "カテゴリ",
     "categories": "カテゴリ"
+  },
+  "disclaimer": {
+    "not": "金融",
+    "financial": "アドバイス",
+    "advice": "ではない"
   }
 }
