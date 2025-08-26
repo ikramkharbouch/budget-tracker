@@ -11,6 +11,7 @@ import FormDetailsPhase from "./FormDetailsPhase";
 import BudgetPlanningPhase from "./BudgetPlanningPhase";
 import IncomeDetailsPhase from "./IncomeDetailsPhase";
 import GoalSettingPhase from "./GoalSettingPhase";
+import GoalTrackingPhase from "./GoalTrackingPhase";  // New import
 import SummaryPhase from "./SummaryPhase";
 import BottomCarousel from "./BottomCarousel";
 import { useTranslation } from "react-i18next";
@@ -88,6 +89,11 @@ const ATMMain = () => {
     localStorage.removeItem("onboardingProgress");
   };
 
+  // New function to handle GOAL button click
+  const handleGoalClick = () => {
+    dispatch(setCurrentPhase("goal-tracking"));
+  };
+
   const handleIncomeInternalNext = () => {
     if (!primaryJobIncome || parseFloat(primaryJobIncome) <= 0) {
       alert("Please enter a valid amount for your primary job income.");
@@ -146,6 +152,9 @@ const ATMMain = () => {
     } else if (currentPhase === "goal-setting") {
       dispatch(setCurrentPhase("summary"));
       dispatch(completeOnboarding());
+    } else if (currentPhase === "goal-tracking") {
+      // From goal tracking, user can navigate to summary or back
+      dispatch(setCurrentPhase("summary"));
     }
   };
 
@@ -157,6 +166,9 @@ const ATMMain = () => {
     } else if (currentPhase === "income-details") {
       dispatch(setCurrentPhase("budget-planning"));
     } else if (currentPhase === "budget-planning") {
+      dispatch(setCurrentPhase("form-details"));
+    } else if (currentPhase === "goal-tracking") {
+      // From goal tracking, go back to form details or wherever makes sense
       dispatch(setCurrentPhase("form-details"));
     }
   };
@@ -177,6 +189,8 @@ const ATMMain = () => {
             reductionStrategy={reductionStrategy}
           />
         );
+      case "goal-tracking":
+        return <GoalTrackingPhase />;
       case "summary":
         return (
           <SummaryPhase
@@ -286,8 +300,9 @@ const ATMMain = () => {
           </div>
         </div>
 
+        {/* Updated GOAL button with click handler */}
         <div className="absolute" style={{ top: "23.5%", left: "7.2%" }}>
-          <ATMButton label={t("navigation.goal")} />
+          <ATMButton label={t("navigation.goal")} onClick={handleGoalClick} />
         </div>
         <div className="absolute" style={{ top: "28.5%", left: "7.2%" }}>
           <ATMButton label={t("navigation.expenses")} />
@@ -337,47 +352,56 @@ const ATMMain = () => {
           style={{ top: "25%", left: "25%", width: "50%" }}
         >
           <div className="text-center">
-            <ProgressBar currentPhase={currentPhase} />
+            {/* Only show progress bar for main onboarding flow, not goal tracking */}
+            {currentPhase !== "goal-tracking" && (
+              <ProgressBar currentPhase={currentPhase} />
+            )}
 
-            <NavigationArrows
-              currentPhase={currentPhase}
-              onPrevious={handlePreviousPhase}
-              onNext={handleNextPhase}
-              onReset={handleReset}
-            />
+            {/* Only show navigation arrows for main onboarding flow */}
+            {currentPhase !== "goal-tracking" && (
+              <NavigationArrows
+                currentPhase={currentPhase}
+                onPrevious={handlePreviousPhase}
+                onNext={handleNextPhase}
+                onReset={handleReset}
+              />
+            )}
 
             {renderCurrentPhase()}
           </div>
         </div>
 
-        <div
-          className="absolute"
-          style={{ top: "78%", left: "15%", width: "70%" }}
-        >
-          <BottomCarousel
-            currentPhase={currentPhase}
-            categories={categories}
-            selectedCategories={selectedCategories}
-            categoryExpenses={categoryExpenses}
-            primaryJobIncome={primaryJobIncome}
-            targetSavings={targetSavings}
-            timeFrame={timeFrame}
-            reductionStrategy={reductionStrategy}
-            onCategorySelect={handleCategorySelect}
-            onExpenseChange={handleExpenseChange}
-            onPrimaryJobIncomeChange={(e) =>
-              dispatch(setPrimaryJobIncome(e.target.value))
-            }
-            onTargetSavingsChange={(e) =>
-              dispatch(setTargetSavings(e.target.value))
-            }
-            onTimeFrameChange={(e) => dispatch(setTimeFrame(e.target.value))}
-            onReductionStrategyChange={(e) =>
-              dispatch(setReductionStrategy(e.target.value))
-            }
-            onIncomeInternalNext={handleIncomeInternalNext}
-          />
-        </div>
+        {/* Only show bottom carousel for main onboarding flow */}
+        {currentPhase !== "goal-tracking" && (
+          <div
+            className="absolute"
+            style={{ top: "78%", left: "15%", width: "70%" }}
+          >
+            <BottomCarousel
+              currentPhase={currentPhase}
+              categories={categories}
+              selectedCategories={selectedCategories}
+              categoryExpenses={categoryExpenses}
+              primaryJobIncome={primaryJobIncome}
+              targetSavings={targetSavings}
+              timeFrame={timeFrame}
+              reductionStrategy={reductionStrategy}
+              onCategorySelect={handleCategorySelect}
+              onExpenseChange={handleExpenseChange}
+              onPrimaryJobIncomeChange={(e) =>
+                dispatch(setPrimaryJobIncome(e.target.value))
+              }
+              onTargetSavingsChange={(e) =>
+                dispatch(setTargetSavings(e.target.value))
+              }
+              onTimeFrameChange={(e) => dispatch(setTimeFrame(e.target.value))}
+              onReductionStrategyChange={(e) =>
+                dispatch(setReductionStrategy(e.target.value))
+              }
+              onIncomeInternalNext={handleIncomeInternalNext}
+            />
+          </div>
+        )}
       </div>
 
       {/* MOBILE VERSION - IMPROVED LAYOUT WITH DISCLAIMER */}
@@ -402,16 +426,18 @@ const ATMMain = () => {
             </div>
           </div>
 
-          {/* Progress */}
-          <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-            <ProgressBar currentPhase={currentPhase} />
-            <NavigationArrows
-              currentPhase={currentPhase}
-              onPrevious={handlePreviousPhase}
-              onNext={handleNextPhase}
-              onReset={handleReset}
-            />
-          </div>
+          {/* Progress - Hide for goal tracking */}
+          {currentPhase !== "goal-tracking" && (
+            <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+              <ProgressBar currentPhase={currentPhase} />
+              <NavigationArrows
+                currentPhase={currentPhase}
+                onPrevious={handlePreviousPhase}
+                onNext={handleNextPhase}
+                onReset={handleReset}
+              />
+            </div>
+          )}
 
           {/* Main Content - ENHANCED FOR FORM-DETAILS */}
           <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
@@ -424,8 +450,8 @@ const ATMMain = () => {
             )}
           </div>
 
-          {/* Bottom Carousel - HIDE FOR FORM-DETAILS ON MOBILE */}
-          {currentPhase !== "form-details" && (
+          {/* Bottom Carousel - HIDE FOR FORM-DETAILS AND GOAL-TRACKING ON MOBILE */}
+          {currentPhase !== "form-details" && currentPhase !== "goal-tracking" && (
             <div className="mb-8">
               <BottomCarousel
                 currentPhase={currentPhase}
@@ -461,8 +487,11 @@ const ATMMain = () => {
             >
               {t("common.reset", "Reset")}
             </button>
-            <button className="flex-1 bg-gray-600 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-gray-700 active:bg-gray-800 transition-colors touch-manipulation">
-              {t("common.settings", "Settings")}
+            <button 
+              onClick={handleGoalClick}
+              className="flex-1 bg-blue-600 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-blue-700 active:bg-blue-800 transition-colors touch-manipulation"
+            >
+              {t("navigation.goal", "GOAL")}
             </button>
           </div>
 
