@@ -12,6 +12,7 @@ import BudgetPlanningPhase from "./BudgetPlanningPhase";
 import IncomeDetailsPhase from "./IncomeDetailsPhase";
 import GoalSettingPhase from "./GoalSettingPhase";
 import GoalTrackingPhase from "./GoalTrackingPhase";
+import SimulateOneYearPhase from "./SimulateOneYearPhase";
 import SummaryPhase from "./SummaryPhase";
 import BottomCarousel from "./BottomCarousel";
 import GoalPopup from "./GoalPopup"; // Import the new component
@@ -100,6 +101,10 @@ const ATMMain = () => {
     dispatch(setCurrentPhase("goal-tracking"));
   };
 
+  const handleSimulateOneYearClick = () => {
+    dispatch(setCurrentPhase("simulate-one-year"));
+  };
+
   const handleClosePopup = () => {
     setIsPopupVisible(false);
   };
@@ -178,6 +183,8 @@ const ATMMain = () => {
       dispatch(setCurrentPhase("form-details"));
     } else if (currentPhase === "goal-tracking") {
       dispatch(setCurrentPhase("form-details"));
+    } else if (currentPhase === "simulate-one-year") {
+      dispatch(setCurrentPhase("form-details"));
     }
   };
 
@@ -199,6 +206,8 @@ const ATMMain = () => {
         );
       case "goal-tracking":
         return <GoalTrackingPhase />;
+      case "simulate-one-year":
+        return <SimulateOneYearPhase />;
       case "summary":
         return (
           <SummaryPhase
@@ -321,7 +330,7 @@ const ATMMain = () => {
         </div>
 
         <div className="absolute" style={{ top: "23.5%", right: "9.2%" }}>
-          <ATMButton label={t("navigation.simulateOneYear")} small />
+          <ATMButton label={t("navigation.simulateOneYear")} small onClick={handleSimulateOneYearClick} />
         </div>
         <div className="absolute" style={{ top: "28.5%", right: "9.2%" }}>
           <ATMButton label={t("navigation.createGoal")} small onClick={handleCreateGoalClick} />
@@ -358,10 +367,10 @@ const ATMMain = () => {
           style={{ top: "25%", left: "25%", width: "50%" }}
         >
           <div className="text-center">
-            {currentPhase !== "goal-tracking" && (
+            {currentPhase !== "goal-tracking" && currentPhase !== "simulate-one-year" && (
               <ProgressBar currentPhase={currentPhase} />
             )}
-            {currentPhase !== "goal-tracking" && (
+            {currentPhase !== "goal-tracking" && currentPhase !== "simulate-one-year" && (
               <NavigationArrows
                 currentPhase={currentPhase}
                 onPrevious={handlePreviousPhase}
@@ -373,7 +382,7 @@ const ATMMain = () => {
           </div>
         </div>
 
-        {currentPhase !== "goal-tracking" && (
+        {currentPhase !== "goal-tracking" && currentPhase !== "simulate-one-year" && (
           <div
             className="absolute"
             style={{ top: "78%", left: "15%", width: "70%" }}
@@ -428,7 +437,7 @@ const ATMMain = () => {
             </div>
           </div>
 
-          {currentPhase !== "goal-tracking" && (
+          {currentPhase !== "goal-tracking" && currentPhase !== "simulate-one-year" && (
             <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
               <ProgressBar currentPhase={currentPhase} />
               <NavigationArrows
@@ -448,7 +457,7 @@ const ATMMain = () => {
             )}
           </div>
 
-          {currentPhase !== "form-details" && currentPhase !== "goal-tracking" && (
+          {currentPhase !== "form-details" && currentPhase !== "goal-tracking" && currentPhase !== "simulate-one-year" && (
             <div className="mb-8">
               <BottomCarousel
                 currentPhase={currentPhase}
