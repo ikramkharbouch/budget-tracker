@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import GoalSelectionModal from './GoalSelectionModal';
+import GoalCreationModal from './GoalCreationModal';
 
 const GoalTrackingPhase = () => {
   const { t } = useTranslation();
@@ -51,8 +53,40 @@ const GoalTrackingPhase = () => {
     }
   ]);
 
+  // Modal states
+  const [isSelectionModalOpen, setIsSelectionModalOpen] = useState(false);
+  const [isCreationModalOpen, setIsCreationModalOpen] = useState(false);
+  const [selectedGoalData, setSelectedGoalData] = useState(null);
+
   const formatAmount = (amount) => {
     return `$${amount.toLocaleString()}`;
+  };
+
+  const handleAddGoal = () => {
+    setIsSelectionModalOpen(true);
+  };
+
+  const handleGoalSelection = (goalData) => {
+    setSelectedGoalData(goalData);
+    setIsSelectionModalOpen(false);
+    setIsCreationModalOpen(true);
+  };
+
+  const handleBackToSelection = () => {
+    setIsCreationModalOpen(false);
+    setIsSelectionModalOpen(true);
+  };
+
+  const handleCreateGoal = (newGoal) => {
+    setGoals(prevGoals => [...prevGoals, newGoal]);
+    setIsCreationModalOpen(false);
+    setSelectedGoalData(null);
+  };
+
+  const handleCloseModals = () => {
+    setIsSelectionModalOpen(false);
+    setIsCreationModalOpen(false);
+    setSelectedGoalData(null);
   };
 
   return (
@@ -72,7 +106,10 @@ const GoalTrackingPhase = () => {
         <h1 className="text-3xl font-medium text-black tracking-wide">GOAL</h1>
         
         {/* Add Button */}
-        <button className="w-12 h-12 rounded-full bg-transparent flex items-center justify-center hover:bg-gray-50">
+        <button 
+          onClick={handleAddGoal}
+          className="w-12 h-12 rounded-full bg-transparent flex items-center justify-center hover:bg-gray-50"
+        >
           <img 
             src="/assets/add-circle.svg" 
             alt="Add Goal"
@@ -88,10 +125,8 @@ const GoalTrackingPhase = () => {
             key={goal.id} 
             className="bg-white rounded-xl border border-black shadow-sm max-h-min py-1"
           >
-            {/* The following div now uses responsive classes for padding and gap */}
             <div className="flex items-center gap-2 p-0 sm:px-5">
               {/* Goal Icon */}
-              {/* The icon container is now smaller on mobile and larger on small screens and up */}
               <div className={`w-16 md:w-16 sm:w-16 h-16 md:h-16 sm:h-16 rounded-lg ${goal.iconBg} flex items-center justify-center flex-shrink-0 border border-1 border-black`}>
                 <img 
                   src={goal.icon} 
@@ -112,7 +147,6 @@ const GoalTrackingPhase = () => {
               {/* Goal Content */}
               <div className="flex-1">
                 {/* Title and Target Amount */}
-                {/* The text size for the title and amounts now changes based on screen size */}
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="font-inter font-normal text-[13.13px] leading-[100%] tracking-normal text-center">
                     {goal.name}
@@ -121,7 +155,6 @@ const GoalTrackingPhase = () => {
                     <div className="text-lg md:text-sm sm:text-sm font-medium text-black">
                       {formatAmount(goal.targetAmount)}
                     </div>
-                  
                   </div>
                 </div>
                 
@@ -138,7 +171,6 @@ const GoalTrackingPhase = () => {
                 </div>
                 
                 {/* Current and Target Amounts */}
-                {/* The text size for the current and target amounts now changes based on screen size */}
                 <div className="flex justify-between">
                   <span className="text-lg md:text-sm sm:text-sm font-medium text-black">
                     {formatAmount(goal.currentAmount)}
@@ -153,7 +185,21 @@ const GoalTrackingPhase = () => {
         ))}
       </div>
 
-     
+      {/* Goal Selection Modal */}
+      <GoalSelectionModal
+        isOpen={isSelectionModalOpen}
+        onClose={handleCloseModals}
+        onNext={handleGoalSelection}
+      />
+
+      {/* Goal Creation Modal */}
+      <GoalCreationModal
+        isOpen={isCreationModalOpen}
+        onClose={handleCloseModals}
+        onBack={handleBackToSelection}
+        onCreateGoal={handleCreateGoal}
+        goalData={selectedGoalData}
+      />
     </div>
   );
 };

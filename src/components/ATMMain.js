@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
@@ -11,9 +11,10 @@ import FormDetailsPhase from "./FormDetailsPhase";
 import BudgetPlanningPhase from "./BudgetPlanningPhase";
 import IncomeDetailsPhase from "./IncomeDetailsPhase";
 import GoalSettingPhase from "./GoalSettingPhase";
-import GoalTrackingPhase from "./GoalTrackingPhase";  // New import
+import GoalTrackingPhase from "./GoalTrackingPhase";
 import SummaryPhase from "./SummaryPhase";
 import BottomCarousel from "./BottomCarousel";
+import GoalPopup from "./GoalPopup"; // Import the new component
 import { useTranslation } from "react-i18next";
 
 import {
@@ -50,6 +51,8 @@ const ATMMain = () => {
   const timeFrame = useSelector(selectTimeFrame);
   const reductionStrategy = useSelector(selectReductionStrategy);
   const onboardingData = useSelector(selectOnboardingData);
+
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   const categories = [
     "Groceries",
@@ -89,9 +92,16 @@ const ATMMain = () => {
     localStorage.removeItem("onboardingProgress");
   };
 
-  // New function to handle GOAL button click
   const handleGoalClick = () => {
     dispatch(setCurrentPhase("goal-tracking"));
+  };
+
+  const handleCreateGoalClick = () => {
+    dispatch(setCurrentPhase("goal-tracking"));
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupVisible(false);
   };
 
   const handleIncomeInternalNext = () => {
@@ -153,7 +163,6 @@ const ATMMain = () => {
       dispatch(setCurrentPhase("summary"));
       dispatch(completeOnboarding());
     } else if (currentPhase === "goal-tracking") {
-      // From goal tracking, user can navigate to summary or back
       dispatch(setCurrentPhase("summary"));
     }
   };
@@ -168,7 +177,6 @@ const ATMMain = () => {
     } else if (currentPhase === "budget-planning") {
       dispatch(setCurrentPhase("form-details"));
     } else if (currentPhase === "goal-tracking") {
-      // From goal tracking, go back to form details or wherever makes sense
       dispatch(setCurrentPhase("form-details"));
     }
   };
@@ -207,7 +215,6 @@ const ATMMain = () => {
     }
   };
 
-  // Mobile category selection component
   const renderMobileCategorySelection = () => (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
@@ -245,9 +252,11 @@ const ATMMain = () => {
     </div>
   );
 
+
+
   return (
     <>
-      {/* DESKTOP VERSION - UPDATED WITH TRANSLATABLE TEXT OVERLAY */}
+      {/* DESKTOP VERSION */}
       <div className="hidden md:block relative mt-4 w-[60vw] max-w-none mx-auto aspect-[1004/1200]">
         <img
           src="/assets/atm-machine-asset.svg"
@@ -258,7 +267,6 @@ const ATMMain = () => {
         {/* Translatable Text Overlay for "Not Financial Advice" */}
         <div className="absolute" style={{ top: "6.5%", left: "8.5%", width: "83%", height: "11%" }}>
           <div className="flex h-full">
-            {/* Left panel - "Not Financial" */}
             <div className="flex-1 flex flex-col items-start justify-center bg-transparent pr-1 pl-2">
               <span 
                 className="text-white font-light italic leading-none select-none"
@@ -283,7 +291,6 @@ const ATMMain = () => {
                 {t('disclaimer.financial', 'Financial')}
               </span>
             </div>
-            {/* Right panel - "Advice" */}
             <div className="flex-1 flex items-center justify-center bg-transparent pl-1">
               <span 
                 className="text-white font-light italic leading-none text-center select-none"
@@ -300,7 +307,6 @@ const ATMMain = () => {
           </div>
         </div>
 
-        {/* Updated GOAL button with click handler */}
         <div className="absolute" style={{ top: "23.5%", left: "7.2%" }}>
           <ATMButton label={t("navigation.goal")} onClick={handleGoalClick} />
         </div>
@@ -318,7 +324,7 @@ const ATMMain = () => {
           <ATMButton label={t("navigation.simulateOneYear")} small />
         </div>
         <div className="absolute" style={{ top: "28.5%", right: "9.2%" }}>
-          <ATMButton label={t("navigation.createGoal")} small />
+          <ATMButton label={t("navigation.createGoal")} small onClick={handleCreateGoalClick} />
         </div>
         <div className="absolute" style={{ top: "33.5%", right: "9.2%" }}>
           <ATMButton label={t("navigation.reset")} onClick={handleReset} />
@@ -327,7 +333,7 @@ const ATMMain = () => {
           <ATMButton />
         </div>
 
-        {/* Terms and Conditions Button - UPDATED */}
+        {/* Terms and Conditions Button */}
         <img
           src="/assets/Button/Off.svg"
           alt="Terms and Conditions"
@@ -337,7 +343,7 @@ const ATMMain = () => {
           title={t("navigation.terms", "Terms & Conditions")}
         />
 
-        {/* Comments & Suggestions Button - UPDATED */}
+        {/* Comments & Suggestions Button */}
         <img
           src="/assets/cmts-suggestions.svg"
           alt="COMMENTS & SUGGESTIONS"
@@ -352,12 +358,9 @@ const ATMMain = () => {
           style={{ top: "25%", left: "25%", width: "50%" }}
         >
           <div className="text-center">
-            {/* Only show progress bar for main onboarding flow, not goal tracking */}
             {currentPhase !== "goal-tracking" && (
               <ProgressBar currentPhase={currentPhase} />
             )}
-
-            {/* Only show navigation arrows for main onboarding flow */}
             {currentPhase !== "goal-tracking" && (
               <NavigationArrows
                 currentPhase={currentPhase}
@@ -366,12 +369,10 @@ const ATMMain = () => {
                 onReset={handleReset}
               />
             )}
-
             {renderCurrentPhase()}
           </div>
         </div>
 
-        {/* Only show bottom carousel for main onboarding flow */}
         {currentPhase !== "goal-tracking" && (
           <div
             className="absolute"
@@ -402,12 +403,14 @@ const ATMMain = () => {
             />
           </div>
         )}
+
+        {/* Use the new GoalPopup component */}
+        {isPopupVisible && <GoalPopup onClose={handleClosePopup} />}
       </div>
 
-      {/* MOBILE VERSION - IMPROVED LAYOUT WITH DISCLAIMER */}
+      {/* MOBILE VERSION - UNCHANGED */}
       <div className="md:hidden min-h-screen bg-gradient-to-b from-gray-100 to-gray-200">
         <div className="container mx-auto px-4 py-6">
-          {/* Mobile Header with Disclaimer */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-3">
               {t("mobile.header.title", "Financial Planner")}
@@ -415,7 +418,6 @@ const ATMMain = () => {
             <p className="text-gray-600 text-lg mb-4">
               {t("mobile.header.subtitle", "Plan your budget and savings goals")}
             </p>
-            {/* Mobile Disclaimer */}
             <div className="bg-gray-800 text-white py-3 px-4 rounded-lg text-sm">
               <span 
                 className="font-bold italic"
@@ -426,7 +428,6 @@ const ATMMain = () => {
             </div>
           </div>
 
-          {/* Progress - Hide for goal tracking */}
           {currentPhase !== "goal-tracking" && (
             <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
               <ProgressBar currentPhase={currentPhase} />
@@ -439,18 +440,14 @@ const ATMMain = () => {
             </div>
           )}
 
-          {/* Main Content - ENHANCED FOR FORM-DETAILS */}
           <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
             {currentPhase === "form-details" ? (
-              // Special mobile layout for category selection
               renderMobileCategorySelection()
             ) : (
-              // Regular phase rendering for other steps
               renderCurrentPhase()
             )}
           </div>
 
-          {/* Bottom Carousel - HIDE FOR FORM-DETAILS AND GOAL-TRACKING ON MOBILE */}
           {currentPhase !== "form-details" && currentPhase !== "goal-tracking" && (
             <div className="mb-8">
               <BottomCarousel
@@ -479,7 +476,6 @@ const ATMMain = () => {
             </div>
           )}
 
-          {/* Mobile Action Buttons */}
           <div className="flex gap-4 mb-6">
             <button 
               onClick={handleReset}
@@ -495,7 +491,6 @@ const ATMMain = () => {
             </button>
           </div>
 
-          {/* Mobile Footer - UPDATED WITH NAVIGATION */}
           <div className="text-center space-y-3 text-base text-gray-600">
             <button 
               className="block w-full py-3 hover:text-gray-800 transition-colors"
