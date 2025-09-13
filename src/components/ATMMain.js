@@ -15,7 +15,7 @@ import GoalTrackingPhase from "./GoalTrackingPhase";
 import SimulateOneYearPhase from "./SimulateOneYearPhase";
 import SummaryPhase from "./SummaryPhase";
 import BottomCarousel from "./BottomCarousel";
-import GoalPopup from "./GoalPopup"; // Import the new component
+import GoalPopup from "./GoalPopup";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -261,12 +261,10 @@ const ATMMain = () => {
     </div>
   );
 
-
-
   return (
     <>
       {/* DESKTOP VERSION */}
-      <div className="hidden md:block relative mt-4 w-[60vw] max-w-none mx-auto aspect-[1004/1200]">
+      <div className="hidden lg:block relative mt-4 mx-auto w-[90vw] max-w-[1004px] aspect-[1004/1200]">
         <img
           src="/assets/atm-machine-asset.svg"
           alt="ATM Machine"
@@ -274,7 +272,7 @@ const ATMMain = () => {
         />
 
         {/* Translatable Text Overlay for "Not Financial Advice" */}
-        <div className="absolute" style={{ top: "6.5%", left: "8.5%", width: "83%", height: "11%" }}>
+        <div className="absolute" style={{ top: "6.5%", left: "9.5%", width: "81%", height: "11%" }}>
           <div className="flex h-full">
             <div className="flex-1 flex flex-col items-start justify-center bg-transparent pr-1 pl-2">
               <span 
@@ -316,38 +314,40 @@ const ATMMain = () => {
           </div>
         </div>
 
-        <div className="absolute" style={{ top: "23.5%", left: "7.2%" }}>
+        {/* CHANGE: Adjusted the left percentage from 7.5% to 8.5% */}
+        <div className="absolute" style={{ top: "23.5%", left: "8.5%" }}>
           <ATMButton label={t("navigation.goal")} onClick={handleGoalClick} />
         </div>
-        <div className="absolute" style={{ top: "28.5%", left: "7.2%" }}>
+        <div className="absolute" style={{ top: "28.5%", left: "8.5%" }}>
           <ATMButton label={t("navigation.expenses")} />
         </div>
-        <div className="absolute" style={{ top: "33.5%", left: "7.2%" }}>
+        <div className="absolute" style={{ top: "33.5%", left: "8.5%" }}>
           <ATMButton label={t("navigation.print")} />
         </div>
-        <div className="absolute" style={{ top: "38.5%", left: "7.2%" }}>
+        <div className="absolute" style={{ top: "38.5%", left: "8.5%" }}>
           <ATMButton />
         </div>
 
-        <div className="absolute" style={{ top: "23.5%", right: "9.2%" }}>
+        <div className="absolute" style={{ top: "23.5%", right: "9.5%" }}>
           <ATMButton label={t("navigation.simulateOneYear")} small onClick={handleSimulateOneYearClick} />
         </div>
-        <div className="absolute" style={{ top: "28.5%", right: "9.2%" }}>
+        <div className="absolute" style={{ top: "28.5%", right: "9.5%" }}>
           <ATMButton label={t("navigation.createGoal")} small onClick={handleCreateGoalClick} />
         </div>
-        <div className="absolute" style={{ top: "33.5%", right: "9.2%" }}>
+        <div className="absolute" style={{ top: "33.5%", right: "9.5%" }}>
           <ATMButton label={t("navigation.reset")} onClick={handleReset} />
         </div>
-        <div className="absolute" style={{ top: "38.5%", right: "9.2%" }}>
+        <div className="absolute" style={{ top: "38.5%", right: "9.5%" }}>
           <ATMButton />
         </div>
-
+        
+        {/* Reverted to absolute positioning with a new, manually adjusted left percentage for the wider button */}
         {/* Terms and Conditions Button */}
         <img
           src="/assets/Button/Off.svg"
           alt="Terms and Conditions"
           className="absolute cursor-pointer hover:opacity-80 transition-opacity"
-          style={{ top: "66%", left: "5%" }}
+          style={{ top: "66%", left: "5%", width: "17%" }} 
           onClick={() => navigate('/terms')}
           title={t("navigation.terms", "Terms & Conditions")}
         />
@@ -357,7 +357,7 @@ const ATMMain = () => {
           src="/assets/cmts-suggestions.svg"
           alt="COMMENTS & SUGGESTIONS"
           className="absolute cursor-pointer hover:opacity-80 transition-opacity"
-          style={{ top: "63.5%", left: "26%" }}
+          style={{ top: "66%", left: "57%", width: "48%" }}
           onClick={() => navigate('/feedback')}
           title={t("navigation.feedback", "Comments & Suggestions")}
         />
@@ -413,12 +413,11 @@ const ATMMain = () => {
           </div>
         )}
 
-        {/* Use the new GoalPopup component */}
         {isPopupVisible && <GoalPopup onClose={handleClosePopup} />}
       </div>
 
       {/* MOBILE VERSION - UNCHANGED */}
-      <div className="md:hidden min-h-screen bg-gradient-to-b from-gray-100 to-gray-200">
+      <div className="lg:hidden min-h-screen bg-gradient-to-b from-gray-100 to-gray-200">
         <div className="container mx-auto px-4 py-6">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-3">
