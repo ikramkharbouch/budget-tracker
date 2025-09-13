@@ -314,7 +314,6 @@ const ATMMain = () => {
           </div>
         </div>
 
-        {/* CHANGE: Adjusted the left percentage from 7.5% to 8.5% */}
         <div className="absolute" style={{ top: "23.5%", left: "8.5%" }}>
           <ATMButton label={t("navigation.goal")} onClick={handleGoalClick} />
         </div>
@@ -341,26 +340,42 @@ const ATMMain = () => {
           <ATMButton />
         </div>
         
-        {/* Reverted to absolute positioning with a new, manually adjusted left percentage for the wider button */}
-        {/* Terms and Conditions Button */}
-        <img
-          src="/assets/Button/Off.svg"
-          alt="Terms and Conditions"
-          className="absolute cursor-pointer hover:opacity-80 transition-opacity"
-          style={{ top: "66%", left: "5%", width: "17%" }} 
-          onClick={() => navigate('/terms')}
-          title={t("navigation.terms", "Terms & Conditions")}
-        />
-
-        {/* Comments & Suggestions Button */}
-        <img
-          src="/assets/cmts-suggestions.svg"
-          alt="COMMENTS & SUGGESTIONS"
-          className="absolute cursor-pointer hover:opacity-80 transition-opacity"
-          style={{ top: "66%", left: "57%", width: "48%" }}
-          onClick={() => navigate('/feedback')}
-          title={t("navigation.feedback", "Comments & Suggestions")}
-        />
+        {/*
+          Final, Corrected Code:
+          - Restored original image buttons for "Terms" and "Comments".
+          - Added a new, correctly styled HTML button for "Privacy Policy" in the middle.
+        */}
+        <div 
+          className="absolute flex justify-between items-center"
+          style={{ 
+            top: "66%", 
+            left: "5%", 
+            width: "90%", 
+            height: "5%"
+          }}
+        >
+          {/* Terms & Conditions Button (Image) */}
+          <img
+            src="/assets/Button/Off.svg"
+            alt="Terms and Conditions"
+            className="cursor-pointer hover:opacity-80 transition-opacity"
+            style={{ width: "23.5%" }} 
+            onClick={() => navigate('/terms')}
+            title={t("navigation.terms", "Terms & Conditions")}
+          />
+        
+          {/* Privacy Policy Button (New HTML Button) */}
+          <img
+            src="/assets/Button 2/Off.svg"
+            alt="Privacy Policy"
+            className="cursor-pointer hover:opacity-80 transition-opacity"
+            style={{ width: "23.5%" }} 
+            onClick={() => navigate('/terms')}
+            title={t("navigation.privacy", "Privacy Policy")}
+          />
+        
+          
+        </div>
 
         <div
           className="absolute"
@@ -416,7 +431,7 @@ const ATMMain = () => {
         {isPopupVisible && <GoalPopup onClose={handleClosePopup} />}
       </div>
 
-      {/* MOBILE VERSION - UNCHANGED */}
+      {/* MOBILE VERSION */}
       <div className="lg:hidden min-h-screen bg-gradient-to-b from-gray-100 to-gray-200">
         <div className="container mx-auto px-4 py-6">
           <div className="text-center mb-8">
@@ -484,31 +499,35 @@ const ATMMain = () => {
             </div>
           )}
 
-          <div className="flex gap-4 mb-6">
+          {/* Mobile Buttons */}
+          <div className="flex flex-wrap justify-around gap-2 mb-6">
             <button 
               onClick={handleReset}
-              className="flex-1 bg-red-600 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-red-700 active:bg-red-800 transition-colors touch-manipulation"
+              className="flex-1 min-w-[45%] bg-red-600 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-red-700 active:bg-red-800 transition-colors touch-manipulation"
             >
               {t("common.reset", "Reset")}
             </button>
             <button 
               onClick={handleGoalClick}
-              className="flex-1 bg-blue-600 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-blue-700 active:bg-blue-800 transition-colors touch-manipulation"
+              className="flex-1 min-w-[45%] bg-blue-600 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-blue-700 active:bg-blue-800 transition-colors touch-manipulation"
             >
               {t("navigation.goal", "GOAL")}
             </button>
-          </div>
-
-          <div className="text-center space-y-3 text-base text-gray-600">
             <button 
-              className="block w-full py-3 hover:text-gray-800 transition-colors"
               onClick={() => navigate('/terms')}
+              className="flex-1 min-w-[45%] bg-gray-700 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-gray-800 active:bg-gray-900 transition-colors touch-manipulation"
             >
               {t("navigation.terms", "Terms & Conditions")}
             </button>
             <button 
-              className="block w-full py-3 hover:text-gray-800 transition-colors"
+              onClick={() => navigate('/privacy')}
+              className="flex-1 min-w-[45%] bg-gray-700 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-gray-800 active:bg-gray-900 transition-colors touch-manipulation"
+            >
+              {t("navigation.privacy", "Privacy Policy")}
+            </button>
+            <button 
               onClick={() => navigate('/feedback')}
+              className="flex-1 min-w-[45%] bg-gray-700 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-gray-800 active:bg-gray-900 transition-colors touch-manipulation"
             >
               {t("navigation.feedback", "Comments & Suggestions")}
             </button>
