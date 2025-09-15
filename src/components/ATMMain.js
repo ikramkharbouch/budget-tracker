@@ -16,6 +16,7 @@ import SimulateOneYearPhase from "./SimulateOneYearPhase";
 import SummaryPhase from "./SummaryPhase";
 import BottomCarousel from "./BottomCarousel";
 import GoalPopup from "./GoalPopup";
+import OverviewPage from "./OverviewPage";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -219,6 +220,8 @@ const ATMMain = () => {
             reductionStrategy={reductionStrategy}
           />
         );
+      case "overview":
+        return <OverviewPage />;
       default:
         return null;
     }
@@ -318,7 +321,7 @@ const ATMMain = () => {
           <ATMButton label={t("navigation.goal")} onClick={handleGoalClick} />
         </div>
         <div className="absolute" style={{ top: "28.5%", left: "8.5%" }}>
-          <ATMButton label={t("navigation.overview")} />
+          <ATMButton label={t("navigation.overview")} onClick={() => dispatch(setCurrentPhase("overview"))} />
         </div>
         <div className="absolute" style={{ top: "33.5%", left: "8.5%" }}>
           <ATMButton label={t("navigation.print")} />
@@ -382,10 +385,10 @@ const ATMMain = () => {
           style={{ top: "25%", left: "25%", width: "50%" }}
         >
           <div className="text-center">
-            {currentPhase !== "goal-tracking" && currentPhase !== "simulate-one-year" && (
+            {currentPhase !== "goal-tracking" && currentPhase !== "simulate-one-year" && currentPhase !== "overview" && (
               <ProgressBar currentPhase={currentPhase} />
             )}
-            {currentPhase !== "goal-tracking" && currentPhase !== "simulate-one-year" && (
+            {currentPhase !== "goal-tracking" && currentPhase !== "simulate-one-year" && currentPhase !== "overview"  && (
               <NavigationArrows
                 currentPhase={currentPhase}
                 onPrevious={handlePreviousPhase}
