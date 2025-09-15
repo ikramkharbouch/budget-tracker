@@ -17,6 +17,7 @@ import SummaryPhase from "./SummaryPhase";
 import BottomCarousel from "./BottomCarousel";
 import GoalPopup from "./GoalPopup";
 import OverviewPage from "./OverviewPage";
+import ImageTextButton from "./ImageTextButton";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -233,7 +234,10 @@ const ATMMain = () => {
         {t("mobile.categorySelection.title", "Select Your Expense Categories")}
       </h2>
       <p className="text-gray-600 text-center mb-8">
-        {t("mobile.categorySelection.subtitle", "Choose the categories you want to track in your budget")}
+        {t(
+          "mobile.categorySelection.subtitle",
+          "Choose the categories you want to track in your budget"
+        )}
       </p>
       <div className="grid grid-cols-1 gap-4">
         {categories.map((item) => (
@@ -250,14 +254,19 @@ const ATMMain = () => {
               }
             `}
           >
-            {t(`categories.${item.toLowerCase().replace(/\s+/g, '')}`, item)}
+            {t(`categories.${item.toLowerCase().replace(/\s+/g, "")}`, item)}
           </button>
         ))}
       </div>
       {selectedCategories.length > 0 && (
         <div className="mt-6 p-4 bg-green-50 rounded-lg">
           <p className="text-green-700 text-center">
-            ✓ {selectedCategories.length} {t("mobile.categorySelection.selected", selectedCategories.length === 1 ? 'category' : 'categories')} {t("common.selected", "selected")}
+            ✓ {selectedCategories.length}{" "}
+            {t(
+              "mobile.categorySelection.selected",
+              selectedCategories.length === 1 ? "category" : "categories"
+            )}{" "}
+            {t("common.selected", "selected")}
           </p>
         </div>
       )}
@@ -275,43 +284,52 @@ const ATMMain = () => {
         />
 
         {/* Translatable Text Overlay for "Not Financial Advice" */}
-        <div className="absolute" style={{ top: "6.5%", left: "9.5%", width: "81%", height: "11%" }}>
+        <div
+          className="absolute"
+          style={{ top: "6.5%", left: "9.5%", width: "81%", height: "11%" }}
+        >
           <div className="flex h-full">
             <div className="flex-1 flex flex-col items-start justify-center bg-transparent pr-1 pl-2">
-              <span 
+              <span
                 className="text-white font-light italic leading-none select-none"
-                style={{ 
-                  fontFamily: '"Bookman Old Style", "Book Antiqua", Georgia, serif',
+                style={{
+                  fontFamily:
+                    '"Bookman Old Style", "Book Antiqua", Georgia, serif',
                   fontSize: "clamp(2.2rem, 5.5vw, 5rem)",
-                  textShadow: '1px 1px 2px rgba(255,255,255,0.5), 0 0 4px rgba(255,255,255,0.3)',
-                  letterSpacing: '1px'
+                  textShadow:
+                    "1px 1px 2px rgba(255,255,255,0.5), 0 0 4px rgba(255,255,255,0.3)",
+                  letterSpacing: "1px",
                 }}
               >
-                {t('disclaimer.not', 'Not')}
+                {t("disclaimer.not", "Not")}
               </span>
-              <span 
+              <span
                 className="text-white font-light italic leading-none select-none -mt-2"
-                style={{ 
-                  fontFamily: '"Bookman Old Style", "Book Antiqua", Georgia, serif',
+                style={{
+                  fontFamily:
+                    '"Bookman Old Style", "Book Antiqua", Georgia, serif',
                   fontSize: "clamp(2.2rem, 5.5vw, 5rem)",
-                  textShadow: '1px 1px 2px rgba(255,255,255,0.5), 0 0 4px rgba(255,255,255,0.3)',
-                  letterSpacing: '1px'
+                  textShadow:
+                    "1px 1px 2px rgba(255,255,255,0.5), 0 0 4px rgba(255,255,255,0.3)",
+                  letterSpacing: "1px",
                 }}
               >
-                {t('disclaimer.financial', 'Financial')}
+                {t("disclaimer.financial", "Financial")}
               </span>
             </div>
             <div className="flex-1 flex items-center justify-center bg-transparent pl-1">
-              <span 
+              <span
                 className="text-white font-light italic leading-none text-center select-none"
-                style={{ 
-                  fontFamily: '"Bookman Old Style", "Book Antiqua", Georgia, serif',
+                style={{
+                  fontFamily:
+                    '"Bookman Old Style", "Book Antiqua", Georgia, serif',
                   fontSize: "clamp(2.6rem, 6.5vw, 6rem)",
-                  textShadow: '1px 1px 2px rgba(255,255,255,0.5), 0 0 4px rgba(255,255,255,0.3)',
-                  letterSpacing: '1px'
+                  textShadow:
+                    "1px 1px 2px rgba(255,255,255,0.5), 0 0 4px rgba(255,255,255,0.3)",
+                  letterSpacing: "1px",
                 }}
               >
-                {t('disclaimer.advice', 'Advice')}
+                {t("disclaimer.advice", "Advice")}
               </span>
             </div>
           </div>
@@ -321,7 +339,10 @@ const ATMMain = () => {
           <ATMButton label={t("navigation.goal")} onClick={handleGoalClick} />
         </div>
         <div className="absolute" style={{ top: "28.5%", left: "8.5%" }}>
-          <ATMButton label={t("navigation.overview")} onClick={() => dispatch(setCurrentPhase("overview"))} />
+          <ATMButton
+            label={t("navigation.overview")}
+            onClick={() => dispatch(setCurrentPhase("overview"))}
+          />
         </div>
         <div className="absolute" style={{ top: "33.5%", left: "8.5%" }}>
           <ATMButton label={t("navigation.print")} />
@@ -331,10 +352,18 @@ const ATMMain = () => {
         </div>
 
         <div className="absolute" style={{ top: "23.5%", right: "9.5%" }}>
-          <ATMButton label={t("navigation.simulateOneYear")} small onClick={handleSimulateOneYearClick} />
+          <ATMButton
+            label={t("navigation.simulateOneYear")}
+            small
+            onClick={handleSimulateOneYearClick}
+          />
         </div>
         <div className="absolute" style={{ top: "28.5%", right: "9.5%" }}>
-          <ATMButton label={t("navigation.createGoal")} small onClick={handleCreateGoalClick} />
+          <ATMButton
+            label={t("navigation.createGoal")}
+            small
+            onClick={handleCreateGoalClick}
+          />
         </div>
         <div className="absolute" style={{ top: "33.5%", right: "9.5%" }}>
           <ATMButton label={t("navigation.reset")} onClick={handleReset} />
@@ -342,42 +371,33 @@ const ATMMain = () => {
         <div className="absolute" style={{ top: "38.5%", right: "9.5%" }}>
           <ATMButton />
         </div>
-        
-        {/*
-          Final, Corrected Code:
-          - Restored original image buttons for "Terms" and "Comments".
-          - Added a new, correctly styled HTML button for "Privacy Policy" in the middle.
-        */}
-        <div 
+
+        <div
           className="absolute flex items-center"
-          style={{ 
-            top: "67%", 
-            left: "5%", 
-            width: "90%", 
-            height: "5%"
+          style={{
+            top: "67%",
+            left: "5%",
+            width: "90%",
+            height: "5%",
           }}
         >
-          {/* Terms & Conditions Button (Image) */}
-          <img
-            src="/assets/button-wrapper.svg"
-            alt="Terms and Conditions"
-            className="cursor-pointer hover:opacity-80 transition-opacity"
-            style={{ width: "23.5%" }} 
-            onClick={() => navigate('/terms')}
-            title={t("navigation.terms", "Terms & Conditions")}
+
+          <ImageTextButton
+            label={t("navigation.terms", "Terms & Conditions")}
+            onClick={() => navigate("/terms")}
+            className="mr-2"
           />
-        
-          {/* Privacy Policy Button (New HTML Button) */}
-          <img
-            src="/assets/button-wrapper.svg"
-            alt="Privacy Policy"
-            className="cursor-pointer hover:opacity-80 transition-opacity"
-            style={{ width: "23.5%" }} 
-            onClick={() => navigate('/terms')}
-            title={t("navigation.privacy", "Privacy Policy")}
+
+          <ImageTextButton
+            label={t("navigation.privacy", "Privacy Policy")}
+            onClick={() => navigate("/privacy")}
+            className="mr-2"
           />
-        
-          
+
+          <ImageTextButton
+            label={t("navigation.feedback", "Comments & Suggestions")}
+            onClick={() => navigate("/feedback")}
+          />
         </div>
 
         <div
@@ -385,97 +405,31 @@ const ATMMain = () => {
           style={{ top: "25%", left: "25%", width: "50%" }}
         >
           <div className="text-center">
-            {currentPhase !== "goal-tracking" && currentPhase !== "simulate-one-year" && currentPhase !== "overview" && (
-              <ProgressBar currentPhase={currentPhase} />
-            )}
-            {currentPhase !== "goal-tracking" && currentPhase !== "simulate-one-year" && currentPhase !== "overview"  && (
-              <NavigationArrows
-                currentPhase={currentPhase}
-                onPrevious={handlePreviousPhase}
-                onNext={handleNextPhase}
-                onReset={handleReset}
-              />
-            )}
+            {currentPhase !== "goal-tracking" &&
+              currentPhase !== "simulate-one-year" &&
+              currentPhase !== "overview" && (
+                <ProgressBar currentPhase={currentPhase} />
+              )}
+            {currentPhase !== "goal-tracking" &&
+              currentPhase !== "simulate-one-year" &&
+              currentPhase !== "overview" && (
+                <NavigationArrows
+                  currentPhase={currentPhase}
+                  onPrevious={handlePreviousPhase}
+                  onNext={handleNextPhase}
+                  onReset={handleReset}
+                />
+              )}
             {renderCurrentPhase()}
           </div>
         </div>
 
-        {currentPhase !== "goal-tracking" && currentPhase !== "simulate-one-year" && (
-          <div
-            className="absolute"
-            style={{ top: "78%", left: "15%", width: "70%" }}
-          >
-            <BottomCarousel
-              currentPhase={currentPhase}
-              categories={categories}
-              selectedCategories={selectedCategories}
-              categoryExpenses={categoryExpenses}
-              primaryJobIncome={primaryJobIncome}
-              targetSavings={targetSavings}
-              timeFrame={timeFrame}
-              reductionStrategy={reductionStrategy}
-              onCategorySelect={handleCategorySelect}
-              onExpenseChange={handleExpenseChange}
-              onPrimaryJobIncomeChange={(e) =>
-                dispatch(setPrimaryJobIncome(e.target.value))
-              }
-              onTargetSavingsChange={(e) =>
-                dispatch(setTargetSavings(e.target.value))
-              }
-              onTimeFrameChange={(e) => dispatch(setTimeFrame(e.target.value))}
-              onReductionStrategyChange={(e) =>
-                dispatch(setReductionStrategy(e.target.value))
-              }
-              onIncomeInternalNext={handleIncomeInternalNext}
-            />
-          </div>
-        )}
-
-        {isPopupVisible && <GoalPopup onClose={handleClosePopup} />}
-      </div>
-
-      {/* MOBILE VERSION */}
-      <div className="lg:hidden min-h-screen bg-gradient-to-b from-gray-100 to-gray-200">
-        <div className="container mx-auto px-4 py-6">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-3">
-              {t("mobile.header.title", "Financial Planner")}
-            </h1>
-            <p className="text-gray-600 text-lg mb-4">
-              {t("mobile.header.subtitle", "Plan your budget and savings goals")}
-            </p>
-            <div className="bg-gray-800 text-white py-3 px-4 rounded-lg text-sm">
-              <span 
-                className="font-bold italic"
-                style={{ fontFamily: '"Bookman Old Style", "Book Antiqua", Georgia, serif' }}
-              >
-                {t('disclaimer.notFinancial', 'Not Financial')} {t('disclaimer.advice', 'Advice')}
-              </span>
-            </div>
-          </div>
-
-          {currentPhase !== "goal-tracking" && currentPhase !== "simulate-one-year" && (
-            <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-              <ProgressBar currentPhase={currentPhase} />
-              <NavigationArrows
-                currentPhase={currentPhase}
-                onPrevious={handlePreviousPhase}
-                onNext={handleNextPhase}
-                onReset={handleReset}
-              />
-            </div>
-          )}
-
-          <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-            {currentPhase === "form-details" ? (
-              renderMobileCategorySelection()
-            ) : (
-              renderCurrentPhase()
-            )}
-          </div>
-
-          {currentPhase !== "form-details" && currentPhase !== "goal-tracking" && currentPhase !== "simulate-one-year" && (
-            <div className="mb-8">
+        {currentPhase !== "goal-tracking" &&
+          currentPhase !== "simulate-one-year" && (
+            <div
+              className="absolute"
+              style={{ top: "78%", left: "15%", width: "70%" }}
+            >
               <BottomCarousel
                 currentPhase={currentPhase}
                 categories={categories}
@@ -493,7 +447,9 @@ const ATMMain = () => {
                 onTargetSavingsChange={(e) =>
                   dispatch(setTargetSavings(e.target.value))
                 }
-                onTimeFrameChange={(e) => dispatch(setTimeFrame(e.target.value))}
+                onTimeFrameChange={(e) =>
+                  dispatch(setTimeFrame(e.target.value))
+                }
                 onReductionStrategyChange={(e) =>
                   dispatch(setReductionStrategy(e.target.value))
                 }
@@ -502,34 +458,115 @@ const ATMMain = () => {
             </div>
           )}
 
+        {isPopupVisible && <GoalPopup onClose={handleClosePopup} />}
+      </div>
+
+      {/* MOBILE VERSION */}
+      <div className="lg:hidden min-h-screen bg-gradient-to-b from-gray-100 to-gray-200">
+        <div className="container mx-auto px-4 py-6">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-800 mb-3">
+              {t("mobile.header.title", "Financial Planner")}
+            </h1>
+            <p className="text-gray-600 text-lg mb-4">
+              {t(
+                "mobile.header.subtitle",
+                "Plan your budget and savings goals"
+              )}
+            </p>
+            <div className="bg-gray-800 text-white py-3 px-4 rounded-lg text-sm">
+              <span
+                className="font-bold italic"
+                style={{
+                  fontFamily:
+                    '"Bookman Old Style", "Book Antiqua", Georgia, serif',
+                }}
+              >
+                {t("disclaimer.notFinancial", "Not Financial")}{" "}
+                {t("disclaimer.advice", "Advice")}
+              </span>
+            </div>
+          </div>
+
+          {currentPhase !== "goal-tracking" &&
+            currentPhase !== "simulate-one-year" && (
+              <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <ProgressBar currentPhase={currentPhase} />
+                <NavigationArrows
+                  currentPhase={currentPhase}
+                  onPrevious={handlePreviousPhase}
+                  onNext={handleNextPhase}
+                  onReset={handleReset}
+                />
+              </div>
+            )}
+
+          <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+            {currentPhase === "form-details"
+              ? renderMobileCategorySelection()
+              : renderCurrentPhase()}
+          </div>
+
+          {currentPhase !== "form-details" &&
+            currentPhase !== "goal-tracking" &&
+            currentPhase !== "simulate-one-year" && (
+              <div className="mb-8">
+                <BottomCarousel
+                  currentPhase={currentPhase}
+                  categories={categories}
+                  selectedCategories={selectedCategories}
+                  categoryExpenses={categoryExpenses}
+                  primaryJobIncome={primaryJobIncome}
+                  targetSavings={targetSavings}
+                  timeFrame={timeFrame}
+                  reductionStrategy={reductionStrategy}
+                  onCategorySelect={handleCategorySelect}
+                  onExpenseChange={handleExpenseChange}
+                  onPrimaryJobIncomeChange={(e) =>
+                    dispatch(setPrimaryJobIncome(e.target.value))
+                  }
+                  onTargetSavingsChange={(e) =>
+                    dispatch(setTargetSavings(e.target.value))
+                  }
+                  onTimeFrameChange={(e) =>
+                    dispatch(setTimeFrame(e.target.value))
+                  }
+                  onReductionStrategyChange={(e) =>
+                    dispatch(setReductionStrategy(e.target.value))
+                  }
+                  onIncomeInternalNext={handleIncomeInternalNext}
+                />
+              </div>
+            )}
+
           {/* Mobile Buttons */}
           <div className="flex flex-wrap justify-around gap-2 mb-6">
-            <button 
+            <button
               onClick={handleReset}
               className="flex-1 min-w-[45%] bg-red-600 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-red-700 active:bg-red-800 transition-colors touch-manipulation"
             >
               {t("common.reset", "Reset")}
             </button>
-            <button 
+            <button
               onClick={handleGoalClick}
               className="flex-1 min-w-[45%] bg-blue-600 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-blue-700 active:bg-blue-800 transition-colors touch-manipulation"
             >
               {t("navigation.goal", "GOAL")}
             </button>
-            <button 
-              onClick={() => navigate('/terms')}
+            <button
+              onClick={() => navigate("/terms")}
               className="flex-1 min-w-[45%] bg-gray-700 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-gray-800 active:bg-gray-900 transition-colors touch-manipulation"
             >
               {t("navigation.terms", "Terms & Conditions")}
             </button>
-            <button 
-              onClick={() => navigate('/privacy')}
+            <button
+              onClick={() => navigate("/privacy")}
               className="flex-1 min-w-[45%] bg-gray-700 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-gray-800 active:bg-gray-900 transition-colors touch-manipulation"
             >
               {t("navigation.privacy", "Privacy Policy")}
             </button>
-            <button 
-              onClick={() => navigate('/feedback')}
+            <button
+              onClick={() => navigate("/feedback")}
               className="flex-1 min-w-[45%] bg-gray-700 text-white py-4 px-6 rounded-lg font-medium text-lg hover:bg-gray-800 active:bg-gray-900 transition-colors touch-manipulation"
             >
               {t("navigation.feedback", "Comments & Suggestions")}
