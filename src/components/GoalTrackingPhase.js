@@ -163,15 +163,38 @@ const GoalTrackingPhase = () => {
           </div>
 
           <div className="mt-6">
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            {/* Progress bar with milestones and current marker */}
+            <div className="relative w-full">
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  className="h-full rounded-full transition-all duration-300"
+                  style={{
+                    width: `${selectedGoalData.progress}%`,
+                    backgroundColor: selectedGoalData.progressColor,
+                  }}
+                />
+              </div>
+
+              {/* Milestone ticks at 0%, 25%, 50%, 75%, 100% */}
+              {[0, 25, 50, 75, 100].map((pct) => (
+                <div
+                  key={`tick-${pct}`}
+                  className="absolute -top-1 h-4 w-[1px] bg-gray-400"
+                  style={{ left: `${pct}%` }}
+                />
+              ))}
+
+              {/* Current progress marker (dot) */}
               <div
-                className="h-full rounded-full transition-all duration-300"
+                className="absolute -top-[6px] -translate-x-1/2 h-3 w-3 rounded-full border border-black"
                 style={{
-                  width: `${selectedGoalData.progress}%`,
+                  left: `${selectedGoalData.progress}%`,
                   backgroundColor: selectedGoalData.progressColor,
                 }}
+                title={`${Math.round(selectedGoalData.progress)}%`}
               />
             </div>
+
             <div className="flex justify-between mt-2 text-sm font-medium">
               <span className="text-black">
                 {formatAmount(selectedGoalData.currentAmount)}
@@ -266,17 +289,32 @@ const GoalTrackingPhase = () => {
                       </div>
                     </div>
 
-                    <div
-                      className="w-full bg-gray-200 rounded-full mb-2"
-                      style={{ height: "6px" }}
-                    >
+                    <div className="relative w-full mb-2" style={{ height: "6px" }}>
                       <div
-                        className="rounded-full transition-all duration-300"
+                        className="w-full bg-gray-200 rounded-full h-full"
+                      >
+                        <div
+                          className="rounded-full transition-all duration-300 h-full"
+                          style={{
+                            width: `${goal.progress}%`,
+                            backgroundColor: goal.progressColor,
+                          }}
+                        />
+                      </div>
+                      {[0, 25, 50, 75, 100].map((pct) => (
+                        <div
+                          key={`tick-${goal.id}-${pct}`}
+                          className="absolute -top-1 h-4 w-[1px] bg-gray-400"
+                          style={{ left: `${pct}%` }}
+                        />
+                      ))}
+                      <div
+                        className="absolute -top-[7px] -translate-x-1/2 h-3 w-3 rounded-full border border-black"
                         style={{
-                          width: `${goal.progress}%`,
-                          height: "6px",
+                          left: `${goal.progress}%`,
                           backgroundColor: goal.progressColor,
                         }}
+                        title={`${Math.round(goal.progress)}%`}
                       />
                     </div>
 
