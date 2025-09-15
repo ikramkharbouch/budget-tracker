@@ -10,7 +10,7 @@ const GoalTrackingPhase = () => {
     {
       id: 1,
       name: "Saving Money",
-      icon: "https://placehold.co/100x100/FFF7E6/000000?text=S",
+      icon: "/assets/money-cash-business-cart-finance-svgrepo-com 1.svg",
       currentAmount: 400,
       targetAmount: 1500,
       leftAmount: 1100,
@@ -21,7 +21,7 @@ const GoalTrackingPhase = () => {
     {
       id: 2,
       name: "Pay off Loans",
-      icon: "https://placehold.co/100x100/E5F1FF/000000?text=P",
+      icon: "/assets/goal-pay-off-loans.svg",
       currentAmount: 20,
       targetAmount: 400,
       leftAmount: 380,
@@ -32,7 +32,7 @@ const GoalTrackingPhase = () => {
     {
       id: 3,
       name: "Pay off Credit Card",
-      icon: "https://placehold.co/100x100/FFF7E6/000000?text=C",
+      icon: "/assets/goals-credit-card.svg",
       currentAmount: 6000,
       targetAmount: 6200,
       leftAmount: 200,
@@ -43,7 +43,7 @@ const GoalTrackingPhase = () => {
     {
       id: 4,
       name: "Buying a Home",
-      icon: "https://placehold.co/100x100/E5F1FF/000000?text=B",
+      icon: "/assets/goal-buying-house.svg",
       currentAmount: 200,
       targetAmount: 500,
       leftAmount: 300,
@@ -109,7 +109,7 @@ const GoalTrackingPhase = () => {
       selectedGoalData.targetAmount - selectedGoalData.currentAmount;
 
     return (
-      <div className="w-full h-full mt-[-25px] flex flex-col items-center">
+      <div className="w-full h-full mt-[-25px] flex flex-col items-center mr-10">
         <div className="flex items-center justify-between mb-6 px-4 w-full">
           <button
             onClick={handleBack}
@@ -135,10 +135,10 @@ const GoalTrackingPhase = () => {
           </button>
         </div>
 
-        <div className="bg-white rounded-xl border border-black shadow-sm p-4 w-full max-w-sm">
+        <div className="bg-white rounded-lg border border-black shadow-sm p-4 w-full h-full">
           <div className="flex items-start gap-4">
             <div
-              className={`w-16 h-16 rounded-lg ${selectedGoalData.iconBg} flex items-center justify-center flex-shrink-0 border border-1 border-black`}
+              className={`w-20 h-20 rounded-md ${selectedGoalData.iconBg} flex items-center justify-center flex-shrink-0 border border-1 border-black`}
             >
               <img
                 src={selectedGoalData.icon}
@@ -146,69 +146,80 @@ const GoalTrackingPhase = () => {
                 className="w-full h-full object-contain"
               />
             </div>
-            <div className="flex-1">
-              <h3 className="font-medium text-lg text-black">Goal</h3>
-              <p className="font-normal text-md text-gray-700">
+            <div className="flex-1 max-w-max text-left font-inter">
+              <h3 className="font-regular text-lg text-black">Goal</h3>
+              <p className="font-medium text-md">
                 {formatAmount(selectedGoalData.targetAmount)}
               </p>
               <div className="flex items-center gap-2">
-                <img
-                  src="https://www.svgrepo.com/show/511529/calendar-166.svg"
-                  alt="Calendar Icon"
-                  className="w-4 h-4"
-                />
-                <p className="text-sm text-gray-500">{dueDate}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6">
-            {/* Progress bar with milestones and current marker */}
-            <div className="relative w-full">
-              <div className="w-full bg-gray-200 rounded-full h-2">
                 <div
-                  className="h-full rounded-full transition-all duration-300"
+                  className="w-4 h-4 bg-black"
                   style={{
-                    width: `${selectedGoalData.progress}%`,
-                    backgroundColor: selectedGoalData.progressColor,
+                    maskImage: "url(/assets/calendar.svg)",
+                    maskSize: "contain",
+                    maskRepeat: "no-repeat",
                   }}
-                />
+                ></div>
+                <p className="text-sm">{dueDate}</p>
               </div>
-
-              {/* Milestone ticks at 0%, 25%, 50%, 75%, 100% */}
-              {[0, 25, 50, 75, 100].map((pct) => (
-                <div
-                  key={`tick-${pct}`}
-                  className="absolute -top-1 h-4 w-[1px] bg-gray-400"
-                  style={{ left: `${pct}%` }}
-                />
-              ))}
-
-              {/* Current progress marker (dot) */}
-              <div
-                className="absolute -top-[6px] -translate-x-1/2 h-3 w-3 rounded-full border border-black"
-                style={{
-                  left: `${selectedGoalData.progress}%`,
-                  backgroundColor: selectedGoalData.progressColor,
-                }}
-                title={`${Math.round(selectedGoalData.progress)}%`}
-              />
-            </div>
-
-            <div className="flex justify-between mt-2 text-sm font-medium">
-              <span className="text-black">
-                {formatAmount(selectedGoalData.currentAmount)}
-              </span>
-              <span className="text-gray-500">
-                {formatAmount(remainingAmount)}
-              </span>
             </div>
           </div>
+
+          <div className="mt-6 relative">
+  <div className="w-full bg-gray-200 rounded-full h-2">
+    <div
+      className="h-full rounded-full transition-all duration-300"
+      style={{
+        width: `${selectedGoalData.progress}%`,
+        backgroundColor: selectedGoalData.progressColor,
+      }}
+    />
+  </div>
+
+  {/* Left pointer at the start of the filled bar */}
+  <div
+    className="absolute z-10"
+    style={{
+      left: `calc(0% + 1px)`,
+      bottom: `-6px`,
+      width: 0,
+      height: 0,
+      borderLeft: '7px solid transparent',
+      borderRight: '7px solid transparent',
+      borderTop: `7px solid ${selectedGoalData.progressColor}`,
+    }}
+  />
+
+  {/* Gray pointer at the very end of the bar (max value) */}
+  <div
+    className="absolute z-10"
+    style={{
+      right: `1px`,
+      bottom: `-6px`,
+      width: 0,
+      height: 0,
+      borderLeft: '7px solid transparent',
+      borderRight: '7px solid transparent',
+      borderTop: `7px solid #e5e7eb`,
+    }}
+  />
+</div>
+
+
+
+<div className="flex justify-between mt-2 text-sm font-medium">
+  <span className="text-green-600">
+    {formatAmount(selectedGoalData.currentAmount)}
+  </span>
+  <span className="text-gray-600 font-regular">
+    {formatAmount(remainingAmount)}
+  </span>
+</div>
 
           {/* Notes section */}
           <div className="mt-4">
             <textarea
-              className="w-full h-32 p-3 text-sm text-gray-800 border rounded-lg resize-none"
+              className="w-full h-32 p-3 text-sm text-gray-800 border border-black rounded-lg resize-none"
               placeholder="Add your notes here..."
               defaultValue={note}
             ></textarea>
@@ -289,32 +300,17 @@ const GoalTrackingPhase = () => {
                       </div>
                     </div>
 
-                    <div className="relative w-full mb-2" style={{ height: "6px" }}>
+                    <div
+                      className="w-full bg-gray-200 rounded-full mb-2"
+                      style={{ height: "6px" }}
+                    >
                       <div
-                        className="w-full bg-gray-200 rounded-full h-full"
-                      >
-                        <div
-                          className="rounded-full transition-all duration-300 h-full"
-                          style={{
-                            width: `${goal.progress}%`,
-                            backgroundColor: goal.progressColor,
-                          }}
-                        />
-                      </div>
-                      {[0, 25, 50, 75, 100].map((pct) => (
-                        <div
-                          key={`tick-${goal.id}-${pct}`}
-                          className="absolute -top-1 h-4 w-[1px] bg-gray-400"
-                          style={{ left: `${pct}%` }}
-                        />
-                      ))}
-                      <div
-                        className="absolute -top-[7px] -translate-x-1/2 h-3 w-3 rounded-full border border-black"
+                        className="rounded-full transition-all duration-300"
                         style={{
-                          left: `${goal.progress}%`,
+                          width: `${goal.progress}%`,
+                          height: "6px",
                           backgroundColor: goal.progressColor,
                         }}
-                        title={`${Math.round(goal.progress)}%`}
                       />
                     </div>
 
