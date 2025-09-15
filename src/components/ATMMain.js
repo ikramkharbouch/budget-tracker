@@ -346,9 +346,9 @@ const ATMMain = () => {
           - Added a new, correctly styled HTML button for "Privacy Policy" in the middle.
         */}
         <div 
-          className="absolute flex justify-between items-center"
+          className="absolute flex items-center"
           style={{ 
-            top: "66%", 
+            top: "67%", 
             left: "5%", 
             width: "90%", 
             height: "5%"
@@ -356,7 +356,7 @@ const ATMMain = () => {
         >
           {/* Terms & Conditions Button (Image) */}
           <img
-            src="/assets/Button/Off.svg"
+            src="/assets/button-wrapper.svg"
             alt="Terms and Conditions"
             className="cursor-pointer hover:opacity-80 transition-opacity"
             style={{ width: "23.5%" }} 
@@ -366,7 +366,7 @@ const ATMMain = () => {
         
           {/* Privacy Policy Button (New HTML Button) */}
           <img
-            src="/assets/Button 2/Off.svg"
+            src="/assets/button-wrapper.svg"
             alt="Privacy Policy"
             className="cursor-pointer hover:opacity-80 transition-opacity"
             style={{ width: "23.5%" }} 
