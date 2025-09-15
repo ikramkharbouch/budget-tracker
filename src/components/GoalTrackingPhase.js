@@ -176,7 +176,6 @@ const GoalTrackingPhase = () => {
     />
   </div>
 
-  {/* Left pointer at the start of the filled bar */}
   <div
     className="absolute z-10"
     style={{
@@ -190,7 +189,6 @@ const GoalTrackingPhase = () => {
     }}
   />
 
-  {/* Gray pointer at the very end of the bar (max value) */}
   <div
     className="absolute z-10"
     style={{

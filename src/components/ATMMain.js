@@ -318,7 +318,7 @@ const ATMMain = () => {
           <ATMButton label={t("navigation.goal")} onClick={handleGoalClick} />
         </div>
         <div className="absolute" style={{ top: "28.5%", left: "8.5%" }}>
-          <ATMButton label={t("navigation.expenses")} />
+          <ATMButton label={t("navigation.overview")} />
         </div>
         <div className="absolute" style={{ top: "33.5%", left: "8.5%" }}>
           <ATMButton label={t("navigation.print")} />

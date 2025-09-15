@@ -3,6 +3,7 @@
   "navigation": {
     "goal": "LAYUNIN",
     "expenses": "MGA GASTOS",
+    "overview": "pangkalahatang-ideya",
     "print": "I-PRINT",
     "simulateOneYear": "I-SIMULATE ANG ISANG TAON",
     "createGoal": "GUMAWA NG LAYUNIN",

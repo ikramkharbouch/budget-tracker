@@ -3,6 +3,7 @@
   "navigation": {
     "goal": "GOAL",
     "expenses": "EXPENSES",
+    "overview": "Overview",
     "print": "PRINT",
     "simulateOneYear": "SIMULATE ONE YEAR",
     "createGoal": "CREATE GOAL",

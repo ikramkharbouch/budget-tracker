@@ -3,6 +3,7 @@
   "navigation": {
     "goal": "目标",
     "expenses": "支出",
+    "overview": "概述",
     "print": "打印",
     "simulateOneYear": "模拟一年",
     "createGoal": "创建目标",

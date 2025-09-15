@@ -3,6 +3,7 @@
   "navigation": {
     "goal": "목표",
     "expenses": "지출",
+    "overview": "개요",
     "print": "인쇄",
     "simulateOneYear": "1년 시뮬레이션",
     "createGoal": "목표 생성",

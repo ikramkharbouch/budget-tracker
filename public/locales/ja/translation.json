@@ -3,6 +3,7 @@
   "navigation": {
     "goal": "目標",
     "expenses": "支出",
+    "overview": "概要",
     "print": "印刷",
     "simulateOneYear": "1年をシミュレート",
     "createGoal": "目標を作成",

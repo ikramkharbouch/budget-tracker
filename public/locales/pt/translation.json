@@ -3,6 +3,7 @@
   "navigation": {
     "goal": "META",
     "expenses": "DESPESAS",
+    "overview": "visão geral",
     "print": "IMPRIMIR",
     "simulateOneYear": "SIMULAR UM ANO",
     "createGoal": "CRIAR META",

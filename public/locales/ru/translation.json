@@ -3,6 +3,7 @@
   "navigation": {
     "goal": "ЦЕЛЬ",
     "expenses": "РАСХОДЫ",
+    "overview": "обзор",
     "print": "ПЕЧАТЬ",
     "simulateOneYear": "СИМУЛИРОВАТЬ ГОД",
     "createGoal": "СОЗДАТЬ ЦЕЛЬ",

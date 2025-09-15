@@ -3,6 +3,7 @@
   "navigation": {
     "goal": "লক্ষ্য",
     "expenses": "খরচ",
+    "overview": "সংক্ষিপ্ত বিবরণ",
     "print": "প্রিন্ট",
     "simulateOneYear": "এক বছর অনুকরণ",
     "createGoal": "লক্ষ্য তৈরি",

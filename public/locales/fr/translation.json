@@ -3,6 +3,7 @@
   "navigation": {
     "goal": "OBJECTIF",
     "expenses": "DÉPENSES",
+    "overview": "aperçu",
     "print": "IMPRIMER",
     "simulateOneYear": "SIMULER UNE ANNÉE",
     "createGoal": "CRÉER OBJECTIF",
