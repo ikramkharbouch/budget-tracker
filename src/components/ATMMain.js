@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
@@ -19,6 +19,10 @@ import GoalPopup from "./GoalPopup";
 import OverviewPage from "./OverviewPage";
 import ImageTextButton from "./ImageTextButton";
 import { useTranslation } from "react-i18next";
+import ResetConfirmationPopup from "./ResetConfirmationPopup";
+
+import { useReactToPrint } from "react-to-print";
+import PrintableSummary from "./PrintableSummary";
 
 import {
   setCurrentPhase,
@@ -46,6 +50,8 @@ const ATMMain = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  const componentRef = useRef();
+
   const currentPhase = useSelector(selectCurrentPhase);
   const selectedCategories = useSelector(selectSelectedCategories);
   const categoryExpenses = useSelector(selectCategoryExpenses);
@@ -56,6 +62,22 @@ const ATMMain = () => {
   const onboardingData = useSelector(selectOnboardingData);
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [isPrintPopupVisible, setIsPrintPopupVisible] = useState(false);
+  const [isResetPopupVisible, setIsResetPopupVisible] = useState(false);
+
+  const reactToPrintFn = useReactToPrint({
+    content: () => componentRef.current,
+    pageStyle: `
+      @page {
+        margin: 0;
+      }
+      body {
+        background-color: #f1f5f9;
+        -webkit-print-color-adjust: exact;
+      }
+    `,
+    onAfterPrint: () => handleClosePrintPopup(),
+  });
 
   const categories = [
     "Groceries",
@@ -91,8 +113,17 @@ const ATMMain = () => {
   };
 
   const handleReset = () => {
+    setIsResetPopupVisible(true);
+  };
+
+  const handleConfirmReset = () => {
     dispatch(resetOnboarding());
     localStorage.removeItem("onboardingProgress");
+    setIsResetPopupVisible(false);
+  };
+
+  const handleCloseResetPopup = () => {
+    setIsResetPopupVisible(false);
   };
 
   const handleGoalClick = () => {
@@ -188,6 +219,14 @@ const ATMMain = () => {
     } else if (currentPhase === "simulate-one-year") {
       dispatch(setCurrentPhase("form-details"));
     }
+  };
+
+  const handlePrintClick = () => {
+    setIsPrintPopupVisible(true);
+  };
+
+  const handleClosePrintPopup = () => {
+    setIsPrintPopupVisible(false);
   };
 
   const renderCurrentPhase = () => {
@@ -345,7 +384,7 @@ const ATMMain = () => {
           />
         </div>
         <div className="absolute" style={{ top: "33.5%", left: "8.5%" }}>
-          <ATMButton label={t("navigation.print")} />
+          <ATMButton label={t("navigation.print")} onClick={handlePrintClick} />
         </div>
         <div className="absolute" style={{ top: "38.5%", left: "8.5%" }}>
           <ATMButton />
@@ -381,7 +420,6 @@ const ATMMain = () => {
             height: "5%",
           }}
         >
-
           <ImageTextButton
             label={t("navigation.terms", "Terms & Conditions")}
             onClick={() => navigate("/terms")}
@@ -460,7 +498,87 @@ const ATMMain = () => {
 
         {isPopupVisible && <GoalPopup onClose={handleClosePopup} />}
       </div>
+      {isPrintPopupVisible && (
+        <div
+          className="absolute bg-black bg-opacity-75 z-50 flex items-center justify-center"
+          style={{
+            top: "36.6%",
+            left: "34.5%",
+            width: "30.3%",
+            height: "51%",
+          }}
+        >
+          <div className="relative left-12">
+            <div
+              className="absolute bg-white border-t border-l border-r border-black"
+              style={{
+                width: "4rem",
+                height: "2rem",
+                borderRadius: "2rem 2rem 0 0",
+                left: "1.2rem",
+                top: "-1.9rem",
+                zIndex: 999,
+              }}
+            >
+              <div className="w-12 h-12 bg-black rounded-full ml-2 mt-2">
+                <img src="/assets/save-print.svg" className="mx-auto pt-3" />
+              </div>
+            </div>
 
+            <div
+              className="bg-white p-4 rounded-2xl shadow-xl relative border border-black"
+              style={{
+                width: "80%",
+                height: "40%",
+                maxWidth: "none",
+                margin: "0",
+              }}
+            >
+              <button
+                onClick={handleClosePrintPopup}
+                className="absolute top-2 right-4 text-black border border-black w-6 h-6 rounded-full hover:text-gray-800 text-xl flex items-center justify-center"
+              >
+                &times;
+              </button>
+              <div className="h-full flex flex-col justify-center mt-5">
+                <div className="mb-3">
+                  <h2 className="font-medium font-inter text-sm ">
+                    Do you want to save and print your income and expenses
+                    report?
+                  </h2>
+                </div>
+                {/* <div style={{ display: "none" }}>
+                  <PrintableSummary ref={componentRef} />
+                </div> */}
+
+                <button className="flex items-center space-x-2 w-1/4 min-w-max h-[21.86px] px-2 py-1 bg-[#dedede] border-[0.64px] border-black rounded-[2.55px] shadow-sm justify-center">
+                  <img src="/assets/pdf.svg" />
+                  <span className="text-black font-inter text-[10px] font-medium">
+                    Full Report.PDF
+                  </span>
+                </button>
+
+                <div className="flex justify-end mt-4">
+                  <button
+                    onClick={reactToPrintFn}
+                    className="bg-black text-white py-2 px-4 rounded hover:bg-gray-800 transition-colors text-sm font-semibold"
+                  >
+                    Save as PDF
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isResetPopupVisible && (
+        <ResetConfirmationPopup
+          isVisible={isResetPopupVisible}
+          onClose={handleCloseResetPopup}
+          onConfirm={handleConfirmReset}
+        />
+      )}
       {/* MOBILE VERSION */}
       <div className="lg:hidden min-h-screen bg-gradient-to-b from-gray-100 to-gray-200">
         <div className="container mx-auto px-4 py-6">
