@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -10,7 +10,7 @@ import {
   setReductionStrategy,
   resetOnboarding,
   saveProgress,
-  selectCurrentPhase,
+  selectCurrentPhase as selectCurrentPhaseFromOnboarding, // Renamed to avoid collision
   selectSelectedCategories,
   selectCategoryExpenses,
   selectPrimaryJobIncome,
@@ -19,6 +19,8 @@ import {
   selectReductionStrategy,
   selectOnboardingData,
 } from "../store/slices/onboardingSlice";
+import { selectIsAuthenticated } from "../store/slices/authSlice"; 
+
 
 // List of available expense categories
 const CATEGORIES = [
@@ -33,7 +35,9 @@ export const useOnboardingState = () => {
   const dispatch = useDispatch();
 
   // Redux Selectors
-  const currentPhase = useSelector(selectCurrentPhase);
+  const currentPhaseFromRedux = useSelector(selectCurrentPhaseFromOnboarding);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  
   const selectedCategories = useSelector(selectSelectedCategories);
   const categoryExpenses = useSelector(selectCategoryExpenses);
   const primaryJobIncome = useSelector(selectPrimaryJobIncome);
@@ -41,6 +45,11 @@ export const useOnboardingState = () => {
   const timeFrame = useSelector(selectTimeFrame);
   const reductionStrategy = useSelector(selectReductionStrategy);
   const onboardingData = useSelector(selectOnboardingData);
+
+  // --- THE GATEKEEPER LOGIC ---
+  const currentPhase = isAuthenticated 
+    ? currentPhaseFromRedux 
+    : "login"; // Forces login screen if not authenticated
 
   // Local State for Modals/Popups
   const [isResetPopupVisible, setIsResetPopupVisible] = useState(false);
@@ -85,13 +94,15 @@ export const useOnboardingState = () => {
     setIsResetPopupVisible(false);
   };
 
-  // --- Local Storage Sync (Extracted useEffect logic) ---
+  // --- Local Storage Sync (Only syncs data if authenticated) ---
 
   // Save progress on data change
   useEffect(() => {
-    localStorage.setItem("onboardingProgress", JSON.stringify(onboardingData));
-    dispatch(saveProgress());
-  }, [onboardingData, dispatch]);
+    if (isAuthenticated) {
+        localStorage.setItem("onboardingProgress", JSON.stringify(onboardingData));
+        dispatch(saveProgress());
+    }
+  }, [onboardingData, dispatch, isAuthenticated]);
 
   // Load progress on initial mount (existing useEffect logic kept here for now)
   useEffect(() => {
@@ -99,7 +110,7 @@ export const useOnboardingState = () => {
     if (savedProgress) {
       try {
         const parsed = JSON.parse(savedProgress);
-        // Note: You would typically dispatch an action here to load 'parsed' data into Redux state
+        // Note: In a real app, this load would be tied to user authentication success
       } catch (error) {
         console.error("Error loading saved progress:", error);
       }
@@ -108,7 +119,8 @@ export const useOnboardingState = () => {
 
   return {
     // State
-    currentPhase,
+    currentPhase, // <-- The effective phase
+    isAuthenticated, // <-- Authentication status
     selectedCategories,
     categoryExpenses,
     primaryJobIncome,
@@ -129,6 +141,6 @@ export const useOnboardingState = () => {
     handleReset,
     handleConfirmReset,
     handleCloseResetPopup,
-    dispatch, // Keeping dispatch exposed for navigation logic below
+    dispatch, 
   };
 };
