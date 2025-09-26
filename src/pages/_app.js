@@ -8,9 +8,9 @@ import { montserrat, inter } from "../fonts/fonts"; // Import the inter font her
 import "../index.css";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "../i18n/index";
-import NotificationProvider from "../components/NotificationProvider";
+import NotificationProvider from "../components/context/NotificationProvider";
 import ATMMain from "../components/ATMMain";
-import LanguageSelector from "../components/LanguageSelector";
+import LanguageSelector from "../components/common/LanguageSelector";
 import TermsAndConditions from "../pages/TermsAndConditions";
 import CommentsAndSuggestions from "../pages/CommentsAndSuggestions";
 

@@ -6,9 +6,9 @@ import {
   selectPrimaryJobIncome,
   selectTargetSavings,
   selectTimeFrame,
-} from "../store/slices/onboardingSlice";
-import StyledParagraphs from "./StyledParagraphs";
-import BudgetTable from "./BudgetTable";
+} from "../../store/slices/onboardingSlice";
+import StyledParagraphs from "../common/StyledParagraphs";
+import BudgetTable from "../common/BudgetTable";
 
 const SimulateOneYearPhase = () => {
   const { t } = useTranslation();

@@ -7,7 +7,7 @@ import {
   selectTargetSavings,
   selectTimeFrame,
   selectReductionStrategy,
-} from "../store/slices/onboardingSlice";
+} from "../../store/slices/onboardingSlice";
 
 const PrintableSummary = React.forwardRef((props, ref) => {
   const primaryJobIncome = useSelector(selectPrimaryJobIncome);

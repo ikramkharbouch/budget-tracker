@@ -1,6 +1,5 @@
-import React from 'react';
-import BudgetTable from './BudgetTable'; // Assuming BudgetTable is in the same directory
-import StyledParagraphs from './StyledParagraphs'; // Assuming StyledParagraphs is in the same directory
+import BudgetTable from '../common/BudgetTable'; // Assuming BudgetTable is in the same directory
+import StyledParagraphs from '../common/StyledParagraphs'; // Assuming StyledParagraphs is in the same directory
 
 const OverviewPage = () => {
   return (

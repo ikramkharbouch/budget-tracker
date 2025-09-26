@@ -1,6 +1,5 @@
-import React from 'react';
 import Slider from "react-slick";
-import GenericInputBar from './GenericInputBar';
+import GenericInputBar from "../common/GenericInputBar";
 
 const BottomCarousel = ({
   currentPhase,

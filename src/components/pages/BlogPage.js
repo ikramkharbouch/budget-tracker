@@ -87,10 +87,7 @@ const BlogPage = ({ onNavigateBack, t }) => {
             {sampleArticle.title}
           </h2>
           
-          <div className="flex items-center mb-4">
-            <div className="w-8 h-8 bg-transparent rounded-full flex items-center justify-center text-white font-semibold text-xs mr-2">
-              FP
-            </div>
+          <div className="flex items-start text-left mb-4">
             <div>
               <p className="font-medium text-gray-900 text-sm">{sampleArticle.author}</p>
               <p className="text-xs text-gray-500">Financial Expert</p>
@@ -115,22 +112,6 @@ const BlogPage = ({ onNavigateBack, t }) => {
               );
             }
           })}
-        </div>
-
-        {/* Call to Action */}
-        <div className="mt-6 p-4 bg-transparent rounded-lg border border-blue-200">
-          <h4 className="text-md font-semibold text-gray-900 mb-2">
-            Ready to Put These Tips into Action?
-          </h4>
-          <p className="text-gray-700 mb-3 text-sm">
-            Use our interactive financial planner to create a personalized budget and start tracking your progress.
-          </p>
-          <button
-            onClick={onNavigateBack}
-            className="bg-transparent text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg text-sm"
-          >
-            Start Your Financial Plan
-          </button>
         </div>
 
         {/* Related Articles - Compact Version */}
