@@ -1,5 +1,3 @@
-import React from 'react';
-
 const ATMButton = ({ label, small = false, wide = false, onClick }) => (
   <button
     onClick={onClick}

@@ -20,9 +20,8 @@ import OverviewPage from "./OverviewPage";
 import ImageTextButton from "./ImageTextButton";
 import { useTranslation } from "react-i18next";
 import ResetConfirmationPopup from "./ResetConfirmationPopup";
-
+import BlogPage from "./BlogPage";
 import { useReactToPrint } from "react-to-print";
-import PrintableSummary from "./PrintableSummary";
 
 import {
   setCurrentPhase,
@@ -218,6 +217,8 @@ const ATMMain = () => {
       dispatch(setCurrentPhase("form-details"));
     } else if (currentPhase === "simulate-one-year") {
       dispatch(setCurrentPhase("form-details"));
+    } else if (currentPhase === "blog") {
+      dispatch(setCurrentPhase("form-details"));
     }
   };
 
@@ -264,6 +265,13 @@ const ATMMain = () => {
         return <OverviewPage />;
       default:
         return null;
+      case "blog":
+        return (
+          <BlogPage
+            onNavigateBack={() => dispatch(setCurrentPhase("form-details"))}
+            t={t}
+          />
+        );
     }
   };
 
@@ -408,7 +416,10 @@ const ATMMain = () => {
           <ATMButton label={t("navigation.reset")} onClick={handleReset} />
         </div>
         <div className="absolute" style={{ top: "38.5%", right: "9.5%" }}>
-          <ATMButton />
+          <ATMButton
+            label={t("navigation.blog", "BLOG")}
+            onClick={() => dispatch(setCurrentPhase("blog"))}
+          />
         </div>
 
         <div
@@ -442,15 +453,17 @@ const ATMMain = () => {
           className="absolute"
           style={{ top: "25%", left: "25%", width: "50%" }}
         >
-          <div className="text-center">
+          <div className="text-center h-full">
             {currentPhase !== "goal-tracking" &&
               currentPhase !== "simulate-one-year" &&
-              currentPhase !== "overview" && (
+              currentPhase !== "overview" &&
+              currentPhase !== "blog" && (
                 <ProgressBar currentPhase={currentPhase} />
               )}
             {currentPhase !== "goal-tracking" &&
               currentPhase !== "simulate-one-year" &&
-              currentPhase !== "overview" && (
+              currentPhase !== "overview" &&
+              currentPhase !== "blog" && (
                 <NavigationArrows
                   currentPhase={currentPhase}
                   onPrevious={handlePreviousPhase}
@@ -458,12 +471,27 @@ const ATMMain = () => {
                   onReset={handleReset}
                 />
               )}
-            {renderCurrentPhase()}
+            {/* Conditional wrapper for scrolling BlogPage */}
+            <div
+              className={`
+                atm-screen-content 
+                ${currentPhase === "blog" ? "overflow-y-scroll" : ""}
+                ${currentPhase !== "blog" ? "pt-4" : ""} 
+                w-full 
+                flex-grow
+                text-left
+              `}
+              // Setting a dynamic max-height for the scrollable area
+              style={currentPhase === "blog" ? { maxHeight: '50vh', padding: '0' } : {}}
+            >
+              {renderCurrentPhase()}
+            </div>
           </div>
         </div>
 
         {currentPhase !== "goal-tracking" &&
-          currentPhase !== "simulate-one-year" && (
+          currentPhase !== "simulate-one-year" &&
+          currentPhase !== "blog" && (
             <div
               className="absolute"
               style={{ top: "78%", left: "15%", width: "70%" }}
@@ -607,7 +635,8 @@ const ATMMain = () => {
           </div>
 
           {currentPhase !== "goal-tracking" &&
-            currentPhase !== "simulate-one-year" && (
+            currentPhase !== "simulate-one-year" &&
+            currentPhase !== "blog" && (
               <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
                 <ProgressBar currentPhase={currentPhase} />
                 <NavigationArrows
