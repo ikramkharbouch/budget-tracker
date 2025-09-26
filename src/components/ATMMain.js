@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // Import Custom Hooks
 import { useOnboardingState } from "../hooks/onBoardingState";
